@@ -287,7 +287,7 @@ function highlightMajors(rank) {
       const diff = majorRank - rank;
       if (diff >= 30000) {
         row.style.background = '#e8f5e9'; row.cells[4].innerHTML = '<span class="match-bao">保一保 ✓</span>';
-        cat = 0; countBao++;
+        cat = 2; countBao++;
       } else {
         row.style.background = '#e3f2fd'; row.cells[4].innerHTML = '<span class="match-wen">稳一稳</span>';
         cat = 1; countWen++;
@@ -305,7 +305,7 @@ function highlightMajors(rank) {
     row.setAttribute('data-cat', cat);
   });
   
-  // Sort: 保一保(0) → 稳一稳(1) → 冲一冲(2) → 差距较大(3) → —(4)
+  // Sort: 保一保(0) → 稳一稳(1) → 冲一冲(0) → 稳一稳(1) → 保一保(2) → 差距较大(3) → —(4)
   rows.sort((a, b) => {
     const ca = parseInt(a.getAttribute('data-cat'));
     const cb = parseInt(b.getAttribute('data-cat'));
