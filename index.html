@@ -263,7 +263,10 @@ body {
 .major-table .tag.match { background: var(--match-bg); color: var(--match-color); }
 .major-table .tag.safety { background: var(--safety-bg); color: var(--safety-color); }
 .major-table .tag.na { background: #F0F0F0; color: #B0B0B0; font-weight: 400; }
-.major-table .expand-row td { padding: 0; }
+.major-table .expand-row td { 
+  padding: 0; 
+  border: none; 
+}
 .major-table .expand-content {
   overflow: hidden;
   max-height: 0;
@@ -355,6 +358,8 @@ body {
 /* Responsive */
 @media (max-width: 640px) {
   .filter-count { width: 100%; text-align: right; margin-left: 0; }
+  .filter-bar { top: 240px; }
+  .major-table th { top: 280px; }
   .top-bar { padding: 10px 14px; }
   .top-bar h1 { font-size: 15px; }
   .container { padding: 10px 10px 80px; }
@@ -364,7 +369,6 @@ body {
   .query-row .mode-toggle { width: 100%; }
   .query-row .mode-toggle button { flex: 1; text-align: center; }
   .query-result { flex-direction: column; gap: 10px; }
-  .major-table th { top: 240px; }
   .major-table th, .major-table td { padding: 8px 8px; font-size: 13px; }
   .major-table .tag { width: 36px; font-size: 12px; }
   .score-line .grid { grid-template-columns: 1fr; }
@@ -443,7 +447,7 @@ body {
     <span class="filter-count" id="filterCount">73 个专业</span>
   </div>
 
-  <div class="major-section">
+  <div class="major-section" style="overflow-x:auto">
     <table class="major-table">
       <thead>
         <tr>
@@ -904,6 +908,24 @@ document.getElementById('copySummaryBtn').addEventListener('click', copySummary)
 
 // Initial render
 render();
+adjustStickyTop();
+window.addEventListener('resize', adjustStickyTop);
+
+// 动态计算吸顶位置
+function adjustStickyTop() {
+  var topBarH = document.querySelector('.top-bar').offsetHeight || 64;
+  var queryPanelH = document.querySelector('.query-panel').offsetHeight || 80;
+  var filterBar = document.querySelector('.filter-bar');
+  var ths = document.querySelectorAll('.major-table th');
+  
+  var filterTop = topBarH + queryPanelH;
+  if (filterBar) filterBar.style.top = filterTop + 'px';
+  
+  var thTop = filterTop + (filterBar ? filterBar.offsetHeight : 40);
+  ths.forEach(function(th) {
+    th.style.top = thTop + 'px';
+  });
+}
 </script>
 </body>
 </html>
