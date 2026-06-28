@@ -173,6 +173,9 @@ body {
   flex-wrap: wrap;
   margin-bottom: 10px;
   padding: 0 2px;
+  position: sticky;
+  z-index: 40;
+  background: var(--bg);
 }
 .filter-group {
   display: flex;
@@ -202,11 +205,10 @@ body {
 }
 
 /* Major Table */
-.major-section { background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow-x: auto; }
+.major-section { background: var(--card); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 .major-table { width: 100%; border-collapse: collapse; }
 .major-table th {
   position: sticky;
-  top: 176px;
   background: var(--primary);
   color: white;
   font-weight: 600;
@@ -895,7 +897,8 @@ function adjustStickyTop() {
   var filterBar = document.querySelector('.filter-bar');
   var ths = document.querySelectorAll('.major-table th');
   if (!filterBar || !ths.length) return;
-  var filterTop = topBar.offsetHeight + qp.offsetHeight;
+  var qpRect = qp.getBoundingClientRect();
+  var filterTop = qpRect.bottom + (window.scrollY || document.documentElement.scrollTop);
   filterBar.style.top = filterTop + 'px';
   var thTop = filterTop + filterBar.offsetHeight;
   ths.forEach(function(th) { th.style.top = thTop + 'px'; });
