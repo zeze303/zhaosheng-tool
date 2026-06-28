@@ -162,22 +162,18 @@ function findRank(subject, year, target) {
   const data = YKDATA[year]?.[subject];
   if (!data) return null;
   let best = null;
+  let lowest = null;
   for (const [score, arr] of Object.entries(data)) {
+    const s = parseInt(score);
     const cum = arr[1];
-    if (cum >= target) {
-      if (!best || cum < best.cum) best = { score: parseInt(score), cum };
+    // track lowest score for overflow
+    if (!lowest || s < lowest.score) lowest = { score: s, cum };
+    // find the score whose cum just >= target (lowest cum that meets the bar)
+    if (cum >= target && (!best || cum < best.cum)) {
+      best = { score: s, cum };
     }
   }
-  if (!best) {
-    // target larger than max cum → return lowest score
-    let lowest = null;
-    for (const [score, arr] of Object.entries(data)) {
-      const s = parseInt(score);
-      if (!lowest || s < lowest.score) lowest = { score: s, cum: arr[1] };
-    }
-    return lowest;
-  }
-  return best;
+  return best || lowest;
 }
 
 function getClosestScore(subject, year, target) {
