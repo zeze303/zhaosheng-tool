@@ -615,6 +615,21 @@ function render() {
   var rank25 = RANK_2025;
   var rank26 = RANK_2026;
 
+  // 按冲稳保排序：冲→稳→保→其他
+  if (queryRank) {
+    filtered.sort(function(a, b) {
+      function getTag(m) {
+        if (m.rank <= 0) return 9;
+        var diff = m.rank - queryRank;
+        if (diff > 30000) return 2;
+        if (diff > 0) return 1;
+        if (diff > -20000) return 0;
+        return 9;
+      }
+      return getTag(a) - getTag(b);
+    });
+  }
+
   filtered.forEach(function(m, i) {
     var score = m.score;
     var rank = m.rank;
