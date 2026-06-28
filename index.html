@@ -23,6 +23,9 @@ body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; ba
 .btn-primary:hover { background: #283593; }
 .btn-outline { background: #fff; color: #1a237e; border: 1.5px solid #1a237e; }
 .btn-outline:hover { background: #e8eaf6; }
+.mode-btn { background: #fff; color: #1a237e; border: 1.5px solid #1a237e; font-size: 12px; padding: 0 14px; }
+.mode-btn.active { background: #1a237e; color: #fff; }
+
 .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
 .result-item { background: #f5f7ff; border-radius: 8px; padding: 12px; text-align: center; }
 .result-item .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -64,11 +67,18 @@ tr:hover td { background: #f5f7ff; }
 <div class="container">
 
 <div class="card">
-  <h2>🔍 分数查位次</h2>
+  <h2>🔍 查询</h2>
   <div class="form-row">
     <div class="form-group">
-      <label>高考分数</label>
-      <input type="number" id="scoreInput" placeholder="140~710" min="140" max="710">
+      <label>模式</label>
+      <div style="display:flex;gap:4px">
+        <button class="btn mode-btn active" id="modeScore" onclick="setMode('score')">按分数</button>
+        <button class="btn mode-btn" id="modeRank" onclick="setMode('rank')">按位次</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label id="inputLabel">高考分数</label>
+      <input type="number" id="queryInput" placeholder="输入分数 140~710" min="1">
     </div>
     <div class="form-group">
       <label>科目</label>
@@ -77,29 +87,10 @@ tr:hover td { background: #f5f7ff; }
         <option value="lishi">历史类</option>
       </select>
     </div>
-    <button class="btn btn-primary" onclick="queryScore()">查询</button>
+    <button class="btn btn-primary" onclick="doQuery()">查询</button>
     <button class="btn btn-outline" onclick="clearAll()">清空</button>
   </div>
   <div id="queryResult"></div>
-</div>
-
-<div class="card">
-  <h2>🔄 位次反查分数</h2>
-  <div class="form-row">
-    <div class="form-group">
-      <label>位次（全省排名）</label>
-      <input type="number" id="rankInput" placeholder="如 224230" min="1">
-    </div>
-    <div class="form-group">
-      <label>科目</label>
-      <select id="rankSubject" onchange="updateRankMax()">
-        <option value="wuli">物理类</option>
-        <option value="lishi">历史类</option>
-      </select>
-    </div>
-    <button class="btn btn-primary" onclick="queryRank()">查询</button>
-  </div>
-  <div id="rankResult"></div>
 </div>
 
 <div class="card">
@@ -216,53 +207,62 @@ function renderResult(score, subject) {
   if (subject === 'wuli') highlightMajors(d25 ? d25[1] : null);
 }
 
-function queryScore() {
-  const score = parseInt(document.getElementById('scoreInput').value);
+let queryMode = 'score';
+function setMode(m) {
+  queryMode = m;
+  document.getElementById('modeScore').className = 'btn mode-btn' + (m==='score'?' active':'');
+  document.getElementById('modeRank').className = 'btn mode-btn' + (m==='rank'?' active':'');
+  const input = document.getElementById('queryInput');
+  if (m === 'score') {
+    document.getElementById('inputLabel').textContent = '高考分数';
+    input.placeholder = '输入分数 140~710';
+    input.min = 140; input.max = 710;
+  } else {
+    document.getElementById('inputLabel').textContent = '全省位次';
+    input.placeholder = '如 224230';
+    input.min = 1; input.max = 370000;
+  }
+  input.value = '';
+  document.getElementById('queryResult').innerHTML = '';
+  clearHighlights();
+}
+
+function doQuery() {
+  const val = parseInt(document.getElementById('queryInput').value);
   const subject = document.getElementById('subjectSelect').value;
-  if (!score || score < 140 || score > 710) {
-    document.getElementById('queryResult').innerHTML = '<div class="tip tip-err">请输入有效分数（140~710）</div>';
+  if (!val || val < 1) {
+    document.getElementById('queryResult').innerHTML = '<div class="tip tip-err">请输入有效数值</div>';
     return;
   }
-  renderResult(score, subject);
+  if (queryMode === 'score') {
+    if (val < 140 || val > 710) {
+      document.getElementById('queryResult').innerHTML = '<div class="tip tip-err">请输入有效分数（140~710）</div>';
+      return;
+    }
+    renderResult(val, subject);
+  } else {
+    const maxCum = subject === 'wuli' ? 363040 : 243812;
+    if (val > maxCum) {
+      document.getElementById('queryResult').innerHTML = `<div class="tip tip-err">最大位次为 ${maxCum.toLocaleString()}，输入值超出范围</div>`;
+      return;
+    }
+    renderRankResult(val, subject);
+  }
 }
 
-function updateRankMax() {
-  const subj = document.getElementById('rankSubject').value;
-  document.getElementById('rankInput').placeholder = subj === 'wuli' ? '如 224230' : '如 64897';
-}
-
-function queryRank() {
-  const rank = parseInt(document.getElementById('rankInput').value);
-  const subject = document.getElementById('rankSubject').value;
-  const label = subject === 'wuli' ? '物理类' : '历史类';
-
-  if (!rank || rank < 1) {
-    document.getElementById('rankResult').innerHTML = '<div class="tip tip-err">请输入有效位次</div>';
-    return;
-  }
-
-  const maxCum = subject === 'wuli' ? 363040 : 243812;
-  if (rank > maxCum) {
-    document.getElementById('rankResult').innerHTML = `<div class="tip tip-err">${label}最大位次为 ${maxCum.toLocaleString()}，你输入的 ${rank.toLocaleString()} 超出范围</div>`;
-    return;
-  }
-
+function renderRankResult(rank, subject) {
   const d25 = findRank(subject, '2025', rank);
   const d26 = findRank(subject, '2026', rank);
-
+  const label = subject === 'wuli' ? '物理类' : '历史类';
   let html = '<div class="result-grid">';
   if (d25) html += `<div class="result-item"><div class="label">2025 等效分</div><div class="value">${d25.score}分</div><div class="subtext">${label} · 位次 ${d25.cum.toLocaleString()}</div></div>`;
   if (d26) html += `<div class="result-item"><div class="label">2026 等效分</div><div class="value">${d26.score}分</div><div class="subtext">${label} · 位次 ${d26.cum.toLocaleString()}</div></div>`;
   html += '</div>';
-
-  // Compare
   if (d25 && d26) {
     const diff = d26.score - d25.score;
-    const trend = diff > 0 ? '比2025年高' : (diff < 0 ? '比2025年低' : '同分');
-    html += `<div class="tip tip-warn">位次 ${rank.toLocaleString()} 在2026年约${d26.score}分，${trend} ${Math.abs(diff)}分</div>`;
+    html += `<div class="tip tip-warn">位次 ${rank.toLocaleString()} 在2026年约${d26.score}分，${diff>0?'高':'低'} ${Math.abs(diff)}分</div>`;
   }
-
-  document.getElementById('rankResult').innerHTML = html;
+  document.getElementById('queryResult').innerHTML = html;
   if (subject === 'wuli') highlightMajors(rank);
 }
 
@@ -331,17 +331,18 @@ function buildMajorTable() {
 }
 
 function clearAll() {
-  document.getElementById('scoreInput').value = '';
+  document.getElementById('queryInput').value = '';
   document.getElementById('queryResult').innerHTML = '';
-  document.getElementById('rankInput').value = '';
-  document.getElementById('rankResult').innerHTML = '';
   document.getElementById('tipArea').textContent = '输入分数后，可匹配的专业会高亮';
+  clearHighlights();
+}
+
+function clearHighlights() {
   const rows = document.querySelectorAll('#majorTable tbody tr');
   rows.forEach(r => { r.style.background = ''; r.cells[4].innerHTML = '<span class="match-no">等待查询</span>'; });
 }
 
-document.getElementById('scoreInput').addEventListener('keydown', e => { if (e.key === 'Enter') queryScore(); });
-document.getElementById('rankInput').addEventListener('keydown', e => { if (e.key === 'Enter') queryRank(); });
+document.getElementById('queryInput').addEventListener('keydown', e => { if (e.key === 'Enter') doQuery(); });
 
 buildMajorTable();
 </script>
