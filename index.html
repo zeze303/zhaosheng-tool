@@ -609,20 +609,20 @@ function render() {
 
   document.getElementById('filterCount').textContent = filtered.length + ' 个专业';
 
-  var rank25 = querySubject === 'wl' ? RANK_2025 : RANK_2025;
-  var rank26 = querySubject === 'wl' ? RANK_2026 : RANK_2026;
+  var rank25 = RANK_2025;
+  var rank26 = RANK_2026;
 
   filtered.forEach(function(m, i) {
     var score = m.score;
     var rank = m.rank;
     
-    // Get 2026 equivalent score (same for all majors, based on student rank)
-    var eq26 = '—';
-    if (queryRank) {
-    var rankFromHis = m.his_score != null && m.phy_score == null;
+    // 2026预测投档分：专业2025位次 → 对应2026年分数
+    var predict26 = '—';
+    if (rank > 0) {
+      var rankFromHis = m.his_score != null && m.phy_score == null;
       var eqIdx = rankFromHis ? 3 : 1;
-      var es = findScore(queryRank, rank26, eqIdx);
-      if (es) eq26 = es + '分';
+      var es = findScore(rank, rank26, eqIdx);
+      if (es) predict26 = es + '分';
     }
 
     // Determine match tag (diff = major_rank - queryRank, positive = student better)
