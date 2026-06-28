@@ -138,6 +138,11 @@ tr:hover td { background: #f5f7ff; }
 </div>
 <script src="data.js"></script>
 <script>
+// Verify data loaded
+if (typeof YKDATA === 'undefined') {
+  document.write('<div style="color:red;padding:20px">数据加载失败，请检查 data.js 是否存在</div>');
+}
+console.log('YKDATA loaded:', YKDATA ? 'OK ('+Object.keys(YKDATA['2025']?.wuli||{}).length+' scores)' : 'FAIL');
 function findScore(subject, year, score) {
   const data = YKDATA[year]?.[subject];
   if (!data) return null;
