@@ -932,11 +932,30 @@ function exportExcel() {
   var subjectMap = {'wl':'物理类','ls':'历史类'};
   var subjLabel = {'wl':'理','ls':'文','all':'文理'};
   
+  var levelF = document.querySelector('#levelFilter .active').getAttribute('data-filter');
+  var subjF = document.querySelector('#subjectFilter .active').getAttribute('data-filter');
+  
   var filtered = MAJORS.filter(function(m) {
-    if (querySubject === 'wl' && m.subject === 'ls') return false;
-    if (querySubject === 'ls' && m.subject === 'wl') return false;
+    if (levelF === 'benke' && m.level !== '本科') return false;
+    if (levelF === 'zhuanke' && m.level !== '专科') return false;
+    if (subjF === 'wl' && m.subject !== 'wl' && m.subject !== 'all') return false;
+    if (subjF === 'ls' && m.subject !== 'ls' && m.subject !== 'all') return false;
     return true;
   });
+  // 按冲稳保排序
+  if (queryRank) {
+    filtered.sort(function(a, b) {
+      function getTag(m) {
+        if (m.rank <= 0) return 9;
+        var diff = m.rank - queryRank;
+        if (diff > 30000) return 2;
+        if (diff > 0) return 1;
+        if (diff > -20000) return 0;
+        return 9;
+      }
+      return getTag(a) - getTag(b);
+    });
+  }
   
   var rows = [];
   rows.push(['专业名称','层次','科类','2025投档分','2025位次','2026预测','录取建议']);
