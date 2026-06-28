@@ -699,6 +699,15 @@ function doQuery() {
     document.getElementById('displayLineDiff').textContent = '—';
   }
 
+  // Auto-filter: if score above 本科线, default to本科 only
+  var line26 = querySubject === 'wl' ? scoreThreshold26 : scoreThreshold26his;
+  if (queryScore && queryScore >= line26) {
+    document.querySelectorAll('#levelFilter button').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelector('#levelFilter button[data-filter="benke"]').classList.add('active');
+  } else if (queryScore && queryScore > 0) {
+    document.querySelectorAll('#levelFilter button').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelector('#levelFilter button[data-filter="all"]').classList.add('active');
+  }
   render();
 }
 
