@@ -202,11 +202,11 @@ body {
 }
 
 /* Major Table */
-.major-section { background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.major-section { background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow-x: auto; }
 .major-table { width: 100%; border-collapse: collapse; }
 .major-table th {
   position: sticky;
-  top: 0;
+  top: 176px;
   background: var(--primary);
   color: white;
   font-weight: 600;
@@ -273,9 +273,10 @@ body {
   border-bottom: 1px solid var(--border);
 }
 .major-table .expand-content.open {
-  max-height: 60px;
+  max-height: 200px;
   padding: 8px 12px;
 }
+.major-table .expand-content.open { overflow-y: auto; }
 .major-table .expand-content .desc {
   font-size: 13px;
   color: var(--text-secondary);
@@ -353,6 +354,7 @@ body {
 
 /* Responsive */
 @media (max-width: 640px) {
+  .filter-count { width: 100%; text-align: right; margin-left: 0; }
   .top-bar { padding: 10px 14px; }
   .top-bar h1 { font-size: 15px; }
   .container { padding: 10px 10px 80px; }
@@ -362,6 +364,7 @@ body {
   .query-row .mode-toggle { width: 100%; }
   .query-row .mode-toggle button { flex: 1; text-align: center; }
   .query-result { flex-direction: column; gap: 10px; }
+  .major-table th { top: 240px; }
   .major-table th, .major-table td { padding: 8px 8px; font-size: 13px; }
   .major-table .tag { width: 36px; font-size: 12px; }
   .score-line .grid { grid-template-columns: 1fr; }
@@ -447,7 +450,7 @@ body {
           <th style="width:35%">专业</th>
           <th style="width:12%">2025投档</th>
           <th style="width:15%">2025位次</th>
-          <th style="width:15%">2026等效</th>
+          <th style="width:15%">2026预测</th>
           <th style="width:11%;text-align:center">匹配</th>
         </tr>
       </thead>
@@ -514,10 +517,32 @@ var RANK_2026={"701\u53ca\u4ee5\u4e0a":[34,34,0,0],"700":[2,36,0,0],"699":[10,46
 var MAJORS=[{"name":"车辆工程","college":"智能工程学院","score":476,"rank":199215,"subject":"wl","type":"普通","level":"本科","desc":"面向汽车产业，培养车辆设计与制造工程技术人才","his_score":null,"phy_score":476},{"name":"机械工程","college":"智能工程学院","score":483,"rank":188387,"subject":"wl","type":"普通","level":"本科","desc":"培养机械设计制造及自动化领域应用型技术人才","his_score":null,"phy_score":483},{"name":"机器人工程","college":"智能工程学院","score":478,"rank":196199,"subject":"wl","type":"普通","level":"本科","desc":"聚焦机器人系统设计与智能控制技术方向","his_score":null,"phy_score":478},{"name":"智能制造工程","college":"智能工程学院","score":479,"rank":194622,"subject":"wl","type":"普通","level":"本科","desc":"面向工业4.0，培养智能制造系统设计与运维人才","his_score":null,"phy_score":479},{"name":"自动化","college":"智能工程学院","score":495,"rank":169008,"subject":"wl","type":"普通","level":"本科","desc":"培养自动控制系统设计与应用领域工程技术人才","his_score":null,"phy_score":495},{"name":"电气工程及其自动化","college":"智能工程学院","score":494,"rank":170629,"subject":"wl","type":"普通","level":"本科","desc":"面向电力系统与电气控制领域应用型人才培养","his_score":null,"phy_score":494},{"name":"护理学","college":"环境与健康学院","score":481,"rank":191536,"subject":"wl","type":"普通","level":"本科","desc":"培养临床护理与健康管理的专业护理人才","his_score":null,"phy_score":481},{"name":"环境工程","college":"环境与健康学院","score":468,"rank":211317,"subject":"wl","type":"普通","level":"本科","desc":"培养环境污染防治与资源化利用工程技术人才","his_score":null,"phy_score":468},{"name":"制药工程","college":"环境与健康学院","score":474,"rank":202340,"subject":"wl","type":"普通","level":"本科","desc":"面向制药行业，培养药品研发与生产工艺人才","his_score":null,"phy_score":474},{"name":"医学检验技术","college":"环境与健康学院","score":475,"rank":200789,"subject":"wl","type":"普通","level":"本科","desc":"培养临床检验与医学实验室技术专业人才","his_score":null,"phy_score":475},{"name":"电子信息工程","college":"信息科学与技术学院","score":484,"rank":186805,"subject":"wl","type":"普通","level":"本科","desc":"培养电子系统与信息处理领域工程技术人才","his_score":null,"phy_score":484},{"name":"计算机科学与技术","college":"信息科学与技术学院","score":489,"rank":178836,"subject":"wl","type":"普通","level":"本科","desc":"培养具备软件开发与系统设计能力的IT工程技术人才","his_score":null,"phy_score":489},{"name":"软件工程","college":"信息科学与技术学院","score":483,"rank":188387,"subject":"wl","type":"普通","level":"本科","desc":"面向软件产业，培养软件开发与项目管理人才","his_score":null,"phy_score":483},{"name":"物联网工程","college":"信息科学与技术学院","score":481,"rank":191536,"subject":"wl","type":"普通","level":"本科","desc":"培养物联网系统架构设计与应用开发人才","his_score":null,"phy_score":481},{"name":"数据科学与大数据技术","college":"信息科学与技术学院","score":482,"rank":189932,"subject":"wl","type":"普通","level":"本科","desc":"培养大数据分析与人工智能应用技术人才","his_score":null,"phy_score":482},{"name":"通信工程","college":"信息科学与技术学院","score":484,"rank":186805,"subject":"wl","type":"普通","level":"本科","desc":"培养通信系统与网络技术领域工程技术人才","his_score":null,"phy_score":484},{"name":"人工智能","college":"信息科学与技术学院","score":482,"rank":189932,"subject":"wl","type":"普通","level":"本科","desc":"聚焦AI算法与智能系统开发应用方向","his_score":null,"phy_score":482},{"name":"工程造价","college":"建筑学院","score":467,"rank":212828,"subject":"wl","type":"普通","level":"本科","desc":"培养建设工程造价管理与成本控制专业人才","his_score":null,"phy_score":467},{"name":"建筑学","college":"建筑学院","score":463,"rank":218647,"subject":"wl","type":"普通","level":"本科","desc":"培养建筑设计、规划与工程实践专业人才","his_score":null,"phy_score":463},{"name":"土木工程","college":"建筑学院","score":459,"rank":224230,"subject":"wl","type":"普通","level":"本科","desc":"培养建筑工程设计与施工管理技术人才","his_score":null,"phy_score":459},{"name":"智慧建筑与建造","college":"建筑学院","score":468,"rank":211317,"subject":"wl","type":"普通","level":"本科","desc":"面向智能建筑与绿色建造技术方向","his_score":null,"phy_score":468},{"name":"会计学","college":"会计学院","score":488,"rank":57521,"subject":"ls","type":"普通","level":"本科","desc":"培养会计核算、审计与财务管理专业人才","his_score":488,"phy_score":null},{"name":"审计学","college":"会计学院","score":493,"rank":54207,"subject":"ls","type":"普通","level":"本科","desc":"培养审计监督与内部控制专业人才","his_score":493,"phy_score":null},{"name":"税收学","college":"会计学院","score":485,"rank":59535,"subject":"ls","type":"普通","level":"本科","desc":"面向税务领域，培养税务筹划与管理人才","his_score":485,"phy_score":null},{"name":"工商管理","college":"国际商学院","score":487,"rank":58171,"subject":"ls","type":"普通","level":"本科","desc":"培养企业运营管理与组织协调能力的管理人才","his_score":487,"phy_score":null},{"name":"人力资源管理","college":"国际商学院","score":488,"rank":57521,"subject":"ls","type":"普通","level":"本科","desc":"培养人力资源开发与管理专业人才","his_score":488,"phy_score":null},{"name":"财务管理","college":"国际商学院","score":495,"rank":52965,"subject":"ls","type":"普通","level":"本科","desc":"培养企业财务分析与资本运作管理人才","his_score":495,"phy_score":null},{"name":"大数据管理与应用","college":"国际商学院","score":482,"rank":189932,"subject":"wl","type":"普通","level":"本科","desc":"培养利用大数据技术辅助商业决策的管理人才","his_score":null,"phy_score":482},{"name":"金融学","college":"国际商学院","score":495,"rank":52965,"subject":"ls","type":"普通","level":"本科","desc":"培养银行证券保险领域金融管理与服务人才","his_score":495,"phy_score":null},{"name":"金融科技","college":"国际商学院","score":471,"rank":206836,"subject":"wl","type":"普通","level":"本科","desc":"培养金融与科技融合创新应用型人才","his_score":null,"phy_score":471},{"name":"数字经济","college":"国际商学院","score":471,"rank":206836,"subject":"wl","type":"普通","level":"本科","desc":"面向数字经济时代，培养数字化运营与管理人才","his_score":null,"phy_score":471},{"name":"英语","college":"人文教育学院","score":486,"rank":58842,"subject":"ls","type":"普通","level":"本科","desc":"培养英语语言应用与国际交流专业人才","his_score":486,"phy_score":null},{"name":"学前教育","college":"人文教育学院","score":481,"rank":62196,"subject":"ls","type":"普通","level":"本科","desc":"培养幼儿教育与保育管理专业人才","his_score":481,"phy_score":null},{"name":"商务英语","college":"人文教育学院","score":480,"rank":62894,"subject":"ls","type":"普通","level":"本科","desc":"培养商务沟通与国际贸易英语应用人才","his_score":480,"phy_score":null},{"name":"汉语言文学","college":"人文教育学院","score":499,"rank":50419,"subject":"ls","type":"普通","level":"本科","desc":"培养汉语言文学素养与写作传播能力人才","his_score":499,"phy_score":null},{"name":"小学教育","college":"人文教育学院","score":491,"rank":55552,"subject":"ls","type":"普通","level":"本科","desc":"培养小学教育教学与管理专业人才","his_score":491,"phy_score":null},{"name":"应用心理学","college":"人文教育学院","score":485,"rank":59535,"subject":"ls","type":"普通","level":"本科","desc":"培养心理咨询与人力资源测评应用型人才","his_score":485,"phy_score":null},{"name":"产品设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养产品创新设计与用户体验设计人才","his_score":null,"phy_score":null},{"name":"服装与服饰设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养服装设计与时尚创意产业人才","his_score":null,"phy_score":null},{"name":"表演（服装表演）(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养服装表演与时尚传播专业人才","his_score":null,"phy_score":null},{"name":"环境设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养室内外环境艺术设计与规划人才","his_score":null,"phy_score":null},{"name":"视觉传达设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养品牌视觉设计与数字媒体创意人才","his_score":null,"phy_score":null},{"name":"数字媒体艺术(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养数字影像与交互媒体艺术创作人才","his_score":null,"phy_score":null},{"name":"艺术与科技(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养科技与艺术融合的创新设计人才","his_score":null,"phy_score":null},{"name":"摄影(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视摄影与商业摄影专业人才","his_score":null,"phy_score":null},{"name":"表演(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视戏剧表演与舞台艺术人才","his_score":null,"phy_score":null},{"name":"广播电视编导(艺术)","college":"传媒学院","score":478.0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视节目策划编导与制作人才","his_score":478,"phy_score":null},{"name":"戏剧影视导演(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视戏剧导演与创作专业人才","his_score":null,"phy_score":null},{"name":"戏剧影视文学(艺术)","college":"传媒学院","score":459.0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视剧本创作与文艺评论人才","his_score":459,"phy_score":null},{"name":"播音与主持艺术(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养播音主持与有声语言传播人才","his_score":null,"phy_score":null},{"name":"影视技术(艺术)","college":"传媒学院","score":477.0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视后期制作与视觉特效技术人才","his_score":477,"phy_score":null},{"name":"动画(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养二维三维动画创作与数字影视制作人才","his_score":null,"phy_score":null},{"name":"网络与新媒体","college":"传媒学院","score":484,"rank":60189,"subject":"ls","type":"普通","level":"本科","desc":"培养新媒体内容生产与传播运营人才","his_score":484,"phy_score":null},{"name":"社会体育指导与管理(体育)","college":"体育学院","score":0,"rank":0,"subject":"all","type":"体育","level":"本科","desc":"培养社会体育指导与健身管理专业人才","his_score":null,"phy_score":null},{"name":"体育教育(体育)","college":"体育学院","score":0,"rank":0,"subject":"all","type":"体育","level":"本科","desc":"培养体育教学与运动训练专业人才","his_score":null,"phy_score":null},{"name":"体能训练","college":"体育学院","score":0,"rank":0,"subject":"all","type":"普通","level":"本科","desc":"体育学院开设的教育学类本科专业","his_score":null,"phy_score":null},{"name":"法学","college":"法学院","score":501,"rank":49149,"subject":"ls","type":"普通","level":"本科","desc":"培养法律实务与法治建设领域专业人才","his_score":501,"phy_score":null},{"name":"机电一体化技术(专)","college":"智能工程学院","score":345,"rank":329119,"subject":"all","type":"普通","level":"专科","desc":"培养机电设备装调与自动化生产线运维技术人才","his_score":null,"phy_score":345},{"name":"电气自动化技术(专)","college":"智能工程学院","score":330,"rank":335946,"subject":"all","type":"普通","level":"专科","desc":"培养电气控制系统安装调试与维护技术人才","his_score":null,"phy_score":330},{"name":"护理(专)","college":"环境与健康学院","score":231,"rank":359169,"subject":"all","type":"普通","level":"专科","desc":"培养基础护理与社区健康服务专业人才","his_score":394,"phy_score":231},{"name":"医学检验技术(专)","college":"环境与健康学院","score":216,"rank":360531,"subject":"all","type":"普通","level":"专科","desc":"培养临床检验标本采集与分析技术人才","his_score":null,"phy_score":216},{"name":"药品生产技术(专)","college":"环境与健康学院","score":240,"rank":358092,"subject":"all","type":"普通","level":"专科","desc":"培养药品生产质量控制与工艺管理人才","his_score":null,"phy_score":240},{"name":"环境工程技术(专)","college":"环境与健康学院","score":202,"rank":361373,"subject":"all","type":"普通","level":"专科","desc":"培养环境监测与污染治理技术人才","his_score":null,"phy_score":202},{"name":"宠物医疗技术(专)","college":"环境与健康学院","score":0,"rank":0,"subject":"all","type":"普通","level":"专科","desc":"培养宠物疾病诊疗与护理技术人才","his_score":null,"phy_score":null},{"name":"计算机应用技术(专)","college":"信息科学与技术学院","score":202,"rank":361373,"subject":"all","type":"普通","level":"专科","desc":"培养计算机系统运维与软件开发应用人才","his_score":null,"phy_score":202},{"name":"电子信息工程技术(专)","college":"信息科学与技术学院","score":205,"rank":361210,"subject":"all","type":"普通","level":"专科","desc":"培养电子设备装调与智能系统运维人才","his_score":null,"phy_score":205},{"name":"工程造价(专)","college":"建筑学院","score":226,"rank":359668,"subject":"all","type":"普通","level":"专科","desc":"培养工程预决算与招投标管理技术人才","his_score":324,"phy_score":226},{"name":"建设工程管理(专)","college":"建筑学院","score":206,"rank":361158,"subject":"all","type":"普通","level":"专科","desc":"培养建设工程项目管理与施工组织人才","his_score":314,"phy_score":206},{"name":"大数据与会计(专)","college":"会计学院","score":218,"rank":360375,"subject":"all","type":"普通","level":"专科","desc":"培养大数据环境下会计核算与财务分析人才","his_score":384,"phy_score":218},{"name":"大数据与财务管理(专)","college":"国际商学院","score":247,"rank":357198,"subject":"all","type":"普通","level":"专科","desc":"培养企业财务数据管理与投融资分析人才","his_score":376,"phy_score":247},{"name":"金融服务与管理(专)","college":"国际商学院","score":231,"rank":359169,"subject":"all","type":"普通","level":"专科","desc":"培养银行保险证券领域金融服务人才","his_score":335,"phy_score":231},{"name":"摄影摄像技术(专)","college":"传媒学院","score":262,"rank":354832,"subject":"all","type":"普通","level":"专科","desc":"培养商业摄影与影视摄制技术人才","his_score":309,"phy_score":262},{"name":"网络直播与运营(专)","college":"传媒学院","score":231,"rank":359169,"subject":"all","type":"普通","level":"专科","desc":"培养网络直播策划与新媒体运营人才","his_score":318,"phy_score":231}];
 
 // ===== HELPERS =====
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      return Promise.resolve();
+    } catch(e) {
+      return Promise.reject(e);
+    } finally {
+      document.body.removeChild(ta);
+    }
+  }
+}
 function getRankData(rankData, subject, scoreStr) {
   var d = rankData[scoreStr];
   if (!d) return null;
-  return subject === 'wl' ? { count: d[1], cum: d[2] } : { count: d[3], cum: d[4] };
+  return subject === 'wl'
+    ? { count: d[0], cum: d[1] }
+    : { count: d[2], cum: d[3] };
 }
 
 function findRank(cum, data, subject) {
@@ -627,7 +652,7 @@ function render() {
     html += '<td><div class="major-name">' + lvlBadge + ' ' + m.name + ' ' + subjBadge + '</div></td>';
     html += '<td class="score-col">' + scoreDisplay + '</td>';
     html += '<td class="rank-col">' + rankDisplay + '</td>';
-    html += '<td class="score-col">' + eq26 + '</td>';
+    html += '<td class="score-col">' + predict26 + '</td>';
     html += '<td style="text-align:center"><span class="tag ' + tagClass + '">' + (tag || '—') + '</span></td>';
     html += '</tr>';
     html += '<tr class="expand-row"><td colspan="5"><div class="expand-content" id="expand' + i + '"><div class="desc">' + m.desc + '</div></div></td></tr>';
@@ -655,9 +680,10 @@ function doQuery() {
   var mode = document.querySelector('#modeToggle .active').getAttribute('data-mode');
   var input = document.getElementById('queryInput').value.trim();
   querySubject = document.getElementById('subjectSelect').value;
-  var rankData = querySubject === 'wl' ? RANK_2025 : RANK_2025;
+  var rankData26 = querySubject === 'wl' ? RANK_2026 : RANK_2026;
+  var rankData25 = querySubject === 'wl' ? RANK_2025 : RANK_2025;
   var idx = querySubject === 'wl' ? 1 : 3;
-  
+
   queryScore = null;
   queryRank = null;
 
@@ -667,45 +693,42 @@ function doQuery() {
     var val = parseInt(input);
     if (isNaN(val)) return;
     queryScore = val;
-    var d = rankData[String(val)];
+    var d = rankData26[String(val)];
     if (d) queryRank = d[idx];
   } else {
     var val = parseInt(input.replace(/,/g, ''));
     if (isNaN(val)) return;
     queryRank = val;
-    var found = findScore(val, rankData, idx);
+    var found = findScore(val, rankData26, idx);
     if (found) queryScore = found;
   }
 
-  // Update result display
   var resultDiv = document.getElementById('queryResult');
   resultDiv.classList.add('show');
   document.getElementById('displayRank').textContent = queryRank ? queryRank.toLocaleString() : '—';
 
-  // Equiv score
-  var eq26data = querySubject === 'wl' ? RANK_2026 : RANK_2026;
-  var equiv = null;
+  // 2025等效分：考生2026位次对应2025年分数
+  var equiv25 = null;
   if (queryRank) {
-    equiv = findScore(queryRank, eq26data, idx);
+    equiv25 = findScore(queryRank, rankData25, idx);
   }
-  document.getElementById('displayEquiv').textContent = equiv ? equiv + '分' : '—';
+  document.getElementById('displayEquiv').textContent = equiv25 ? equiv25 + '分' : '—';
 
-  // Line diff
+  // 本科线差：考生2026分数与2026本科线
   var line26 = querySubject === 'wl' ? scoreThreshold26 : scoreThreshold26his;
-  if (equiv) {
-    var diff = equiv - line26;
+  if (queryScore) {
+    var diff = queryScore - line26;
     var txt = diff >= 0 ? '+' + diff : String(diff);
     document.getElementById('displayLineDiff').textContent = txt + '分' + (diff >= 0 ? ' (过线)' : ' (差线)');
   } else {
     document.getElementById('displayLineDiff').textContent = '—';
   }
 
-  // Auto-filter: if score above 本科线, default to本科 only
-  var line26 = querySubject === 'wl' ? scoreThreshold26 : scoreThreshold26his;
+  // Auto-filter
   if (queryScore && queryScore >= line26) {
     document.querySelectorAll('#levelFilter button').forEach(function(b) { b.classList.remove('active'); });
     document.querySelector('#levelFilter button[data-filter="benke"]').classList.add('active');
-  } else if (queryScore && queryScore > 0) {
+  } else if (queryScore && queryScore >= 200) {
     document.querySelectorAll('#levelFilter button').forEach(function(b) { b.classList.remove('active'); });
     document.querySelector('#levelFilter button[data-filter="all"]').classList.add('active');
   }
@@ -714,14 +737,13 @@ function doQuery() {
 
 // ===== SHARE CARD =====
 function generateShareCard() {
-  if (!queryRank) return;
+  if (!queryRank) { alert('请先查询分数或位次'); return; }
   
   var subjectMap = {'wl':'物理类','ls':'历史类'};
   document.getElementById('scRank').textContent = queryRank ? queryRank.toLocaleString() : '—';
   document.getElementById('scScore').textContent = document.getElementById('displayEquiv').textContent;
   document.getElementById('scSubject').textContent = subjectMap[querySubject] || '—';
 
-  // Top 5 majors (2 reach + 2 match + 1 safety)
   var filtered = MAJORS.filter(function(m) {
     if (querySubject === 'wl' && m.subject === 'ls') return false;
     if (querySubject === 'ls' && m.subject === 'wl') return false;
@@ -731,9 +753,11 @@ function generateShareCard() {
   var reach = [], match = [], safety = [];
   filtered.forEach(function(m) {
     var diff = m.rank - queryRank;
-    if (diff > 30000) safety.push(m);
+    var rl = m.level === '本科' ? -20000 : -5000;
+    var sl = m.level === '本科' ? 30000 : 10000;
+    if (diff > sl) safety.push(m);
     else if (diff > 0) match.push(m);
-    else if (diff > -20000) reach.push(m);
+    else if (diff > rl) reach.push(m);
   });
   
   var selected = [];
@@ -747,25 +771,44 @@ function generateShareCard() {
   });
   document.getElementById('scMajors').innerHTML = html || '<div style="font-size:13px;opacity:0.7">暂无推荐专业</div>';
 
-  // Use html2canvas-like approach via canvas
-  var card = document.getElementById('shareCard');
-  // For now, use a simple approach: screenshot via canvas
-  import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js').then(function() {
-    html2canvas(card, { backgroundColor: null, scale: 2 }).then(function(canvas) {
-      var link = document.createElement('a');
-      link.download = '燕京理工招生参考.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+  function loadScript(src) {
+    return new Promise(function(resolve, reject) {
+      if (window.html2canvas) { resolve(); return; }
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
     });
-  }).catch(function() {
-    // Fallback: native screenshot
-    alert('生成分享卡片需要网络连接，已复制查询信息到剪贴板。');
+  }
+
+  var card = document.getElementById('shareCard');
+  var cdnList = [
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://unpkg.zhimg.com/html2canvas@1.4.1/dist/html2canvas.min.js'
+  ];
+
+  function fallback() {
     var text = '燕京理工学院招生参考\n';
     text += '考生位次：' + (queryRank ? queryRank.toLocaleString() : '—') + '\n';
-    text += '等效分：' + document.getElementById('displayEquiv').textContent + '\n';
+    text += '2025等效分：' + document.getElementById('displayEquiv').textContent + '\n';
     text += '科目：' + subjectMap[querySubject] + '\n';
-    navigator.clipboard.writeText(text);
-  });
+    copyText(text);
+    alert('生成图片失败，已将查询信息复制到剪贴板。');
+  }
+
+  function tryLoad(i) {
+    if (i >= cdnList.length) { fallback(); return; }
+    loadScript(cdnList[i]).then(function() {
+      html2canvas(card, { backgroundColor: null, scale: 2, useCORS: true }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = '燕京理工招生参考.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }).catch(fallback);
+    }).catch(function() { tryLoad(i+1); });
+  }
+  tryLoad(0);
 }
 
 // ===== COPY SUMMARY =====
@@ -795,7 +838,7 @@ function copySummary() {
   text += '较稳妥（' + match.length + '个）：' + match.slice(0,3).map(function(m){return m.name;}).join('、') + '等\n';
   text += '保底选择（' + safety.length + '个）：' + safety.slice(0,3).map(function(m){return m.name;}).join('、') + '等\n';
 
-  navigator.clipboard.writeText(text).then(function() {
+  copyText(text).then(function() {
     alert('咨询摘要已复制到剪贴板！');
   });
 }
@@ -808,6 +851,13 @@ document.getElementById('clearBtn').addEventListener('click', function() {
   document.getElementById('queryResult').classList.remove('show');
   queryScore = null;
   queryRank = null;
+  document.querySelectorAll('#levelFilter button').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('#levelFilter button[data-filter="all"]').classList.add('active');
+  document.querySelectorAll('#subjectFilter button').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('#subjectFilter button[data-filter="all"]').classList.add('active');
+  document.querySelectorAll('#modeToggle button').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('#modeToggle button[data-mode="score"]').classList.add('active');
+  document.getElementById('queryInput').placeholder = '输入高考分数，如 500';
   render();
 });
 
