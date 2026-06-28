@@ -272,32 +272,52 @@ function highlightMajors(rank) {
     document.getElementById('tipArea').textContent = '暂无位次数据，无法匹配专业';
     return;
   }
-  const rows = document.querySelectorAll('#majorTable tr');
+  const tbody = document.getElementById('majorTable');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
   let countBao = 0, countWen = 0, countChong = 0;
+  
   rows.forEach(row => {
     const cell = row.cells[2];
     const majorRank = parseInt(cell?.getAttribute('data-rank'));
+    let cat;
     if (!majorRank) {
       row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">—</span>';
+      cat = 4;
     } else if (rank <= majorRank) {
       const diff = majorRank - rank;
       if (diff >= 30000) {
         row.style.background = '#e8f5e9'; row.cells[4].innerHTML = '<span class="match-bao">保一保 ✓</span>';
-        countBao++;
+        cat = 0; countBao++;
       } else {
-        row.style.background = '#e3f2fd'; row.cells[4].innerHTML = '<span class="match-yes" class="match-wen">稳一稳</span>';
-        countWen++;
+        row.style.background = '#e3f2fd'; row.cells[4].innerHTML = '<span class="match-wen">稳一稳</span>';
+        cat = 1; countWen++;
       }
     } else {
       const diff = rank - majorRank;
       if (diff <= 20000) {
         row.style.background = '#fff8e1'; row.cells[4].innerHTML = '<span class="match-chong">冲一冲 △</span>';
-        countChong++;
+        cat = 2; countChong++;
       } else {
         row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">差距较大</span>';
+        cat = 3;
       }
     }
+    row.setAttribute('data-cat', cat);
   });
+  
+  // Sort: 保一保(0) → 稳一稳(1) → 冲一冲(2) → 差距较大(3) → —(4)
+  rows.sort((a, b) => {
+    const ca = parseInt(a.getAttribute('data-cat'));
+    const cb = parseInt(b.getAttribute('data-cat'));
+    if (ca !== cb) return ca - cb;
+    // Same category: sort by score descending
+    const sa = parseInt(a.cells[1].textContent) || 0;
+    const sb = parseInt(b.cells[1].textContent) || 0;
+    return sb - sa;
+  });
+  
+  rows.forEach(row => tbody.appendChild(row));
+  
   document.getElementById('tipArea').textContent = `保一保 ${countBao} · 稳一稳 ${countWen} · 冲一冲 ${countChong}`;
   applyFilter(currentFilter);
 }
@@ -339,6 +359,18 @@ function buildMajorTable() {
     </tr>`;
   });
   tbody.innerHTML = html;
+  sortByScore();
+}
+
+function sortByScore() {
+  const tbody = document.getElementById('majorTable');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a, b) => {
+    const sa = parseInt(a.cells[1].textContent) || 0;
+    const sb = parseInt(b.cells[1].textContent) || 0;
+    return sb - sa;
+  });
+  rows.forEach(row => tbody.appendChild(row));
 }
 
 function clearAll() {
