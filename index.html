@@ -488,6 +488,7 @@ body {
 <div class="share-bar">
   <button class="share-btn primary" id="shareBtn">生成分享卡片</button>
   <button class="share-btn secondary" id="copySummaryBtn">复制咨询摘要</button>
+  <button class="share-btn secondary" id="exportBtn">导出Excel</button>
 </div>
 
 <!-- Hidden share card canvas -->
@@ -908,7 +909,69 @@ document.getElementById('subjectSelect').addEventListener('change', function() {
 
 document.getElementById('shareBtn').addEventListener('click', generateShareCard);
 document.getElementById('copySummaryBtn').addEventListener('click', copySummary);
+document.getElementById('exportBtn').addEventListener('click', exportExcel);
 
+function exportExcel() {
+  if (!queryRank) { alert('请先查询分数或位次'); return; }
+  
+  var subjectMap = {'wl':'物理类','ls':'历史类'};
+  var subjLabel = {'wl':'理','ls':'文','all':'文理'};
+  
+  var filtered = MAJORS.filter(function(m) {
+    if (querySubject === 'wl' && m.subject === 'ls') return false;
+    if (querySubject === 'ls' && m.subject === 'wl') return false;
+    return true;
+  });
+  
+  var rows = [];
+  rows.push(['专业名称','层次','科类','2025投档分','2025位次','2026预测','录取建议']);
+  
+  filtered.forEach(function(m) {
+    var level = m.level;
+    var subj = subjLabel[m.subject] || '';
+    var scoreDisplay = m.score > 0 ? m.score : '-';
+    var rankDisplay = m.rank > 0 ? m.rank : '-';
+    var predict26 = '-';
+    if (m.rank > 0) {
+      var rankFromHis = m.his_score != null && m.phy_score == null;
+      var eqIdx = rankFromHis ? 3 : 1;
+      var es = findScore(m.rank, RANK_2026, eqIdx);
+      if (es) predict26 = es;
+    }
+    var tag = '-';
+    if (queryRank && m.rank > 0) {
+      var diff = m.rank - queryRank;
+      if (diff > 30000) tag = '保';
+      else if (diff > 0) tag = '稳';
+      else if (diff > -20000) tag = '冲';
+    }
+    rows.push([m.name, level, subj, scoreDisplay, rankDisplay, predict26, tag]);
+  });
+  
+  // Create HTML table for Excel
+  var tableHtml = '<table><tr><th>' + rows[0].join('</th><th>') + '</th></tr>';
+  for (var i = 1; i < rows.length; i++) {
+    tableHtml += '<tr><td>' + rows[i].join('</td><td>') + '</td></tr>';
+  }
+  tableHtml += '</table>';
+  
+  var info = '燕京理工学院招生查询结果\n';
+  info += '考生位次：' + queryRank.toLocaleString() + '\n';
+  info += '等效分：' + document.getElementById('displayEquiv').textContent + '\n';
+  info += '科目：' + subjectMap[querySubject] + '\n\n';
+  
+  var fullHtml = '<html><head><meta charset="utf-8"></head><body>' +
+    '<h2>燕京理工学院招生参考</h2>' +
+    '<p>' + info.replace(/\n/g, '<br>') + '</p>' +
+    tableHtml + '</body></html>';
+  
+  var blob = new Blob([fullHtml], {type: 'application/vnd.ms-excel;charset=utf-8'});
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = '燕京理工招生参考.xls';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
 // Initial render
 render();
 window.addEventListener('resize', adjustStickyTop);
