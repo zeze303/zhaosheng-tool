@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>燕京理工学院 招生助手</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; }
+.header { background: linear-gradient(135deg, #1a237e, #283593); color: #fff; padding: 24px 32px; }
+.header h1 { font-size: 22px; font-weight: 600; }
+.header .sub { font-size: 13px; opacity: 0.75; margin-top: 4px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+.card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.card h2 { font-size: 15px; color: #1a237e; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #e8eaf6; }
+.form-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+.form-group { display: flex; flex-direction: column; gap: 3px; }
+.form-group label { font-size: 12px; color: #666; font-weight: 500; }
+.form-group input, .form-group select { height: 38px; padding: 0 10px; border: 1.5px solid #d0d0d0; border-radius: 6px; font-size: 14px; outline: none; transition: .2s; min-width: 100px; }
+.form-group input:focus, .form-group select:focus { border-color: #1a237e; box-shadow: 0 0 0 3px rgba(26,35,126,0.1); }
+.btn { height: 38px; padding: 0 20px; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: .2s; }
+.btn-primary { background: #1a237e; color: #fff; }
+.btn-primary:hover { background: #283593; }
+.btn-outline { background: #fff; color: #1a237e; border: 1.5px solid #1a237e; }
+.btn-outline:hover { background: #e8eaf6; }
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.result-item { background: #f5f7ff; border-radius: 8px; padding: 12px; text-align: center; }
+.result-item .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+.result-item .value { font-size: 24px; font-weight: 700; color: #1a237e; margin: 4px 0; }
+.result-item .subtext { font-size: 12px; color: #888; }
+.tip { padding: 8px 12px; border-radius: 6px; font-size: 13px; margin-top: 8px; }
+.tip-info { background: #e3f2fd; border-left: 3px solid #1a237e; }
+.tip-warn { background: #fff8e1; border-left: 3px solid #ffa000; }
+.tip-err { background: #ffebee; border-left: 3px solid #e53935; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #e8eaf6; color: #1a237e; padding: 8px 6px; text-align: left; font-weight: 600; border-bottom: 2px solid #c5cae9; font-size: 12px; white-space: nowrap; }
+td { padding: 6px; border-bottom: 1px solid #eee; vertical-align: middle; }
+tr:hover td { background: #f5f7ff; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+.badge-本科 { background: #e3f2fd; color: #1565c0; }
+.badge-专科 { background: #fce4ec; color: #c62828; }
+.match-yes { color: #2e7d32; font-weight: 600; }
+.match-no { color: #bdbdbd; }
+.match-maybe { color: #e65100; font-weight: 500; }
+.empty-state { text-align: center; padding: 30px 0; color: #bbb; font-size: 14px; }
+.filter-bar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.filter-btn { padding: 4px 12px; border: 1.5px solid #ddd; border-radius: 14px; font-size: 12px; cursor: pointer; background: #fff; transition: .2s; }
+.filter-btn.active { background: #1a237e; color: #fff; border-color: #1a237e; }
+.filter-btn:hover { border-color: #1a237e; }
+@media (max-width: 700px) {
+  .header { padding: 16px; }
+  .form-row { flex-direction: column; }
+  .form-group input, .form-group select { width: 100%; }
+  .result-grid { grid-template-columns: 1fr; }
+  .card { padding: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🏫 招生助手 — 燕京理工学院</h1>
+  <div class="sub">河北省高考一分一档查询 · 2025 / 2026 对比 · 物理 / 历史类</div>
+</div>
+<div class="container">
+
+<div class="card">
+  <h2>🔍 分数查位次</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label>高考分数</label>
+      <input type="number" id="scoreInput" placeholder="140~710" min="140" max="710">
+    </div>
+    <div class="form-group">
+      <label>科目</label>
+      <select id="subjectSelect">
+        <option value="wuli">物理类</option>
+        <option value="lishi">历史类</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" onclick="queryScore()">查询</button>
+    <button class="btn btn-outline" onclick="clearAll()">清空</button>
+  </div>
+  <div id="queryResult"></div>
+</div>
+
+<div class="card">
+  <h2>🔄 位次反查分数</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label>位次（全省排名）</label>
+      <input type="number" id="rankInput" placeholder="如 224230" min="1">
+    </div>
+    <div class="form-group">
+      <label>科目</label>
+      <select id="rankSubject" onchange="updateRankMax()">
+        <option value="wuli">物理类</option>
+        <option value="lishi">历史类</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" onclick="queryRank()">查询</button>
+  </div>
+  <div id="rankResult"></div>
+</div>
+
+<div class="card">
+  <h2>📋 专业录取参考</h2>
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">全部</button>
+    <button class="filter-btn" data-filter="benke" onclick="setFilter('benke')">本科</button>
+    <button class="filter-btn" data-filter="zhuanke" onclick="setFilter('zhuanke')">专科</button>
+  </div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead><tr>
+      <th>专业</th><th>2025投档分</th><th>位次</th><th>2026等效分</th><th>预估</th>
+    </tr></thead>
+    <tbody id="majorTable"></tbody>
+  </table>
+  </div>
+  <div id="tipArea" class="tip tip-info">输入分数后，可匹配的专业会高亮</div>
+</div>
+
+<div class="card">
+  <h2>📊 两年省控线对比</h2>
+  <div style="overflow-x:auto">
+  <table>
+    <thead><tr><th>批次</th><th>科目</th><th>2025</th><th>2026</th><th>位次变化</th></tr></thead>
+    <tbody>
+      <tr><td>本科批</td><td>物理类</td><td>459分 / 224,230位</td><td>443分 / 236,367位</td><td class="match-no">降 12,137 位</td></tr>
+      <tr><td>本科批</td><td>历史类</td><td>477分 / 64,897位</td><td>485分 / 64,280位</td><td class="match-yes">升 617 位</td></tr>
+      <tr><td>专科批</td><td>物理类</td><td>200分 / 361,477位</td><td>200分 / 349,792位</td><td class="match-yes">升 11,685 位</td></tr>
+      <tr><td>专科批</td><td>历史类</td><td>200分 / 236,503位</td><td>200分 / 228,233位</td><td class="match-yes">升 8,270 位</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+</div>
+<script src="data.js"></script>
+<script>
+function findScore(subject, year, score) {
+  const data = YKDATA[year]?.[subject];
+  if (!data) return null;
+  return data[String(score)] || null;
+}
+
+function findRank(subject, year, target) {
+  const data = YKDATA[year]?.[subject];
+  if (!data) return null;
+  let best = null;
+  for (const [score, arr] of Object.entries(data)) {
+    const cum = arr[1];
+    if (cum >= target) {
+      if (!best || cum < best.cum) best = { score: parseInt(score), cum };
+    }
+  }
+  if (!best) {
+    // target larger than max cum → return lowest score
+    let lowest = null;
+    for (const [score, arr] of Object.entries(data)) {
+      const s = parseInt(score);
+      if (!lowest || s < lowest.score) lowest = { score: s, cum: arr[1] };
+    }
+    return lowest;
+  }
+  return best;
+}
+
+function getClosestScore(subject, year, target) {
+  const data = YKDATA[year]?.[subject];
+  if (!data || !target) return null;
+  let best = null;
+  for (const [score, arr] of Object.entries(data)) {
+    const cum = arr[1];
+    if (!best || Math.abs(cum - target) < Math.abs(best.cum - target))
+      best = { score: parseInt(score), cum };
+  }
+  return best;
+}
+
+function renderResult(score, subject) {
+  const d25 = findScore(subject, '2025', score);
+  const d26 = findScore(subject, '2026', score);
+  const label = subject === 'wuli' ? '物理类' : '历史类';
+
+  let html = '<div class="result-grid">';
+  if (d25) html += `<div class="result-item"><div class="label">2025 位次</div><div class="value">${(+d25[1]).toLocaleString()}</div><div class="subtext">${label} · ${score}分</div></div>`;
+  else html += `<div class="result-item"><div class="label">2025</div><div class="value" style="color:#999">—</div><div class="subtext">${score}分超出数据范围</div></div>`;
+  if (d26) html += `<div class="result-item"><div class="label">2026 位次</div><div class="value">${(+d26[1]).toLocaleString()}</div><div class="subtext">${label} · ${score}分</div></div>`;
+  else html += `<div class="result-item"><div class="label">2026</div><div class="value" style="color:#999">—</div><div class="subtext">${score}分超出数据范围</div></div>`;
+  html += '</div>';
+
+  if (d25 && d26) {
+    const diff = d26[1] - d25[1];
+    const trend = diff > 0 ? '下降' : (diff < 0 ? '上升' : '持平');
+    html += `<div class="tip tip-warn">⚠ ${score}分在2025年排${d25[1].toLocaleString()}名，2026年排${d26[1].toLocaleString()}名，同分位次${trend}了 ${Math.abs(diff).toLocaleString()} 名</div>`;
+  } else if (d25 && !d26) {
+    const eq = getClosestScore(subject, '2026', d25[1]);
+    if (eq) html += `<div class="tip tip-info">💡 ${score}分（2025）≈ ${eq.score}分（2026），位次${eq.cum.toLocaleString()}</div>`;
+  } else if (d26 && !d25) {
+    const eq = getClosestScore(subject, '2025', d26[1]);
+    if (eq) html += `<div class="tip tip-info">💡 ${score}分（2026）≈ ${eq.score}分（2025），位次${eq.cum.toLocaleString()}</div>`;
+  }
+
+  document.getElementById('queryResult').innerHTML = html;
+  if (subject === 'wuli') highlightMajors(d25 ? d25[1] : null);
+}
+
+function queryScore() {
+  const score = parseInt(document.getElementById('scoreInput').value);
+  const subject = document.getElementById('subjectSelect').value;
+  if (!score || score < 140 || score > 710) {
+    document.getElementById('queryResult').innerHTML = '<div class="tip tip-err">请输入有效分数（140~710）</div>';
+    return;
+  }
+  renderResult(score, subject);
+}
+
+function updateRankMax() {
+  const subj = document.getElementById('rankSubject').value;
+  document.getElementById('rankInput').placeholder = subj === 'wuli' ? '如 224230' : '如 64897';
+}
+
+function queryRank() {
+  const rank = parseInt(document.getElementById('rankInput').value);
+  const subject = document.getElementById('rankSubject').value;
+  const label = subject === 'wuli' ? '物理类' : '历史类';
+
+  if (!rank || rank < 1) {
+    document.getElementById('rankResult').innerHTML = '<div class="tip tip-err">请输入有效位次</div>';
+    return;
+  }
+
+  const maxCum = subject === 'wuli' ? 363040 : 243812;
+  if (rank > maxCum) {
+    document.getElementById('rankResult').innerHTML = `<div class="tip tip-err">${label}最大位次为 ${maxCum.toLocaleString()}，你输入的 ${rank.toLocaleString()} 超出范围</div>`;
+    return;
+  }
+
+  const d25 = findRank(subject, '2025', rank);
+  const d26 = findRank(subject, '2026', rank);
+
+  let html = '<div class="result-grid">';
+  if (d25) html += `<div class="result-item"><div class="label">2025 等效分</div><div class="value">${d25.score}分</div><div class="subtext">${label} · 位次 ${d25.cum.toLocaleString()}</div></div>`;
+  if (d26) html += `<div class="result-item"><div class="label">2026 等效分</div><div class="value">${d26.score}分</div><div class="subtext">${label} · 位次 ${d26.cum.toLocaleString()}</div></div>`;
+  html += '</div>';
+
+  // Compare
+  if (d25 && d26) {
+    const diff = d26.score - d25.score;
+    const trend = diff > 0 ? '比2025年高' : (diff < 0 ? '比2025年低' : '同分');
+    html += `<div class="tip tip-warn">位次 ${rank.toLocaleString()} 在2026年约${d26.score}分，${trend} ${Math.abs(diff)}分</div>`;
+  }
+
+  document.getElementById('rankResult').innerHTML = html;
+  if (subject === 'wuli') highlightMajors(rank);
+}
+
+function highlightMajors(rank) {
+  if (!rank) {
+    document.getElementById('tipArea').textContent = '暂无位次数据，无法匹配专业';
+    return;
+  }
+  const rows = document.querySelectorAll('#majorTable tbody tr');
+  let matchCount = 0;
+  rows.forEach(row => {
+    const cell = row.cells[2];
+    const majorRank = parseInt(cell?.getAttribute('data-rank'));
+    if (!majorRank) {
+      row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">—</span>';
+    } else if (rank <= majorRank) {
+      row.style.background = '#e8f5e9'; row.cells[4].innerHTML = '<span class="match-yes">✓ 可报考</span>';
+      matchCount++;
+    } else if (rank - majorRank < 30000) {
+      row.style.background = '#fff8e1'; row.cells[4].innerHTML = '<span class="match-maybe">△ 冲一冲</span>';
+    } else {
+      row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">差距较大</span>';
+    }
+  });
+  document.getElementById('tipArea').textContent = `共 ${matchCount} 个专业可报考（含冲一冲）`;
+  applyFilter(currentFilter);
+}
+
+let currentFilter = 'all';
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  applyFilter(f);
+}
+function applyFilter(f) {
+  const rows = document.querySelectorAll('#majorTable tbody tr');
+  rows.forEach(r => {
+    const isZhuanke = r.cells[0].querySelector('.badge-专科');
+    if (f === 'all') r.style.display = '';
+    else if (f === 'benke') r.style.display = isZhuanke ? 'none' : '';
+    else if (f === 'zhuanke') r.style.display = isZhuanke ? '' : 'none';
+  });
+}
+
+function buildMajorTable() {
+  const tbody = document.getElementById('majorTable');
+  let html = '';
+  SCHOOL_MAJORS.forEach(([name, score, rank]) => {
+    let eq26Score = '—';
+    if (rank) {
+      const eq26 = getClosestScore('wuli', '2026', rank);
+      if (eq26) eq26Score = `${eq26.score}分`;
+    }
+    const isZhuanke = name.includes('(专)');
+    const badge = isZhuanke ? '专科' : '本科';
+    const scoreDisplay = score > 0 ? `${score}分` : '暂无数据';
+    html += `<tr>
+      <td><span class="badge badge-${badge}">${badge}</span> ${name.replace('(专)','')}</td>
+      <td>${scoreDisplay}</td>
+      <td data-rank="${rank}">${rank ? rank.toLocaleString() : '—'}</td>
+      <td>${eq26Score}</td>
+      <td><span class="match-no">等待查询</span></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function clearAll() {
+  document.getElementById('scoreInput').value = '';
+  document.getElementById('queryResult').innerHTML = '';
+  document.getElementById('rankInput').value = '';
+  document.getElementById('rankResult').innerHTML = '';
+  document.getElementById('tipArea').textContent = '输入分数后，可匹配的专业会高亮';
+  const rows = document.querySelectorAll('#majorTable tbody tr');
+  rows.forEach(r => { r.style.background = ''; r.cells[4].innerHTML = '<span class="match-no">等待查询</span>'; });
+}
+
+document.getElementById('scoreInput').addEventListener('keydown', e => { if (e.key === 'Enter') queryScore(); });
+document.getElementById('rankInput').addEventListener('keydown', e => { if (e.key === 'Enter') queryRank(); });
+
+buildMajorTable();
+</script>
+</body>
+</html>
