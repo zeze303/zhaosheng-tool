@@ -594,7 +594,8 @@ function render() {
     // Get 2026 equivalent score (same for all majors, based on student rank)
     var eq26 = '—';
     if (queryRank) {
-    var es = findScore(queryRank, rank26, 2);
+    var eqIdx = querySubject === 'wl' ? 1 : 3;
+      var es = findScore(queryRank, rank26, eqIdx);
       if (es) eq26 = es + '分';
     }
 
