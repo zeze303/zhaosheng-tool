@@ -202,7 +202,7 @@ body {
 }
 
 /* Major Table */
-.major-section { background: var(--card); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow-x: auto; }
+.major-section { background: var(--card); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 .major-table { width: 100%; border-collapse: collapse; }
 .major-table th {
   position: sticky;
@@ -444,7 +444,7 @@ body {
     <span class="filter-count" id="filterCount">73 个专业</span>
   </div>
 
-  <div class="major-section" style="overflow-x:auto">
+  <div class="major-section">
     <table class="major-table">
       <thead>
         <tr>
@@ -905,8 +905,15 @@ document.getElementById('copySummaryBtn').addEventListener('click', copySummary)
 
 // Initial render
 render();
-adjustStickyTop();
+setTimeout(adjustStickyTop, 50);
 window.addEventListener('resize', adjustStickyTop);
+
+// doQuery 和 clearBtn 之后也需要重算吸顶
+var _origRender = render;
+render = function() {
+  _origRender();
+  setTimeout(adjustStickyTop, 50);
+};
 
 // 动态计算吸顶位置
 function adjustStickyTop() {
