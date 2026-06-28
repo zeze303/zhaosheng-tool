@@ -3,410 +3,844 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>燕京理工学院 招生助手</title>
+<title>燕京理工学院 · 招生助手</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; }
-.header { background: linear-gradient(135deg, #1a237e, #283593); color: #fff; padding: 24px 32px; }
-.header h1 { font-size: 22px; font-weight: 600; }
-.header .sub { font-size: 13px; opacity: 0.75; margin-top: 4px; }
-.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
-.card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-.card h2 { font-size: 15px; color: #1a237e; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #e8eaf6; }
-.form-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
-.form-group { display: flex; flex-direction: column; gap: 3px; }
-.form-group label { font-size: 12px; color: #666; font-weight: 500; }
-.form-group input, .form-group select { height: 38px; padding: 0 10px; border: 1.5px solid #d0d0d0; border-radius: 6px; font-size: 14px; outline: none; transition: .2s; min-width: 100px; }
-.form-group input:focus, .form-group select:focus { border-color: #1a237e; box-shadow: 0 0 0 3px rgba(26,35,126,0.1); }
-.btn { height: 38px; padding: 0 20px; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: .2s; }
-.btn-primary { background: #1a237e; color: #fff; }
-.btn-primary:hover { background: #283593; }
-.btn-outline { background: #fff; color: #1a237e; border: 1.5px solid #1a237e; }
-.btn-outline:hover { background: #e8eaf6; }
-.mode-btn { background: #fff; color: #1a237e; border: 1.5px solid #1a237e; font-size: 12px; padding: 0 14px; }
-.mode-btn.active { background: #1a237e; color: #fff; }
-
-.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.result-item { background: #f5f7ff; border-radius: 8px; padding: 12px; text-align: center; }
-.result-item .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
-.result-item .value { font-size: 24px; font-weight: 700; color: #1a237e; margin: 4px 0; }
-.result-item .subtext { font-size: 12px; color: #888; }
-.tip { padding: 8px 12px; border-radius: 6px; font-size: 13px; margin-top: 8px; }
-.tip-info { background: #e3f2fd; border-left: 3px solid #1a237e; }
-.tip-warn { background: #fff8e1; border-left: 3px solid #ffa000; }
-.tip-err { background: #ffebee; border-left: 3px solid #e53935; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th { background: #e8eaf6; color: #1a237e; padding: 8px 6px; text-align: left; font-weight: 600; border-bottom: 2px solid #c5cae9; font-size: 12px; white-space: nowrap; }
-td { padding: 6px; border-bottom: 1px solid #eee; vertical-align: middle; }
-tr:hover td { background: #f5f7ff; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
-.badge-本科 { background: #e3f2fd; color: #1565c0; }
-.badge-专科 { background: #fce4ec; color: #c62828; }
-.match-yes { color: #2e7d32; font-weight: 600; }
-.match-bao { color: #2e7d32; font-weight: 600; } .match-wen { color: #1565c0; font-weight: 600; } .match-chong { color: #e65100; font-weight: 500; }
-.match-no { color: #bdbdbd; }
-.match-maybe { color: #e65100; font-weight: 500; }
-.empty-state { text-align: center; padding: 30px 0; color: #bbb; font-size: 14px; }
-.filter-bar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-.filter-btn { padding: 4px 12px; border: 1.5px solid #ddd; border-radius: 14px; font-size: 12px; cursor: pointer; background: #fff; transition: .2s; }
-.filter-btn.active { background: #1a237e; color: #fff; border-color: #1a237e; }
-.filter-btn:hover { border-color: #1a237e; }
-@media (max-width: 700px) {
-  .header { padding: 16px; }
-  .form-row { flex-direction: column; }
-  .form-group input, .form-group select { width: 100%; }
-  .result-grid { grid-template-columns: 1fr; }
-  .card { padding: 14px; }
+:root {
+  --primary: #0F1D45;
+  --primary-light: #1A3A6B;
+  --gold: #C8943E;
+  --gold-light: #F5E6C8;
+  --bg: #F2F4F8;
+  --card: #FFFFFF;
+  --text: #1B1E2B;
+  --text-secondary: #5C6170;
+  --border: #E0E3EA;
+  --row-alt: #F7F8FC;
+  --reach-bg: #FFF3E6;
+  --reach-color: #D4792E;
+  --match-bg: #E8F5EE;
+  --match-color: #1B8A3D;
+  --safety-bg: #EDF2F9;
+  --safety-color: #3A5F8A;
 }
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+.top-bar {
+  background: var(--primary);
+  color: white;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.top-bar .logo {
+  width: 36px; height: 36px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.top-bar h1 { font-size: 18px; font-weight: 600; }
+.top-bar .subtitle { font-size: 12px; opacity: 0.7; margin-left: auto; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 16px 16px 80px; }
+
+/* Query Panel */
+.query-panel {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-bottom: 12px;
+  position: sticky;
+  top: 64px;
+  z-index: 50;
+}
+.query-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.query-row .mode-toggle {
+  display: flex;
+  background: var(--bg);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.query-row .mode-toggle button {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: 0.15s;
+}
+.query-row .mode-toggle button.active {
+  background: var(--primary);
+  color: white;
+}
+.query-row input {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.15s;
+}
+.query-row input:focus { border-color: var(--primary); }
+.query-row select {
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+  cursor: pointer;
+}
+.query-btn {
+  padding: 10px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.query-btn:hover { background: var(--primary-light); }
+.query-btn.clear {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 10px 16px;
+}
+.query-btn.clear:hover { color: var(--text); }
+
+.query-result {
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: #F0F4FF;
+  border-radius: 8px;
+  display: none;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.query-result.show { display: flex; }
+.query-result .stat {
+  display: flex;
+  flex-direction: column;
+}
+.query-result .stat .label { font-size: 12px; color: var(--text-secondary); }
+.query-result .stat .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.query-result .stat .value .change {
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 6px;
+}
+.query-result .stat .value .change.up { color: var(--match-color); }
+.query-result .stat .value .change.down { color: var(--reach-color); }
+
+/* Filter Bar */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 0 2px;
+}
+.filter-group {
+  display: flex;
+  background: var(--card);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.filter-group button {
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: 0.15s;
+}
+.filter-group button.active {
+  background: var(--primary);
+  color: white;
+}
+.filter-group button:not(:last-child) { border-right: 1px solid var(--border); }
+.filter-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+/* Major Table */
+.major-section { background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.major-table { width: 100%; border-collapse: collapse; }
+.major-table th {
+  position: sticky;
+  top: 0;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+.major-table th:last-child { text-align: center; }
+.major-table td {
+  padding: 10px 12px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.major-table tr:nth-child(even) td { background: var(--row-alt); }
+.major-table tr:hover td { background: #EDF1F9; }
+.major-table .major-name {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.major-table .major-name .level-badge {
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: #E0E3EA;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+.major-table .major-name .level-badge.benke { background: #D6E4FF; color: var(--primary); }
+.major-table .major-name .subj-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.major-table .major-name .subj-badge.wl { background: #E3F2FD; color: #1565C0; }
+.major-table .major-name .subj-badge.ls { background: #FCE4EC; color: #C62828; }
+.major-table .major-name .subj-badge.all { background: #E8F5E9; color: #2E7D32; }
+.major-table .score-col { font-variant-numeric: tabular-nums; }
+.major-table .rank-col { font-variant-numeric: tabular-nums; color: var(--text-secondary); font-size: 13px; }
+.major-table .tag {
+  display: inline-block;
+  width: 44px;
+  text-align: center;
+  padding: 3px 0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.major-table .tag.reach { background: var(--reach-bg); color: var(--reach-color); }
+.major-table .tag.match { background: var(--match-bg); color: var(--match-color); }
+.major-table .tag.safety { background: var(--safety-bg); color: var(--safety-color); }
+.major-table .tag.na { background: #F0F0F0; color: #B0B0B0; font-weight: 400; }
+.major-table .expand-row td { padding: 0; }
+.major-table .expand-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s;
+  padding: 0 12px;
+  background: #FAFBFF;
+  border-bottom: 1px solid var(--border);
+}
+.major-table .expand-content.open {
+  max-height: 60px;
+  padding: 8px 12px;
+}
+.major-table .expand-content .desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.major-table .clickable { cursor: pointer; }
+
+/* Score Line */
+.score-line {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-top: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.score-line summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  padding: 4px 0;
+}
+.score-line .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+.score-line .item {
+  background: var(--bg);
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+.score-line .item .subj { font-size: 12px; color: var(--text-secondary); }
+.score-line .item .vals { font-size: 14px; margin-top: 4px; }
+.score-line .item .vals .diff { 
+  font-size: 13px; margin-left: 6px; 
+}
+.score-line .item .vals .diff.up { color: var(--match-color); }
+.score-line .item .vals .diff.down { color: var(--reach-color); }
+
+/* Share bar */
+.share-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  z-index: 100;
+}
+.share-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.share-btn.primary {
+  background: var(--gold);
+  color: white;
+}
+.share-btn.primary:hover { opacity: 0.9; }
+.share-btn.secondary {
+  background: var(--bg);
+  color: var(--text);
+}
+.share-btn.secondary:hover { background: #E0E3EA; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .top-bar { padding: 10px 14px; }
+  .top-bar h1 { font-size: 15px; }
+  .container { padding: 10px 10px 80px; }
+  .query-row { flex-direction: column; }
+  .query-row input { width: 100%; }
+  .query-row select { width: 100%; }
+  .query-row .mode-toggle { width: 100%; }
+  .query-row .mode-toggle button { flex: 1; text-align: center; }
+  .query-result { flex-direction: column; gap: 10px; }
+  .major-table th, .major-table td { padding: 8px 8px; font-size: 13px; }
+  .major-table .tag { width: 36px; font-size: 12px; }
+  .score-line .grid { grid-template-columns: 1fr; }
+}
+
+/* Share card canvas */
+.share-card {
+  width: 360px;
+  background: linear-gradient(135deg, var(--primary) 0%, #162D5C 100%);
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
+.share-card .header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.share-card .logo { width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: var(--primary); }
+.share-card .school-name { font-size: 16px; font-weight: 600; }
+.share-card .subtitle { font-size: 11px; opacity: 0.7; }
+.share-card .info-box {
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.share-card .info-box .row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+.share-card .info-box .row .val { font-weight: 600; }
+.share-card .major-list { margin-top: 10px; }
+.share-card .major-item { display: flex; gap: 8px; padding: 5px 0; font-size: 13px; align-items: center; }
+.share-card .major-item .tag { width: 28px; text-align: center; padding: 1px 0; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.share-card .footer { margin-top: 14px; text-align: center; font-size: 11px; opacity: 0.6; }
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>🏫 招生助手 — 燕京理工学院</h1>
-  <div class="sub">河北省高考一分一档查询 · 2025 / 2026 对比 · 物理 / 历史类</div>
+
+<div class="top-bar">
+  <div class="logo">Y</div>
+  <h1>燕京理工学院</h1>
+  <span class="subtitle">招生助手</span>
 </div>
+
 <div class="container">
-
-<div class="card">
-  <h2>🔍 查询</h2>
-  <div class="form-row">
-    <div class="form-group">
-      <label>模式</label>
-      <div style="display:flex;gap:4px">
-        <button class="btn mode-btn active" id="modeScore" onclick="setMode('score')">按分数</button>
-        <button class="btn mode-btn" id="modeRank" onclick="setMode('rank')">按位次</button>
+  <div class="query-panel">
+    <div class="query-row">
+      <div class="mode-toggle" id="modeToggle">
+        <button class="active" data-mode="score">按分数查</button>
+        <button data-mode="rank">按位次查</button>
       </div>
-    </div>
-    <div class="form-group">
-      <label id="inputLabel">高考分数</label>
-      <input type="number" id="queryInput" placeholder="输入分数 140~710" min="1">
-    </div>
-    <div class="form-group">
-      <label>科目</label>
+      <input type="text" id="queryInput" placeholder="输入高考分数，如 500" autocomplete="off">
       <select id="subjectSelect">
-        <option value="wuli">物理类</option>
-        <option value="lishi">历史类</option>
+        <option value="wl">物理类</option>
+        <option value="ls">历史类</option>
       </select>
+      <button class="query-btn" id="queryBtn">查询</button>
+      <button class="query-btn clear" id="clearBtn">清空</button>
     </div>
-    <button class="btn btn-primary" onclick="doQuery()">查询</button>
-    <button class="btn btn-outline" onclick="clearAll()">清空</button>
+    <div class="query-result" id="queryResult">
+      <div class="stat"><span class="label">你的位次</span><span class="value" id="displayRank">—</span></div>
+      <div class="stat"><span class="label">2026等效分</span><span class="value" id="displayEquiv">—</span></div>
+      <div class="stat"><span class="label">本科线差</span><span class="value" id="displayLineDiff">—</span></div>
+    </div>
   </div>
-  <div id="queryResult"></div>
+
+  <div class="filter-bar">
+    <div class="filter-group" id="levelFilter">
+      <button class="active" data-filter="all">全部</button>
+      <button data-filter="benke">本科</button>
+      <button data-filter="zhuanke">专科</button>
+    </div>
+    <div class="filter-group" id="subjectFilter">
+      <button class="active" data-filter="all">全部专业</button>
+      <button data-filter="wl">仅物理</button>
+      <button data-filter="ls">仅历史</button>
+    </div>
+    <span class="filter-count" id="filterCount">73 个专业</span>
+  </div>
+
+  <div class="major-section">
+    <table class="major-table">
+      <thead>
+        <tr>
+          <th style="width:35%">专业</th>
+          <th style="width:12%">2025投档</th>
+          <th style="width:15%">2025位次</th>
+          <th style="width:15%">2026等效</th>
+          <th style="width:11%;text-align:center">匹配</th>
+        </tr>
+      </thead>
+      <tbody id="majorBody"></tbody>
+    </table>
+  </div>
+
+  <div class="score-line">
+    <details>
+      <summary>河北省2025/2026省控线对比</summary>
+      <div class="grid">
+        <div class="item">
+          <div class="subj">物理类本科批</div>
+          <div class="vals">2025: 477  →  2026: 443 <span class="diff down">↓34</span></div>
+        </div>
+        <div class="item">
+          <div class="subj">历史类本科批</div>
+          <div class="vals">2025: 459  →  2026: 485 <span class="diff up">↑26</span></div>
+        </div>
+        <div class="item">
+          <div class="subj">物理类专科批</div>
+          <div class="vals">2025: 200  →  2026: 200 <span class="diff" style="color:var(--text-secondary)">—</span></div>
+        </div>
+        <div class="item">
+          <div class="subj">历史类专科批</div>
+          <div class="vals">2025: 200  →  2026: 200 <span class="diff" style="color:var(--text-secondary)">—</span></div>
+        </div>
+      </div>
+    </details>
+  </div>
 </div>
 
-<div class="card">
-  <h2>📋 专业录取参考</h2>
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">全部</button>
-    <button class="filter-btn" data-filter="benke" onclick="setFilter('benke')">本科</button>
-    <button class="filter-btn" data-filter="zhuanke" onclick="setFilter('zhuanke')">专科</button>
-  </div>
-  <div style="overflow-x:auto">
-  <table>
-    <thead><tr>
-      <th>专业</th><th>2025投档分</th><th>位次</th><th>2026等效分</th><th>预估</th>
-    </tr></thead>
-    <tbody id="majorTable"></tbody>
-  </table>
-  </div>
-  <div id="tipArea" class="tip tip-info">输入分数后，可匹配的专业会高亮</div>
+<div class="share-bar">
+  <button class="share-btn primary" id="shareBtn">生成分享卡片</button>
+  <button class="share-btn secondary" id="copySummaryBtn">复制咨询摘要</button>
 </div>
 
-<div class="card">
-  <h2>📊 两年省控线对比</h2>
-  <div style="overflow-x:auto">
-  <table>
-    <thead><tr><th>批次</th><th>科目</th><th>2025</th><th>2026</th><th>位次变化</th></tr></thead>
-    <tbody>
-      <tr><td>本科批</td><td>物理类</td><td>459分 / 224,230位</td><td>443分 / 236,367位</td><td class="match-no">降 12,137 位</td></tr>
-      <tr><td>本科批</td><td>历史类</td><td>477分 / 64,897位</td><td>485分 / 64,280位</td><td class="match-yes">升 617 位</td></tr>
-      <tr><td>专科批</td><td>物理类</td><td>200分 / 361,477位</td><td>200分 / 349,792位</td><td class="match-yes">升 11,685 位</td></tr>
-      <tr><td>专科批</td><td>历史类</td><td>200分 / 236,503位</td><td>200分 / 228,233位</td><td class="match-yes">升 8,270 位</td></tr>
-    </tbody>
-  </table>
+<!-- Hidden share card canvas -->
+<div class="share-card" id="shareCard">
+  <div class="header">
+    <div class="logo">Y</div>
+    <div>
+      <div class="school-name">燕京理工学院</div>
+      <div class="subtitle">2026年河北省招生参考</div>
+    </div>
+  </div>
+  <div class="info-box">
+    <div class="row"><span>考生位次</span><span class="val" id="scRank">—</span></div>
+    <div class="row"><span>2026等效分</span><span class="val" id="scScore">—</span></div>
+    <div class="row"><span>科目</span><span class="val" id="scSubject">—</span></div>
+  </div>
+  <div style="font-size:12px;opacity:0.8;margin-bottom:6px">推荐专业</div>
+  <div class="major-list" id="scMajors"></div>
+  <div class="footer">
+    数据来源：河北省教育考试院 · 燕京理工学院招生办<br>
+    扫码可查看完整专业列表
   </div>
 </div>
 
-</div>
 <script>
-var YKDATA = {"2025":{"wuli":{"692":[6,38],"691":[8,46],"690":[11,57],"689":[11,68],"688":[14,82],"687":[17,99],"686":[22,121],"685":[25,146],"684":[13,159],"683":[22,181],"682":[25,206],"681":[27,233],"680":[34,267],"679":[30,297],"678":[33,330],"677":[31,361],"676":[34,395],"675":[48,443],"674":[58,501],"673":[49,550],"672":[72,622],"671":[59,681],"670":[52,733],"669":[55,788],"668":[80,868],"667":[82,950],"666":[63,1013],"665":[97,1110],"664":[109,1219],"663":[125,1344],"662":[102,1446],"661":[123,1569],"660":[118,1687],"659":[128,1815],"658":[128,1943],"657":[137,2080],"656":[143,2223],"655":[142,2365],"654":[139,2504],"653":[194,2698],"652":[215,2913],"651":[191,3104],"650":[189,3293],"649":[219,3512],"648":[241,3753],"647":[252,4005],"646":[246,4251],"645":[215,4466],"644":[257,4723],"643":[271,4994],"642":[273,5267],"641":[305,5572],"640":[273,5845],"639":[335,6180],"638":[322,6502],"637":[335,6837],"636":[348,7185],"635":[336,7521],"634":[357,7878],"633":[372,8250],"632":[372,8622],"631":[390,9012],"630":[424,9436],"629":[391,9827],"628":[444,10271],"627":[432,10703],"626":[445,11148],"625":[487,11635],"624":[456,12091],"623":[501,12592],"622":[485,13077],"621":[510,13587],"620":[511,14098],"619":[538,14636],"618":[535,15171],"617":[604,15775],"616":[564,16339],"615":[595,16934],"614":[587,17521],"613":[593,18114],"612":[606,18720],"611":[647,19367],"610":[642,20009],"609":[689,20698],"608":[656,21354],"607":[655,22009],"606":[686,22695],"605":[688,23383],"604":[717,24100],"603":[733,24833],"602":[741,25574],"601":[758,26332],"600":[790,27122],"599":[806,27928],"598":[776,28704],"597":[777,29481],"596":[820,30301],"595":[802,31103],"594":[811,31914],"593":[885,32799],"592":[847,33646],"591":[911,34557],"590":[834,35391],"589":[896,36287],"588":[943,37230],"587":[884,38114],"586":[936,39050],"585":[938,39988],"584":[1043,41031],"583":[997,42028],"582":[1002,43030],"581":[1006,44036],"580":[999,45035],"579":[1044,46079],"578":[1053,47132],"577":[1035,48167],"576":[1082,49249],"575":[1082,50331],"574":[1051,51382],"573":[1109,52491],"572":[1068,53559],"571":[1131,54690],"570":[1129,55819],"569":[1095,56914],"568":[1100,58014],"567":[1108,59122],"566":[1189,60311],"565":[1222,61533],"564":[1197,62730],"563":[1221,63951],"562":[1220,65171],"561":[1304,66475],"560":[1256,67731],"559":[1251,68982],"558":[1347,70329],"557":[1308,71637],"556":[1282,72919],"555":[1377,74296],"554":[1316,75612],"553":[1378,76990],"552":[1328,78318],"551":[1441,79759],"550":[1358,81117],"549":[1378,82495],"548":[1408,83903],"547":[1360,85263],"546":[1406,86669],"545":[1453,88122],"544":[1435,89557],"543":[1475,91032],"542":[1462,92494],"541":[1473,93967],"540":[1497,95464],"539":[1503,96967],"538":[1514,98481],"537":[1492,99973],"536":[1490,101463],"535":[1522,102985],"534":[1543,104528],"533":[1504,106032],"532":[1617,107649],"531":[1575,109224],"530":[1585,110809],"529":[1575,112384],"528":[1604,113988],"527":[1539,115527],"526":[1568,117095],"525":[1654,118749],"524":[1623,120372],"523":[1634,122006],"522":[1662,123668],"521":[1638,125306],"520":[1632,126938],"519":[1614,128552],"518":[1636,130188],"517":[1661,131849],"516":[1680,133529],"515":[1692,135221],"514":[1681,136902],"513":[1627,138529],"512":[1710,140239],"511":[1714,141953],"510":[1715,143668],"509":[1620,145288],"508":[1705,146993],"507":[1669,148662],"506":[1684,150346],"505":[1667,152013],"504":[1695,153708],"503":[1726,155434],"502":[1700,157169],"501":[1680,158849],"500":[1658,160507],"499":[1739,162246],"498":[1716,163962],"497":[1725,165687],"496":[1683,167370],"495":[1638,169008],"494":[1621,170629],"493":[1592,172221],"492":[1699,173920],"491":[1649,175569],"490":[1662,177231],"489":[1605,178836],"488":[1565,180401],"487":[1566,181967],"486":[1578,183545],"485":[1587,185132],"484":[1673,186805],"483":[1582,188387],"482":[1545,189932],"481":[1604,191536],"480":[1552,193088],"479":[1534,194622],"478":[1577,196199],"477":[1559,197758],"476":[1457,199215],"475":[1574,200789],"474":[1551,202340],"470":[1463,208299],"469":[1542,209841],"468":[1476,211317],"467":[1511,212828],"466":[1478,214306],"465":[1417,215723],"464":[1459,217182],"463":[1465,218647],"462":[1427,220074],"461":[1414,221488],"460":[1362,222850],"459":[1380,224230],"458":[1369,225599],"457":[1478,227077],"456":[1385,228462],"455":[1342,229804],"454":[1358,231162],"453":[1372,232534],"452":[1305,233839],"451":[1350,235189],"450":[1302,236491],"449":[1239,237730],"448":[1337,239067],"447":[1290,240357],"446":[1293,241650],"445":[1270,242920],"444":[1253,244173],"443":[1218,245391],"442":[1266,246657],"441":[1246,247903],"440":[1225,249128],"439":[1236,250364],"438":[1216,251580],"437":[1184,252764],"436":[1211,253975],"435":[1242,255217],"434":[1184,256401],"433":[1214,257615],"432":[1181,258796],"431":[1133,259929],"430":[1173,261102],"429":[1114,262216],"428":[1124,263340],"427":[1206,264546],"426":[1098,265644],"425":[1154,266798],"424":[1059,267857],"423":[1116,268973],"422":[1123,270096],"421":[1073,271169],"420":[1076,272245],"419":[1057,273302],"418":[1016,274318],"417":[1031,275349],"416":[1044,276393],"415":[1022,277415],"414":[1046,278461],"413":[984,279445],"412":[980,280425],"411":[1013,281438],"410":[976,282414],"310":[295,343230],"309":[334,343564],"308":[318,343882],"307":[292,344174],"306":[307,344481],"305":[296,344777],"304":[319,345096],"303":[287,345383],"302":[283,345666],"301":[295,345961],"300":[310,346271],"299":[565,346836],"298":[244,347080],"297":[267,347347],"296":[233,347580],"295":[292,347872],"294":[266,348138],"293":[235,348373],"292":[252,348625],"291":[271,348896],"290":[271,349167],"289":[238,349405],"288":[268,349673],"287":[218,349891],"286":[236,350127],"285":[238,350365],"284":[218,350583],"283":[208,350791],"282":[192,350983],"281":[195,351178],"280":[204,351382],"279":[207,351589],"278":[96,351685],"277":[203,351888],"276":[213,352101],"275":[197,352298],"274":[183,352481],"273":[187,352668],"272":[203,352871],"271":[203,353074],"270":[178,353252],"269":[188,353440],"268":[192,353632],"267":[192,353824],"266":[192,354112],"265":[183,354295],"264":[181,354476],"263":[187,354663],"262":[169,354832],"261":[159,354991],"260":[203,355194],"259":[170,355364],"258":[143,355507],"257":[179,355686],"256":[163,355849],"255":[142,355991],"254":[152,356143],"253":[135,356278],"252":[169,356447],"251":[167,356614],"250":[153,356767],"249":[142,356909],"248":[140,357049],"247":[148,357197],"246":[120,357317],"245":[139,357456],"244":[131,357587],"243":[130,357717],"242":[126,357843],"241":[131,357974],"240":[127,358101],"239":[121,358222],"238":[132,358354],"237":[118,358472],"236":[124,358596],"235":[114,358710],"234":[136,358846],"233":[116,358962],"232":[88,359050],"231":[119,359169],"230":[106,359275],"229":[95,359370],"228":[112,359482],"227":[104,359586],"226":[82,359668],"225":[92,359760],"224":[85,359845],"223":[83,359928],"222":[97,360025],"221":[87,360112],"220":[92,360204],"219":[100,360304],"218":[71,360375],"217":[72,360447],"216":[70,360517],"215":[71,360588],"214":[70,360658],"213":[63,360751],"212":[76,360827],"211":[71,360898],"210":[63,360961],"209":[63,361024],"208":[66,361090],"207":[58,361148],"206":[54,361202],"205":[53,361255],"204":[65,361320],"203":[55,361375],"202":[56,361373],"201":[52,361425],"200":[52,361477],"199":[43,361520],"198":[52,361572],"197":[49,361621],"196":[49,361670],"195":[51,361721],"194":[52,361773],"193":[52,361825],"192":[46,361871],"191":[42,361913],"190":[40,361953],"189":[44,361997],"188":[29,362026],"187":[33,362059],"186":[31,362090],"185":[29,362119],"184":[27,362146],"183":[26,362172],"182":[24,362196],"181":[31,362227],"180":[20,362247],"179":[16,362263],"178":[15,362278],"177":[17,362295],"176":[27,362322],"175":[18,362340],"174":[23,362363],"173":[19,362382],"172":[21,362403],"171":[32,362435],"170":[31,362516],"169":[20,362547],"168":[16,362567],"167":[15,362583],"166":[17,362598],"165":[27,362615],"164":[18,362659],"163":[23,362676],"162":[19,362694],"161":[21,362717],"160":[32,362736],"159":[16,362752],"158":[21,362773],"157":[32,362805],"156":[19,362824],"155":[17,362841],"154":[11,362852],"153":[12,362864],"152":[10,362874],"151":[9,362883],"150":[8,362891],"149":[7,362898],"148":[6,362904],"147":[8,362912],"146":[5,362917],"145":[6,362923],"144":[4,362927],"143":[5,362932],"142":[4,362936],"141":[3,362939],"140":[2,362941],"473":[1986,204326,0,0],"472":[1986,206312,0,0],"471":[1986,208298,0,0],"409":[614,283028,0,0],"408":[614,283642,0,0],"407":[614,284256,0,0],"406":[614,284870,0,0],"405":[614,285484,0,0],"404":[614,286098,0,0],"403":[614,286712,0,0],"402":[614,287326,0,0],"401":[614,287940,0,0],"400":[614,288554,0,0],"399":[614,289168,0,0],"398":[614,289782,0,0],"397":[614,290396,0,0],"396":[614,291010,0,0],"395":[614,291624,0,0],"394":[614,292238,0,0],"393":[614,292852,0,0],"392":[614,293466,0,0],"391":[614,294080,0,0],"390":[614,294694,0,0],"389":[614,295308,0,0],"388":[614,295922,0,0],"387":[614,296536,0,0],"386":[614,297150,0,0],"385":[614,297764,0,0],"384":[614,298378,0,0],"383":[614,298992,0,0],"382":[614,299606,0,0],"381":[614,300220,0,0],"380":[614,300834,0,0],"379":[614,301448,0,0],"378":[614,302062,0,0],"377":[614,302676,0,0],"376":[614,303290,0,0],"375":[614,303904,0,0],"374":[614,304518,0,0],"373":[614,305132,0,0],"372":[614,305746,0,0],"371":[614,306360,0,0],"370":[614,306974,0,0],"369":[614,307588,0,0],"368":[614,308202,0,0],"367":[614,308816,0,0],"366":[614,309430,0,0],"365":[614,310044,0,0],"364":[614,310658,0,0],"363":[614,311272,0,0],"362":[614,311886,0,0],"361":[614,312500,0,0],"360":[614,313114,0,0],"359":[614,313728,0,0],"358":[614,314342,0,0],"357":[614,314956,0,0],"356":[614,315570,0,0],"355":[614,316184,0,0],"354":[614,316798,0,0],"353":[614,317412,0,0],"352":[614,318026,0,0],"351":[614,318640,0,0],"350":[614,319254,0,0],"349":[614,319868,0,0],"348":[614,320482,0,0],"347":[614,321096,0,0],"346":[614,321710,0,0],"345":[614,322324,0,0],"344":[614,322938,0,0],"343":[614,323552,0,0],"342":[614,324166,0,0],"341":[614,324780,0,0],"340":[614,325394,0,0],"339":[614,326008,0,0],"338":[614,326622,0,0],"337":[614,327236,0,0],"336":[614,327850,0,0],"335":[614,328464,0,0],"334":[614,329078,0,0],"333":[614,329692,0,0],"332":[614,330306,0,0],"331":[614,330920,0,0],"330":[614,331534,0,0],"329":[614,332148,0,0],"328":[614,332762,0,0],"327":[614,333376,0,0],"326":[614,333990,0,0],"325":[614,334604,0,0],"324":[614,335218,0,0],"323":[614,335832,0,0],"322":[614,336446,0,0],"321":[614,337060,0,0],"320":[614,337674,0,0],"319":[614,338288,0,0],"318":[614,338902,0,0],"317":[614,339516,0,0],"316":[614,340130,0,0],"315":[614,340744,0,0],"314":[614,341358,0,0],"313":[614,341972,0,0],"312":[614,342586,0,0],"311":[614,343200,0,0]},"lishi":{"672":[35,35],"671":[8,43],"670":[7,50],"669":[9,59],"668":[12,71],"667":[5,76],"666":[10,86],"665":[14,100],"664":[14,114],"663":[15,129],"662":[11,140],"661":[7,147],"660":[20,167],"659":[14,181],"658":[17,198],"657":[19,217],"656":[20,237],"655":[29,266],"654":[23,289],"653":[20,309],"652":[36,345],"651":[33,378],"650":[31,409],"649":[26,435],"648":[40,475],"647":[37,512],"646":[43,555],"645":[39,594],"644":[45,639],"643":[40,679],"642":[43,722],"641":[57,779],"640":[54,833],"639":[43,876],"638":[55,931],"637":[74,1005],"636":[70,1075],"635":[50,1125],"634":[75,1200],"633":[75,1275],"632":[74,1349],"631":[98,1447],"630":[76,1523],"629":[88,1611],"628":[86,1697],"627":[92,1789],"626":[95,1884],"625":[92,1976],"624":[95,2071],"623":[110,2181],"622":[114,2295],"621":[115,2410],"620":[118,2528],"619":[123,2651],"618":[126,2777],"617":[129,2906],"616":[145,3051],"615":[164,3215],"614":[148,3363],"613":[158,3521],"612":[139,3660],"611":[176,3836],"610":[172,4008],"609":[162,4170],"608":[180,4350],"607":[208,4558],"606":[187,4745],"605":[197,4942],"604":[181,5123],"603":[215,5338],"602":[208,5546],"601":[225,5771],"600":[225,5996],"599":[236,6232],"598":[204,6436],"597":[256,6692],"596":[279,6971],"595":[248,7219],"594":[225,7444],"593":[243,7687],"592":[254,7941],"591":[240,8181],"590":[261,8442],"589":[295,8737],"588":[287,9024],"587":[266,9290],"586":[274,9564],"585":[282,9846],"584":[273,10119],"583":[319,10438],"582":[281,10719],"581":[295,11014],"580":[261,11275],"579":[308,11583],"578":[313,11896],"577":[359,12255],"576":[337,12592],"575":[334,12926],"574":[334,13260],"573":[331,13591],"572":[353,13944],"571":[331,14275],"570":[355,14630],"569":[353,14983],"568":[347,15330],"567":[373,15703],"566":[394,16097],"565":[382,16479],"564":[328,16807],"563":[426,17233],"562":[393,17626],"561":[369,17995],"560":[390,18385],"559":[375,18760],"558":[439,19199],"557":[405,19604],"556":[372,19976],"555":[422,20398],"554":[435,20833],"553":[407,21240],"552":[425,21665],"551":[427,22092],"550":[487,22579],"549":[458,23037],"548":[471,23508],"547":[472,23980],"546":[502,24482],"545":[458,24940],"544":[484,25424],"543":[482,25906],"542":[450,26356],"541":[413,26769],"540":[508,27277],"539":[489,27766],"538":[454,28220],"537":[465,28685],"536":[491,29176],"535":[562,29738],"534":[505,30243],"533":[557,30800],"532":[523,31323],"531":[523,31846],"530":[563,32409],"529":[518,32927],"528":[507,33434],"527":[520,33954],"526":[529,34483],"525":[569,35052],"524":[549,35601],"523":[526,36127],"522":[557,36684],"521":[573,37257],"520":[554,37811],"519":[577,38388],"518":[570,38958],"517":[547,39505],"516":[571,40076],"515":[586,40662],"514":[613,41275],"513":[553,41828],"512":[593,42421],"511":[627,43048],"510":[625,43673],"509":[566,44239],"508":[638,44877],"507":[561,45438],"506":[644,46082],"505":[635,46717],"504":[628,47345],"503":[660,48005],"502":[610,48511],"501":[638,49149],"500":[626,49775],"499":[644,50419],"498":[651,51070],"497":[635,51705],"496":[650,52355],"495":[610,52965],"494":[631,53596],"493":[611,54207],"492":[650,54857],"491":[629,55486],"490":[727,56213],"489":[649,56862],"488":[659,57521],"487":[650,58171],"486":[671,58842],"485":[693,59535],"484":[654,60189],"483":[659,60848],"482":[683,61531],"481":[665,62196],"480":[698,62894],"479":[691,63585],"478":[672,64257],"477":[640,64897],"476":[622,65519],"475":[667,66186],"474":[684,66870],"470":[713,69602],"469":[713,70315],"468":[713,71028],"467":[713,71741],"466":[713,72454],"465":[713,73167],"464":[713,73880],"463":[713,74593],"462":[713,75306],"461":[713,76019],"460":[713,76732],"459":[704,77151],"458":[682,77855],"457":[665,78537],"456":[715,79202],"455":[656,79917],"454":[742,80573],"453":[684,81315],"452":[710,81999],"451":[681,82709],"450":[743,83390],"449":[724,84133],"448":[693,84857],"447":[690,85550],"446":[714,86240],"445":[702,86954],"444":[725,87656],"443":[748,88381],"442":[748,89129],"441":[748,89877],"440":[748,90625],"439":[748,91373],"438":[748,92121],"437":[748,92869],"436":[748,93617],"435":[748,94365],"434":[748,95113],"433":[748,95861],"432":[748,96609],"431":[748,97357],"430":[748,98105],"429":[748,98853],"428":[748,99601],"427":[748,100349],"426":[748,101097],"425":[748,101845],"424":[748,102593],"423":[748,103341],"422":[748,104089],"421":[748,104837],"420":[748,105585],"419":[748,106333],"418":[748,107081],"417":[748,107829],"416":[748,108577],"415":[748,109325],"414":[748,110073],"413":[748,110821],"412":[748,111569],"411":[748,112317],"410":[748,113065],"310":[630,189315],"309":[744,190059],"308":[639,190698],"307":[474,191172],"306":[576,191748],"305":[648,192396],"304":[605,193001],"303":[514,193515],"302":[533,194048],"301":[413,194461],"300":[552,195013],"299":[547,196083],"298":[570,196653],"297":[546,197199],"296":[538,197737],"295":[510,198247],"294":[539,198786],"293":[504,199290],"292":[516,199806],"291":[524,200330],"290":[480,200810],"289":[499,201309],"288":[512,201821],"287":[508,202329],"286":[483,202812],"285":[529,203341],"284":[490,203831],"283":[483,204314],"282":[503,204817],"281":[520,205337],"280":[497,205834],"279":[510,206344],"278":[537,206311],"277":[454,206765],"276":[494,207259],"275":[446,207705],"274":[465,208170],"273":[460,208630],"272":[477,209107],"271":[500,209607],"270":[492,210099],"269":[482,210581],"268":[498,211079],"267":[443,211522],"266":[492,212014],"265":[480,212494],"264":[454,212948],"263":[461,213409],"262":[466,213875],"261":[472,214347],"260":[461,214808],"259":[458,215266],"258":[461,215727],"257":[444,216171],"256":[440,216611],"255":[457,217068],"254":[436,217504],"253":[451,217955],"252":[398,218353],"251":[451,218804],"250":[469,219273],"249":[446,219719],"248":[430,220149],"247":[452,220601],"246":[430,221031],"245":[446,221477],"244":[453,221930],"243":[441,222371],"242":[468,222839],"241":[462,223301],"240":[455,223756],"239":[446,224202],"238":[461,224663],"237":[348,225011],"236":[323,225334],"235":[583,225917],"234":[371,226288],"233":[382,226670],"232":[377,227047],"231":[338,227385],"230":[407,227792],"229":[383,228175],"228":[395,228570],"227":[347,228917],"226":[386,229303],"225":[402,229705],"224":[341,230046],"223":[352,230398],"222":[305,230703],"221":[317,231020],"220":[343,231363],"219":[304,231667],"218":[306,231973],"217":[278,232251],"216":[285,232536],"215":[280,232816],"214":[291,233107],"213":[307,233156],"212":[295,233451],"211":[270,233721],"210":[272,233993],"209":[264,234257],"208":[273,234530],"207":[280,234810],"206":[265,235075],"205":[234,235309],"204":[253,235562],"203":[241,235775],"202":[254,236029],"201":[242,236271],"200":[232,236503],"199":[232,236735],"198":[240,236975],"197":[240,237215],"196":[235,237450],"195":[240,237690],"194":[218,237908],"193":[218,238126],"192":[205,238331],"191":[201,238532],"190":[199,238731],"189":[206,238937],"188":[194,239131],"187":[190,239321],"186":[206,239527],"185":[196,239723],"184":[195,239918],"183":[210,240128],"182":[200,240328],"181":[108,240436],"180":[124,240560],"179":[112,240672],"178":[100,240772],"177":[96,240868],"176":[113,240981],"175":[95,241076],"174":[95,241171],"173":[96,241267],"172":[72,241339],"171":[78,241417],"170":[108,241525],"169":[124,241649],"168":[112,241761],"167":[100,241861],"166":[96,241957],"165":[113,242070],"164":[95,242165],"163":[95,242260],"162":[96,242356],"161":[72,242428],"160":[78,242506],"159":[76,242582],"158":[79,242661],"157":[82,242743],"156":[88,242831],"155":[81,242912],"154":[90,243002],"153":[78,243080],"152":[85,243165],"151":[72,243237],"150":[70,243307],"149":[65,243372],"148":[62,243434],"147":[58,243492],"146":[55,243547],"145":[52,243599],"144":[48,243647],"143":[45,243692],"142":[42,243734],"141":[40,243774],"140":[38,243812],"473":[911,67781,0,0],"472":[911,68692,0,0],"471":[911,69603,0,0],"409":[770,113835,0,0],"408":[770,114605,0,0],"407":[770,115375,0,0],"406":[770,116145,0,0],"405":[770,116915,0,0],"404":[770,117685,0,0],"403":[770,118455,0,0],"402":[770,119225,0,0],"401":[770,119995,0,0],"400":[770,120765,0,0],"399":[770,121535,0,0],"398":[770,122305,0,0],"397":[770,123075,0,0],"396":[770,123845,0,0],"395":[770,124615,0,0],"394":[770,125385,0,0],"393":[770,126155,0,0],"392":[770,126925,0,0],"391":[770,127695,0,0],"390":[770,128465,0,0],"389":[770,129235,0,0],"388":[770,130005,0,0],"387":[770,130775,0,0],"386":[770,131545,0,0],"385":[770,132315,0,0],"384":[770,133085,0,0],"383":[770,133855,0,0],"382":[770,134625,0,0],"381":[770,135395,0,0],"380":[770,136165,0,0],"379":[770,136935,0,0],"378":[770,137705,0,0],"377":[770,138475,0,0],"376":[770,139245,0,0],"375":[770,140015,0,0],"374":[770,140785,0,0],"373":[770,141555,0,0],"372":[770,142325,0,0],"371":[770,143095,0,0],"370":[770,143865,0,0],"369":[770,144635,0,0],"368":[770,145405,0,0],"367":[770,146175,0,0],"366":[770,146945,0,0],"365":[770,147715,0,0],"364":[770,148485,0,0],"363":[770,149255,0,0],"362":[770,150025,0,0],"361":[770,150795,0,0],"360":[770,151565,0,0],"359":[770,152335,0,0],"358":[770,153105,0,0],"357":[770,153875,0,0],"356":[770,154645,0,0],"355":[770,155415,0,0],"354":[770,156185,0,0],"353":[770,156955,0,0],"352":[770,157725,0,0],"351":[770,158495,0,0],"350":[770,159265,0,0],"349":[770,160035,0,0],"348":[770,160805,0,0],"347":[770,161575,0,0],"346":[770,162345,0,0],"345":[770,163115,0,0],"344":[770,163885,0,0],"343":[770,164655,0,0],"342":[770,165425,0,0],"341":[770,166195,0,0],"340":[770,166965,0,0],"339":[770,167735,0,0],"338":[770,168505,0,0],"337":[770,169275,0,0],"336":[770,170045,0,0],"335":[770,170815,0,0],"334":[770,171585,0,0],"333":[770,172355,0,0],"332":[770,173125,0,0],"331":[770,173895,0,0],"330":[770,174665,0,0],"329":[770,175435,0,0],"328":[770,176205,0,0],"327":[770,176975,0,0],"326":[770,177745,0,0],"325":[770,178515,0,0],"324":[770,179285,0,0],"323":[770,180055,0,0],"322":[770,180825,0,0],"321":[770,181595,0,0],"320":[770,182365,0,0],"319":[770,183135,0,0],"318":[770,183905,0,0],"317":[770,184675,0,0],"316":[770,185445,0,0],"315":[770,186215,0,0],"314":[770,186985,0,0],"313":[770,187755,0,0],"312":[770,188525,0,0],"311":[770,189295,0,0]}},"2026":{"wuli":{"701":[34,34],"700":[2,36],"699":[10,46],"698":[6,52],"697":[14,66],"696":[9,75],"695":[8,83],"694":[9,92],"693":[19,111],"692":[19,130],"691":[21,151],"690":[26,177],"689":[25,202],"688":[26,228],"687":[30,258],"686":[28,286],"685":[40,326],"684":[38,364],"683":[38,402],"682":[42,444],"681":[35,479],"680":[48,527],"679":[51,578],"678":[67,645],"677":[67,712],"676":[67,779],"675":[73,852],"674":[75,927],"673":[62,989],"672":[81,1070],"671":[94,1164],"670":[98,1262],"669":[108,1370],"668":[120,1490],"667":[103,1593],"666":[104,1697],"665":[130,1827],"664":[138,1965],"663":[142,2107],"662":[157,2264],"661":[157,2421],"660":[117,2538],"659":[168,2706],"658":[157,2863],"657":[178,3041],"656":[183,3224],"655":[205,3429],"654":[206,3635],"653":[218,3853],"652":[231,4084],"651":[230,4314],"650":[224,4538],"649":[210,4748],"648":[252,5000],"647":[256,5256],"646":[243,5499],"645":[271,5770],"644":[277,6047],"643":[275,6322],"642":[418,6740],"641":[418,7158],"640":[417,7575],"639":[345,7575],"638":[352,7927],"637":[465,8392],"636":[465,8857],"635":[465,9322],"634":[465,9787],"633":[465,10252],"632":[465,10717],"631":[438,10717],"630":[646,11363],"629":[647,12010],"628":[440,12010],"627":[436,12453],"626":[508,12961],"625":[502,13463],"624":[519,13982],"623":[489,14471],"622":[538,15009],"621":[509,15518],"620":[593,16111],"619":[529,16640],"618":[560,17200],"617":[604,17804],"616":[613,18417],"615":[633,19050],"614":[595,19645],"613":[662,20307],"612":[643,20950],"611":[619,21569],"610":[923,22492],"609":[923,23415],"608":[922,24337],"607":[714,24337],"606":[659,24996],"605":[724,25720],"604":[756,26476],"603":[890,27366],"602":[890,28256],"601":[890,29146],"600":[890,30036],"599":[890,30926],"598":[890,31816],"597":[891,32707],"596":[837,32707],"595":[849,33556],"594":[881,34437],"593":[908,35345],"592":[871,36216],"591":[877,37093],"590":[913,38006],"589":[901,38907],"588":[894,39801],"587":[940,40741],"586":[974,41715],"585":[930,42645],"584":[991,43636],"583":[1031,44667],"582":[957,45624],"581":[1033,46657],"580":[1088,47745],"579":[1024,48769],"578":[1431,50200],"577":[1431,51631],"576":[1432,53063],"575":[1120,53063],"574":[1024,54087],"573":[1129,55216],"572":[1230,56446],"571":[1230,57676],"570":[1230,58906],"569":[1230,60136],"568":[1230,61366],"567":[1230,62596],"566":[1230,63826],"565":[1232,65058],"564":[1212,65058],"563":[1254,66892],"562":[1245,68137],"561":[1297,69434],"560":[1279,70713],"559":[1311,72024],"558":[1295,73319],"557":[1218,74537],"556":[1297,75834],"555":[1351,77185],"554":[1308,78493],"553":[1402,79895],"552":[1311,81206],"551":[1335,82541],"550":[1401,83942],"549":[1320,85262],"548":[1366,86628],"547":[1482,88110],"546":[1867,89977],"545":[1867,91844],"544":[1868,93712],"543":[1372,93712],"542":[1549,95261],"541":[1549,96810],"540":[1549,98359],"539":[1549,99908],"538":[1549,101457],"537":[1549,103006],"536":[1549,104555],"535":[1549,106104],"534":[1549,107653],"533":[1549,109202],"532":[1549,110751],"531":[1549,112300],"530":[1549,113849],"529":[1549,115398],"528":[1549,116947],"527":[1549,118496],"526":[1549,120045],"525":[1549,121594],"524":[1549,123143],"523":[1549,124692],"522":[1549,126241],"521":[1549,127790],"520":[1549,129339],"519":[1549,130888],"518":[1549,132437],"517":[1549,133986],"516":[1549,135535],"515":[1549,137084],"514":[1549,138633],"513":[1549,140182],"512":[1553,141735],"511":[1564,141735],"510":[1514,143249],"509":[1579,144828],"508":[1552,146380],"507":[1518,147898],"506":[1483,149381],"505":[1515,150896],"504":[1518,152414],"503":[1522,153936],"502":[1550,155486],"501":[1548,157034],"500":[1519,158553],"499":[1561,160114],"498":[1522,161636],"497":[1570,163206],"496":[1535,164741],"495":[1520,166261],"494":[1505,167766],"493":[1490,169256],"492":[1456,170712],"491":[1470,172182],"490":[1460,173642],"489":[1455,175097],"488":[1444,176541],"487":[1440,177981],"486":[1435,179416],"485":[1430,180846],"484":[1425,182271],"483":[1420,183691],"482":[1415,185106],"481":[1410,186516],"480":[1400,187916],"479":[1384,189300],"478":[1450,190750],"477":[1477,192227],"476":[1403,193630],"475":[1405,195035],"474":[1392,196427],"473":[1424,197851],"472":[1442,199293],"471":[1417,200710],"470":[1419,202129],"469":[1364,203493],"468":[1268,204761],"467":[1473,206234],"466":[1417,207651],"465":[1340,208991],"464":[1311,210302],"463":[1358,211660],"462":[1360,213020],"461":[1227,214247],"460":[1391,215638],"459":[1362,217000],"458":[1244,218244],"457":[1260,219504],"456":[1310,220814],"455":[1284,222098],"454":[1210,223308],"453":[1248,224556],"452":[1201,225757],"451":[1200,226957],"450":[1180,228137],"449":[1160,229297],"448":[1140,230437],"447":[1192,231629],"446":[1208,232837],"445":[1195,234032],"444":[1175,235207],"443":[1160,236367],"442":[1155,237522],"441":[1140,238662],"440":[1125,239787],"439":[1110,240897],"438":[1100,241997],"437":[1095,243092],"436":[1089,244181],"435":[1172,245353],"434":[1106,246459],"433":[1108,247567],"432":[1098,248665],"431":[1094,249759],"430":[1138,250897],"429":[1131,252028],"428":[1068,253096],"427":[1109,254205],"426":[1024,255229],"425":[1079,256308],"424":[1064,257372],"423":[972,258344],"422":[991,259335],"421":[1065,260400],"420":[1025,261425],"419":[1046,262471],"418":[1030,263501],"417":[1020,264521],"416":[1010,265531],"415":[978,266509],"414":[971,267480],"413":[950,268430],"412":[964,269394],"411":[904,270298],"410":[979,271277],"409":[908,272185],"408":[950,273135],"407":[943,274078],"406":[937,275015],"405":[925,275940],"404":[876,276816],"403":[886,277702],"402":[907,278609],"401":[925,279534],"400":[908,280442],"399":[813,281255],"398":[893,282148],"397":[805,282953],"396":[811,283764],"395":[838,284602],"394":[802,285404],"393":[828,286232],"392":[841,287073],"391":[779,287852],"390":[790,288642],"389":[742,289384],"388":[755,290139],"387":[755,290894],"386":[1272,292166],"385":[1272,293438],"384":[1272,294710],"383":[741,294710],"382":[847,295557],"381":[847,296404],"380":[847,297251],"379":[847,298098],"378":[847,298945],"377":[847,299792],"376":[847,300639],"375":[847,301486],"374":[847,302333],"373":[847,303180],"372":[770,303180],"371":[851,304031],"370":[678,304709],"369":[633,305342],"368":[663,306005],"367":[673,306678],"366":[632,307310],"365":[619,307929],"364":[630,308559],"363":[621,309180],"362":[549,309729],"361":[592,310321],"360":[593,310914],"359":[594,311508],"358":[559,312067],"357":[582,312649],"356":[584,313233],"355":[552,313785],"354":[720,314505],"353":[720,315225],"352":[719,315944],"351":[514,315944],"350":[519,316463],"349":[535,316998],"348":[535,317533],"347":[535,318068],"346":[535,318603],"345":[535,319138],"344":[535,319673],"343":[535,320208],"342":[535,320743],"341":[532,321275],"340":[402,321275],"339":[465,321740],"338":[452,322192],"337":[441,322633],"336":[428,323061],"335":[441,323502],"334":[427,323929],"333":[386,324315],"332":[455,324770],"331":[419,325189],"330":[394,325583],"329":[388,325971],"328":[436,326407],"327":[409,326816],"326":[381,327197],"325":[403,327600],"324":[352,327952],"323":[393,328345],"322":[338,328683],"321":[338,329021],"320":[338,329359],"319":[348,329359],"318":[369,329728],"317":[329,330057],"316":[315,330372],"315":[340,330712],"314":[342,331054],"313":[340,331394],"312":[350,331744],"311":[297,332041],"310":[281,332322],"309":[304,332626],"308":[326,332952],"307":[305,333257],"306":[295,333552],"305":[285,333837],"304":[302,334139],"303":[284,334423],"302":[286,334709],"301":[276,334985],"300":[291,335276],"299":[275,335551],"298":[281,335832],"297":[272,336104],"296":[257,336361],"295":[270,336631],"294":[231,336862],"293":[231,337093],"292":[273,337366],"291":[236,337602],"290":[297,337899],"289":[297,338196],"288":[297,338493],"287":[218,338493],"286":[220,338713],"285":[252,338965],"284":[240,339205],"283":[240,339445],"282":[240,339685],"281":[240,339925],"280":[240,340165],"279":[240,340405],"278":[240,340645],"277":[238,340883],"276":[206,340883],"275":[194,341077],"274":[189,341266],"273":[177,341443],"272":[190,341633],"271":[191,341824],"270":[178,342002],"269":[196,342198],"268":[181,342379],"267":[176,342555],"266":[173,342728],"265":[188,342916],"264":[170,343086],"263":[159,343245],"262":[168,343413],"261":[170,343583],"260":[168,343751],"259":[165,343916],"258":[213,344129],"257":[213,344342],"256":[214,344556],"255":[155,344556],"254":[149,344705],"253":[143,344848],"252":[143,344991],"251":[143,345134],"250":[143,345277],"249":[143,345420],"248":[143,345563],"247":[143,345706],"246":[143,345849],"245":[146,345995],"244":[125,345995],"243":[217,346212],"242":[105,346317],"241":[125,346442],"240":[135,346577],"239":[125,346702],"238":[137,346839],"237":[126,346965],"236":[115,347080],"235":[121,347201],"234":[109,347310],"233":[67,347425],"232":[91,347516],"231":[97,347613],"230":[107,347720],"229":[91,347811],"228":[95,347906],"227":[98,348004],"226":[118,348122],"225":[118,348240],"224":[117,348357],"223":[80,348357],"222":[85,348442],"221":[71,348513],"220":[73,348586],"219":[80,348666],"218":[68,348734],"217":[58,348792],"216":[69,348861],"215":[74,348935],"214":[63,348998],"213":[83,349081],"212":[89,349170],"211":[57,349227],"210":[58,349285],"209":[55,349340],"208":[53,349393],"207":[54,349447],"206":[52,349499],"205":[61,349560],"204":[49,349609],"203":[43,349652],"202":[41,349693],"201":[56,349749],"200":[43,349792],"199":[43,349835],"198":[31,349866],"197":[48,349914],"196":[27,349941],"195":[37,349978],"194":[37,350015],"193":[37,350052],"192":[38,350090],"191":[33,350090],"190":[27,350117],"189":[27,350144],"188":[27,350171],"187":[27,350198],"186":[27,350225],"185":[27,350252],"184":[27,350279],"183":[27,350306],"182":[27,350333],"181":[26,350359],"180":[23,350359],"179":[23,350382],"178":[26,350408],"177":[20,350428],"176":[17,350445],"175":[18,350463],"174":[25,350488],"173":[26,350514],"172":[33,350547],"171":[23,350570],"170":[19,350589],"169":[14,350603],"168":[19,350622],"167":[17,350639],"166":[15,350654],"165":[16,350670],"164":[16,350686],"163":[18,350704],"162":[14,350718],"161":[28,350746],"160":[28,350774],"159":[18,350774],"158":[14,350788],"157":[14,350802],"156":[14,350816],"155":[14,350830],"154":[14,350844],"153":[14,350858],"152":[14,350872],"151":[14,350886],"150":[14,350900],"149":[17,350917],"148":[13,350917],"147":[13,350927],"146":[6,350933],"145":[11,350944],"144":[9,350953],"143":[9,350962],"142":[9,350971],"141":[7,350978],"140":[13,350991]},"lishi":{"671":[31,31],"670":[5,36],"669":[2,38],"667":[7,45],"666":[6,51],"665":[10,61],"664":[8,69],"663":[6,75],"662":[10,85],"661":[11,96],"660":[14,110],"659":[6,116],"658":[10,126],"657":[14,140],"656":[18,158],"655":[18,176],"654":[17,193],"653":[18,211],"652":[21,232],"651":[26,258],"650":[25,283],"649":[34,317],"648":[42,359],"647":[30,389],"646":[38,427],"645":[39,466],"644":[46,512],"643":[37,549],"642":[63,612],"641":[63,675],"640":[64,739],"639":[53,739],"638":[57,796],"637":[76,872],"636":[76,948],"635":[76,1024],"634":[76,1100],"633":[76,1176],"632":[79,1255],"631":[94,1255],"630":[136,1391],"629":[137,1528],"628":[91,1528],"627":[108,1636],"626":[105,1741],"625":[99,1840],"624":[103,1943],"623":[107,2050],"622":[123,2173],"621":[122,2295],"620":[120,2415],"619":[105,2520],"618":[147,2667],"617":[132,2799],"616":[127,2926],"615":[167,3093],"614":[154,3247],"613":[158,3405],"612":[153,3558],"611":[167,3725],"610":[258,3983],"609":[258,4241],"608":[257,4498],"607":[233,4498],"606":[176,4674],"605":[185,4859],"604":[205,5064],"603":[248,5312],"602":[248,5560],"601":[248,5808],"600":[248,6056],"599":[248,6304],"598":[248,6552],"597":[246,6798],"596":[230,6798],"595":[238,7036],"594":[261,7297],"593":[275,7572],"592":[247,7819],"591":[274,8093],"590":[279,8372],"589":[281,8653],"588":[273,8926],"587":[297,9223],"586":[267,9490],"585":[307,9797],"584":[308,10105],"583":[296,10401],"582":[306,10707],"581":[336,11043],"580":[340,11383],"579":[324,11707],"578":[492,12199],"577":[492,12691],"576":[492,13183],"575":[378,13183],"574":[342,13525],"573":[352,13877],"572":[463,14340],"571":[463,14803],"570":[463,15266],"569":[463,15729],"568":[463,16192],"567":[463,16655],"566":[463,17118],"565":[460,17578],"564":[389,17578],"563":[487,17865],"562":[400,18265],"561":[488,18753],"560":[452,19205],"559":[419,19624],"558":[462,20086],"557":[432,20518],"556":[439,20957],"555":[460,21417],"554":[484,21901],"553":[468,22369],"552":[490,22859],"551":[495,23354],"550":[501,23855],"549":[518,24373],"548":[475,24848],"547":[526,25374],"546":[718,26092],"545":[718,26810],"544":[719,27529],"543":[529,27529],"542":[608,28137],"541":[608,28745],"540":[608,29353],"539":[608,29961],"538":[608,30569],"537":[608,31177],"536":[608,31785],"535":[608,32393],"534":[608,33001],"533":[608,33609],"532":[608,34217],"531":[608,34825],"530":[608,35433],"529":[608,36041],"528":[608,36649],"527":[608,37257],"526":[608,37865],"525":[608,38473],"524":[608,39081],"523":[608,39689],"522":[608,40297],"521":[608,40905],"520":[608,41513],"519":[608,42121],"518":[608,42729],"517":[608,43337],"516":[608,43945],"515":[608,44553],"514":[608,45161],"513":[608,45769],"512":[603,46372],"511":[662,46372],"510":[624,46996],"509":[662,47658],"508":[683,48341],"507":[662,49003],"506":[614,49617],"505":[655,50272],"504":[702,50974],"503":[669,51643],"502":[641,52284],"501":[708,52992],"500":[654,53646],"499":[668,54358],"498":[695,55053],"497":[721,55774],"496":[700,56474],"495":[698,57172],"494":[695,57867],"493":[695,58562],"492":[701,59263],"491":[705,59968],"490":[710,60678],"489":[715,61393],"488":[712,62105],"487":[720,62825],"486":[725,63550],"485":[730,64280],"484":[730,65010],"483":[730,65740],"482":[685,66425],"481":[685,67110],"480":[690,67800],"479":[707,68507],"478":[698,69205],"477":[728,69933],"476":[695,70628],"475":[792,71420],"474":[689,72109],"473":[710,72819],"472":[729,73548],"471":[721,74269],"470":[716,74985],"469":[680,75665],"468":[613,76278],"467":[837,77115],"466":[784,77899],"465":[754,78653],"464":[691,79344],"463":[713,80057],"462":[729,80786],"461":[772,81558],"460":[762,82320],"459":[715,83035],"458":[735,83770],"457":[777,84547],"456":[722,85269],"455":[744,86013],"454":[758,86771],"453":[768,87539],"452":[761,88300],"451":[759,89059],"450":[750,89809],"449":[745,90554],"448":[740,91294],"447":[790,92084],"446":[722,92806],"445":[735,93541],"444":[740,94281],"443":[750,95031],"442":[755,95786],"441":[760,96546],"440":[765,97311],"439":[760,98071],"438":[755,98826],"437":[750,99576],"436":[749,100325],"435":[828,101153],"434":[793,101946],"433":[810,102756],"432":[767,103523],"431":[823,104346],"430":[815,105161],"429":[724,105885],"428":[759,106644],"427":[794,107438],"426":[827,108265],"425":[760,109025],"424":[743,109768],"423":[766,110534],"422":[805,111339],"421":[756,112095],"420":[809,112904],"419":[782,113686],"418":[790,114476],"417":[795,115271],"416":[800,116071],"415":[785,116856],"414":[805,117661],"413":[801,118462],"412":[823,119285],"411":[736,120021],"410":[858,120879],"409":[745,121624],"408":[799,122423],"407":[798,123221],"406":[819,124040],"405":[782,124822],"404":[839,125661],"403":[813,126474],"402":[786,127260],"401":[765,128025],"400":[810,128835],"399":[797,129632],"398":[781,130413],"397":[816,131229],"396":[817,132046],"395":[793,132839],"394":[793,133632],"393":[809,134441],"392":[807,135248],"391":[785,136033],"390":[772,136805],"389":[842,137647],"388":[782,138429],"387":[769,139198],"386":[1270,140468],"385":[1270,141738],"384":[1270,143008],"383":[780,143008],"382":[868,143876],"381":[868,144744],"380":[868,145612],"379":[868,146480],"378":[868,147348],"377":[868,148216],"376":[868,149084],"375":[868,149952],"374":[868,150820],"373":[866,151686],"372":[793,151686],"371":[792,152478],"370":[822,153300],"369":[773,154073],"368":[757,154830],"367":[771,155601],"366":[774,156375],"365":[777,157152],"364":[761,157913],"363":[735,158648],"362":[759,159407],"361":[749,160156],"360":[787,160943],"359":[728,161671],"358":[754,162425],"357":[741,163166],"356":[779,163945],"355":[767,164712],"354":[1020,165732],"353":[1020,166752],"352":[1020,167772],"351":[755,167772],"350":[704,168476],"349":[778,169254],"348":[778,170032],"347":[778,170810],"346":[778,171588],"345":[778,172366],"344":[778,173144],"343":[778,173922],"342":[778,174700],"341":[781,175481],"340":[715,175481],"339":[723,176204],"338":[681,176885],"337":[688,177573],"336":[659,178232],"335":[674,178906],"334":[705,179611],"333":[693,180304],"332":[718,181022],"331":[702,181724],"330":[635,182359],"329":[660,183019],"328":[634,183653],"327":[669,184322],"326":[649,184971],"325":[651,185622],"324":[637,186259],"323":[584,186843],"322":[652,187495],"321":[652,188147],"320":[653,188800],"319":[567,188800],"308":[493,195129],"307":[515,195644],"306":[543,196187],"305":[547,196734],"304":[533,197267],"303":[558,197825],"302":[534,198359],"301":[529,198888],"300":[500,199388],"299":[508,199896],"298":[486,200382],"297":[489,200871],"296":[466,201337],"295":[481,201818],"294":[475,202293],"293":[427,202720],"292":[452,203172],"291":[449,203621],"290":[581,204202],"289":[581,204783],"288":[580,205363],"287":[444,205363],"286":[449,205812],"285":[417,206229],"284":[436,206665],"283":[436,207101],"282":[436,207537],"281":[436,207973],"280":[436,208409],"279":[436,208845],"278":[436,209281],"277":[436,209717],"276":[384,209717],"275":[352,210069],"274":[372,210441],"273":[388,210829],"272":[374,211203],"271":[374,211577],"270":[354,211931],"269":[368,212299],"268":[360,212659],"267":[335,212994],"266":[312,213306],"265":[349,213655],"264":[377,214032],"263":[355,214387],"262":[306,214693],"261":[332,215025],"260":[334,215359],"259":[306,215665],"258":[410,216075],"257":[410,216485],"256":[411,216896],"255":[324,216896],"254":[301,217197],"253":[305,217502],"252":[305,217807],"251":[305,218112],"250":[305,218417],"249":[305,218722],"248":[305,219027],"247":[305,219332],"246":[305,219637],"245":[307,219944],"244":[240,219944],"243":[254,220198],"242":[281,220479],"241":[250,220729],"240":[223,220952],"239":[255,221207],"238":[256,221463],"237":[229,221692],"236":[216,221908],"235":[255,222163],"234":[239,222402],"233":[237,222639],"232":[195,222834],"231":[225,223059],"230":[207,223266],"229":[237,223503],"228":[231,223734],"227":[203,223937],"226":[255,224192],"225":[255,224447],"224":[254,224701],"223":[194,224701],"222":[199,224900],"221":[209,225109],"220":[191,225300],"219":[183,225483],"218":[186,225669],"217":[176,225845],"216":[181,226026],"215":[139,226165],"214":[150,226315],"213":[147,226462],"212":[164,226626],"211":[104,226730],"210":[174,226904],"209":[155,227059],"208":[155,227214],"207":[126,227340],"206":[149,227489],"205":[129,227618],"204":[151,227769],"203":[144,227913],"202":[104,228017],"201":[104,228121],"200":[112,228233],"199":[113,228346],"198":[125,228471],"197":[96,228567],"196":[118,228685],"195":[82,228767],"194":[115,228882],"193":[115,228997],"192":[115,229112],"191":[89,229112],"190":[77,229189],"189":[77,229266],"188":[77,229343],"187":[77,229420],"186":[77,229497],"185":[77,229574],"184":[77,229651],"183":[77,229728],"182":[77,229805],"181":[81,229886],"180":[52,229886],"179":[2,229888],"178":[58,229946],"177":[39,229985],"176":[67,230052],"175":[53,230105],"174":[54,230159],"173":[57,230216],"172":[44,230260],"171":[40,230300],"170":[54,230354],"169":[50,230404],"168":[43,230447],"167":[47,230494],"166":[54,230548],"165":[40,230588],"164":[31,230619],"163":[48,230667],"162":[32,230699],"161":[85,230784],"160":[85,230869],"159":[39,230869],"158":[49,230918],"157":[32,230950],"156":[32,230982],"155":[32,231014],"154":[32,231046],"153":[32,231078],"152":[32,231110],"151":[32,231142],"150":[32,231174],"149":[31,231205],"148":[50,231205],"147":[33,231298],"146":[30,231328],"145":[23,231351],"144":[32,231383],"143":[29,231412],"142":[16,231428],"141":[19,231447],"140":[29,231476],"668":[7,45,0,0],"318":[633,189433,0,0],"317":[633,190066,0,0],"316":[633,190699,0,0],"315":[633,191332,0,0],"314":[633,191965,0,0],"313":[633,192598,0,0],"312":[633,193231,0,0],"311":[633,193864,0,0],"310":[633,194497,0,0],"309":[633,195130,0,0]}}};
-var SCHOOL_MAJORS = [["\u8f66\u8f86\u5de5\u7a0b",476,0,"wl"],["\u673a\u68b0\u5de5\u7a0b",483,0,"wl"],["\u673a\u5668\u4eba\u5de5\u7a0b",478,0,"wl"],["\u667a\u80fd\u5236\u9020\u5de5\u7a0b",479,0,"wl"],["\u81ea\u52a8\u5316",495,0,"wl"],["\u7535\u6c14\u5de5\u7a0b\u53ca\u5176\u81ea\u52a8\u5316",494,0,"wl"],["\u62a4\u7406\u5b66",481,0,"wl"],["\u73af\u5883\u5de5\u7a0b",468,0,"wl"],["\u5236\u836f\u5de5\u7a0b",474,0,"wl"],["\u533b\u5b66\u68c0\u9a8c\u6280\u672f",475,0,"wl"],["\u7535\u5b50\u4fe1\u606f\u5de5\u7a0b",484,0,"wl"],["\u8ba1\u7b97\u673a\u79d1\u5b66\u4e0e\u6280\u672f",489,0,"wl"],["\u8f6f\u4ef6\u5de5\u7a0b",483,0,"wl"],["\u7269\u8054\u7f51\u5de5\u7a0b",481,0,"wl"],["\u6570\u636e\u79d1\u5b66\u4e0e\u5927\u6570\u636e\u6280\u672f",482,0,"wl"],["\u901a\u4fe1\u5de5\u7a0b",484,0,"wl"],["\u4eba\u5de5\u667a\u80fd",482,0,"wl"],["\u5de5\u7a0b\u9020\u4ef7",467,0,"wl"],["\u5efa\u7b51\u5b66",463,0,"wl"],["\u571f\u6728\u5de5\u7a0b",459,0,"wl"],["\u667a\u6167\u5efa\u7b51\u4e0e\u5efa\u9020",468,0,"wl"],["\u5927\u6570\u636e\u7ba1\u7406\u4e0e\u5e94\u7528",482,0,"wl"],["\u91d1\u878d\u79d1\u6280",471,0,"wl"],["\u6570\u5b57\u7ecf\u6d4e",471,0,"wl"],["\u4f1a\u8ba1\u5b66",488,0,"ls"],["\u5ba1\u8ba1\u5b66",493,0,"ls"],["\u7a0e\u6536\u5b66",485,0,"ls"],["\u5de5\u5546\u7ba1\u7406",487,0,"ls"],["\u4eba\u529b\u8d44\u6e90\u7ba1\u7406",488,0,"ls"],["\u8d22\u52a1\u7ba1\u7406",495,0,"ls"],["\u91d1\u878d\u5b66",495,0,"ls"],["\u82f1\u8bed",486,0,"ls"],["\u5b66\u524d\u6559\u80b2",481,0,"ls"],["\u5546\u52a1\u82f1\u8bed",480,0,"ls"],["\u6c49\u8bed\u8a00\u6587\u5b66",499,0,"ls"],["\u5c0f\u5b66\u6559\u80b2",491,0,"ls"],["\u5e94\u7528\u5fc3\u7406\u5b66",485,0,"ls"],["\u6cd5\u5b66",501,0,"ls"],["\u7f51\u7edc\u4e0e\u65b0\u5a92\u4f53",484,0,"ls"],["\u4ea7\u54c1\u8bbe\u8ba1(\u827a\u672f)",454.75,0,"all"],["\u670d\u88c5\u4e0e\u670d\u9970\u8bbe\u8ba1(\u827a\u672f)",449.25,0,"all"],["\u8868\u6f14\uff08\u670d\u88c5\u8868\u6f14\uff09(\u827a\u672f)",440.35,0,"all"],["\u73af\u5883\u8bbe\u8ba1(\u827a\u672f)",443.5,0,"all"],["\u89c6\u89c9\u4f20\u8fbe\u8bbe\u8ba1(\u827a\u672f)",462.75,0,"all"],["\u6570\u5b57\u5a92\u4f53\u827a\u672f(\u827a\u672f)",456,0,"all"],["\u827a\u672f\u4e0e\u79d1\u6280(\u827a\u672f)",449.5,0,"all"],["\u6444\u5f71(\u827a\u672f)",390.75,0,"all"],["\u8868\u6f14(\u827a\u672f)",459.375,0,"all"],["\u5e7f\u64ad\u7535\u89c6\u7f16\u5bfc(\u827a\u672f)",478,0,"all"],["\u620f\u5267\u5f71\u89c6\u5bfc\u6f14(\u827a\u672f)",474.75,0,"all"],["\u620f\u5267\u5f71\u89c6\u6587\u5b66(\u827a\u672f)",459,0,"all"],["\u64ad\u97f3\u4e0e\u4e3b\u6301\u827a\u672f(\u827a\u672f)",460.3,0,"all"],["\u5f71\u89c6\u6280\u672f(\u827a\u672f)",477,0,"all"],["\u52a8\u753b(\u827a\u672f)",441.75,0,"all"],["\u793e\u4f1a\u4f53\u80b2\u6307\u5bfc\u4e0e\u7ba1\u7406(\u4f53\u80b2)",509,0,"all"],["\u4f53\u80b2\u6559\u80b2(\u4f53\u80b2)",515,0,"all"],["\u4f53\u80fd\u8bad\u7ec3(\u4f53\u80b2)",509,0,"all"],["\u673a\u7535\u4e00\u4f53\u5316\u6280\u672f(\u4e13)",345,0,"all"],["\u7535\u6c14\u81ea\u52a8\u5316\u6280\u672f(\u4e13)",330,0,"all"],["\u62a4\u7406(\u4e13)",231,0,"all"],["\u533b\u5b66\u68c0\u9a8c\u6280\u672f(\u4e13)",216,0,"all"],["\u836f\u54c1\u751f\u4ea7\u6280\u672f(\u4e13)",240,0,"all"],["\u73af\u5883\u5de5\u7a0b\u6280\u672f(\u4e13)",202,0,"all"],["\u5ba0\u7269\u533b\u7597\u6280\u672f(\u4e13)",0,0,"all"],["\u8ba1\u7b97\u673a\u5e94\u7528\u6280\u672f(\u4e13)",202,0,"all"],["\u7535\u5b50\u4fe1\u606f\u5de5\u7a0b\u6280\u672f(\u4e13)",205,0,"all"],["\u5de5\u7a0b\u9020\u4ef7(\u4e13)",226,0,"all"],["\u5efa\u8bbe\u5de5\u7a0b\u7ba1\u7406(\u4e13)",206,0,"all"],["\u5927\u6570\u636e\u4e0e\u4f1a\u8ba1(\u4e13)",218,0,"all"],["\u5927\u6570\u636e\u4e0e\u8d22\u52a1\u7ba1\u7406(\u4e13)",247,0,"all"],["\u91d1\u878d\u670d\u52a1\u4e0e\u7ba1\u7406(\u4e13)",231,0,"all"],["\u6444\u5f71\u6444\u50cf\u6280\u672f(\u4e13)",262,0,"all"],["\u7f51\u7edc\u76f4\u64ad\u4e0e\u8fd0\u8425(\u4e13)",231,0,"all"]];
+// ===== DATA =====
+var RANK_2025=[["690",11,57,0,0],["689",11,68,0,0],["688",14,82,0,0],["687",17,99,0,0],["686",22,121,0,0],["685",25,146,0,0],["684",13,159,0,0],["683",22,181,0,0],["682",25,206,0,0],["681",27,233,0,0],["664",101,1236,19,115],["663",109,1345,14,129],["662",102,1447,0,140],["661",123,1570,7,147],["660",118,1688,20,167],["659",128,1816,14,181],["658",128,1944,17,198],["657",137,2081,19,217],["656",143,2224,20,237],["655",142,2366,29,266],["654",139,2505,23,289],["653",194,2699,20,309],["652",215,2914,36,345],["651",191,3105,33,378],["650",189,3294,31,409],["649",219,3513,26,435],["648",241,3754,40,475],["647",252,4006,37,512],["646",246,4252,43,555],["645",215,4467,39,594],["644",257,4724,45,639],["643",271,4995,40,679],["642",273,5268,43,722],["641",305,5573,57,779],["640",273,5846,54,833],["639",335,6181,43,876],["638",322,6503,55,931],["637",335,6838,74,1005],["636",348,7186,70,1075],["635",336,7522,50,1125],["634",357,7879,75,1200],["633",357,8236,62,1262],["632",386,8622,87,1349],["631",390,9012,98,1447],["630",424,9436,76,1523],["629",391,9827,88,1611],["628",444,10271,86,1697],["627",432,10703,92,1789],["626",445,11148,95,1884],["625",487,11635,92,1976],["624",456,12091,95,2071],["623",501,12592,110,2181],["622",485,13077,114,2295],["621",510,13587,115,2410],["620",511,14098,118,2528],["619",538,14636,123,2651],["618",535,15171,126,2777],["617",604,15775,129,2906],["616",564,16339,145,3051],["615",595,16934,164,3215],["614",587,17521,148,3363],["613",593,18114,158,3521],["612",606,18720,139,3660],["611",647,19367,176,3836],["610",642,20009,172,4008],["609",689,20698,162,4170],["608",656,21354,180,4350],["607",655,22009,208,4558],["606",686,22695,187,4745],["605",688,23383,197,4942],["604",717,24100,181,5123],["603",733,24833,215,5338],["602",741,25574,208,5546],["601",713,26287,213,5759],["600",786,27073,245,6004],["599",748,27821,237,6241],["598",776,28597,204,6445],["597",777,29374,256,6701],["596",820,30194,279,6980],["595",802,30996,248,7228],["594",811,31807,225,7453],["593",885,32692,243,7696],["592",847,33539,254,7950],["591",911,34450,240,8190],["590",834,35284,261,8451],["589",896,36180,295,8746],["588",943,37123,287,9033],["587",884,38007,266,9299],["586",936,38943,274,9573],["585",938,39881,282,9855],["584",1043,40924,273,10128],["583",997,41921,319,10447],["582",1002,42923,281,10728],["581",1006,43929,295,11023],["580",999,44928,261,11284],["579",1044,45972,308,11592],["578",1053,47025,313,11905],["577",1035,48060,359,12264],["576",1082,49142,337,12601],["575",1082,50224,334,12935],["574",1051,51275,334,13269],["573",1109,52384,331,13600],["572",1068,53452,353,13953],["571",1131,54583,331,14284],["570",1129,55712,355,14639],["569",1140,56852,351,14990],["568",1148,58000,343,15333],["567",1117,59117,373,15706],["566",1189,60306,394,16100],["565",1222,61528,382,16482],["564",1197,62725,328,16810],["563",1221,63946,426,17236],["562",1220,65166,393,17629],["561",1304,66470,369,17998],["560",1256,67726,390,18388],["559",1251,68977,375,18763],["558",1347,70324,439,19202],["557",1308,71632,405,19607],["556",1282,72914,372,19979],["555",1377,74291,422,20401],["554",1316,75607,435,20836],["553",1378,76985,407,21243],["552",1328,78313,425,21668],["551",1441,79754,427,22095],["550",1358,81112,487,22582],["549",1378,82490,458,23040],["548",1408,83898,471,23511],["547",1360,85258,472,23983],["546",1406,86664,502,24485],["545",1453,88117,458,24943],["544",1435,89552,484,25427],["543",1475,91027,482,25909],["542",1462,92489,450,26359],["541",1473,93962,413,26772],["540",1497,95459,508,27280],["539",1503,96962,489,27769],["538",1514,98476,454,28223],["537",1511,99987,487,28710],["536",1539,101526,532,29242],["535",1522,103048,496,29738],["534",1543,104591,505,30243],["533",1504,106095,557,30800],["532",1617,107712,523,31323],["531",1575,109287,523,31846],["530",1585,110872,563,32409],["529",1575,112447,518,32927],["528",1604,114051,507,33434],["527",1539,115590,520,33954],["526",1568,117158,529,34483],["525",1654,118812,569,35052],["524",1623,120435,549,35601],["523",1634,122069,526,36127],["522",1662,123731,557,36684],["521",1638,125369,573,37257],["520",1632,127001,554,37811],["519",1614,128615,577,38388],["518",1636,130251,570,38958],["517",1661,131912,547,39505],["516",1680,133592,571,40076],["515",1692,135284,586,40662],["514",1681,136965,613,41275],["513",1627,138592,553,41828],["512",1710,140302,593,42421],["511",1714,142016,627,43048],["510",1715,143731,625,43673],["509",1620,145351,566,44239],["508",1705,147056,638,44877],["507",1669,148725,561,45438],["506",1684,150409,644,46082],["505",1715,152124,629,46711],["504",1658,153782,589,47300],["503",1687,155469,601,47901],["502",1700,157169,610,48511],["501",1680,158849,638,49149],["500",1658,160507,626,49775],["499",1739,162246,644,50419],["498",1716,163962,651,51070],["497",1725,165687,635,51705],["496",1683,167370,650,52355],["495",1638,169008,610,52965],["494",1621,170629,631,53596],["493",1592,172221,611,54207],["492",1699,173920,650,54857],["491",1649,175569,695,55552],["490",1662,177231,661,56213],["489",1605,178836,649,56862],["488",1565,180401,659,57521],["487",1566,181967,650,58171],["486",1578,183545,671,58842],["485",1587,185132,693,59535],["484",1673,186805,654,60189],["483",1582,188387,659,60848],["482",1545,189932,683,61531],["481",1604,191536,665,62196],["480",1552,193088,698,62894],["479",1534,194622,691,63585],["478",1577,196199,672,64257],["477",1559,197758,640,64897],["476",1457,199215,622,65519],["475",1574,200789,667,66186],["474",1551,202340,684,66870],["473",1528,203868,683,67553],["472",1514,205382,665,68218],["471",1454,206836,671,68889],["470",1463,208299,713,69602],["469",1542,209841,669,70271],["468",1476,211317,703,70974],["467",1511,212828,674,71648],["466",1478,214306,663,72311],["465",1417,215723,645,72956],["464",1459,217182,695,73651],["463",1465,218647,710,74361],["462",1427,220074,693,75054],["461",1414,221488,703,75757],["460",1362,222850,678,76435],["459",1380,224230,696,77131],["458",1369,225599,724,77855],["457",1478,227077,682,78537],["456",1385,228462,665,79202],["455",1342,229804,715,79917],["454",1358,231162,656,80573],["453",1372,232534,742,81315],["452",1305,233839,684,81999],["451",1350,235189,710,82709],["450",1302,236491,681,83390],["449",1239,237730,743,84133],["448",1337,239067,724,84857],["447",1290,240357,693,85550],["446",1293,241650,690,86240],["445",1270,242920,714,86954],["444",1253,244173,702,87656],["443",1218,245391,725,88381],["442",1266,246657,748,89129],["441",1246,247903,736,89865],["440",1225,249128,752,90617],["439",1236,250364,700,91317],["438",1216,251580,712,92029],["437",1184,252764,785,92814],["436",1211,253975,760,93574],["435",1242,255217,734,94308],["434",1184,256401,732,95040],["433",1214,257615,721,95761],["432",1181,258796,732,96493],["431",1133,259929,745,97238],["430",1173,261102,739,97977],["429",1114,262216,764,98741],["428",1124,263340,703,99444],["427",1206,264546,738,100182],["426",1098,265644,744,100926],["425",1154,266798,763,101689],["424",1059,267857,726,102415],["423",1116,268973,798,103213],["422",1123,270096,768,103981],["421",1073,271169,733,104714],["420",1076,272245,764,105478],["419",1057,273302,735,106213],["418",1016,274318,792,107005],["417",1031,275349,769,107774],["416",1044,276393,764,108538],["415",1022,277415,772,109310],["414",1046,278461,802,110112],["413",984,279445,758,110870],["412",980,280425,788,111658],["411",1013,281438,856,112514],["410",976,282414,776,113290],["409",962,283376,757,114047],["408",959,284335,783,114830],["407",958,285293,738,115568],["406",977,286270,795,116363],["405",992,287262,782,117145],["404",969,288231,800,117945],["403",920,289151,822,118767],["402",906,290057,812,119579],["401",888,290945,842,120421],["400",908,291853,732,121153],["399",939,292792,824,121977],["398",856,293648,758,122735],["397",884,294532,786,123521],["396",906,295438,757,124278],["395",847,296285,796,125074],["394",810,297095,831,125905],["393",848,297943,803,126708],["392",834,298777,789,127497],["391",781,299558,845,128342],["390",871,300429,787,129129],["389",823,301252,830,129959],["388",779,302031,831,130790],["387",707,302738,854,131644],["386",700,303438,863,132507],["385",787,304225,767,133274],["384",758,304983,855,134129],["383",745,305728,839,134968],["382",798,306526,789,135757],["381",749,307275,788,136545],["380",725,308000,826,137371],["379",740,308740,830,138201],["378",705,309445,845,139046],["377",694,310139,837,139883],["376",728,310867,798,140681],["375",757,311624,838,141519],["374",681,312305,804,142323],["373",673,312978,890,143213],["372",661,313639,770,143983],["371",637,314276,804,144787],["370",666,314942,840,145627],["369",623,315565,853,146480],["368",688,316253,770,147250],["367",676,316929,839,148089],["366",620,317549,765,148854],["365",603,318152,848,149702],["364",604,318756,801,150503],["363",573,319329,791,151294],["362",572,319901,777,152071],["361",580,320481,821,152892],["360",599,321080,807,153699],["359",578,321658,815,154514],["358",578,322236,800,155314],["357",576,322812,813,156127],["356",570,323382,830,156957],["355",514,323896,816,157773],["354",571,324467,768,158541],["353",570,325037,810,159351],["352",522,325559,792,160143],["351",545,326104,770,160913],["350",505,326609,812,161725],["349",521,327130,785,162510],["348",493,327623,726,163236],["347",470,328093,719,163955],["346",513,328606,808,164763],["345",513,329119,797,165560],["344",486,329605,716,166276],["343",487,330092,810,167086],["342",467,330559,785,167871],["341",491,331050,741,168612],["340",489,331539,752,169364],["339",449,331988,732,170096],["338",459,332447,778,170874],["337",468,332915,696,171570],["336",456,333371,685,172255],["335",449,333820,699,172954],["334",441,334261,711,173665],["333",441,334702,687,174352],["332",406,335108,708,175060],["331",424,335532,711,175771],["330",414,335946,672,176443],["329",419,336365,678,177121],["328",430,336795,676,177797],["327",399,337194,698,178495],["326",419,337613,668,179163],["325",387,338000,637,179800],["324",382,338382,667,180467],["323",374,338756,627,181094],["322",405,339161,655,181749],["321",357,339518,617,182366],["320",367,339885,613,182979],["319",371,340256,671,183650],["318",360,340616,610,184260],["317",312,340928,652,184912],["316",347,341275,621,185533],["315",321,341596,643,186176],["314",337,341933,633,186809],["313",345,342278,626,187435],["312",326,342604,628,188063],["311",331,342935,622,188685],["310",295,343230,630,189315],["309",336,343566,560,189875],["308",309,343875,562,190437],["307",310,344185,584,191021],["306",302,344487,589,191610],["305",333,344820,560,192170],["304",286,345106,552,192722],["303",304,345410,557,193279],["302",280,345690,574,193853],["301",271,345961,608,194461],["300",310,346271,552,195013],["299",295,346566,523,195536],["298",270,346836,547,196083],["297",244,347080,570,196653],["296",267,347347,546,197199],["295",233,347580,538,197737],["294",292,347872,510,198247],["293",266,348138,539,198786],["292",235,348373,504,199290],["291",252,348625,516,199806],["290",271,348896,524,200330],["289",271,349167,480,200810],["288",238,349405,499,201309],["287",268,349673,512,201821],["286",218,349891,508,202329],["285",236,350127,483,202812],["284",238,350365,529,203341],["283",218,350583,490,203831],["282",208,350791,483,204314],["281",242,351033,506,204820],["280",230,351263,489,205309],["279",220,351483,465,205774],["278",202,351685,537,206311],["277",224,351909,454,206765],["276",221,352130,483,207248],["275",202,352332,490,207738],["274",210,352542,488,208226],["273",216,352758,486,208712],["272",199,352957,502,209214],["271",211,353168,457,209671],["270",173,353341,469,210140],["269",193,353534,472,210612],["268",206,353740,464,211076],["267",186,353926,446,211522],["266",186,354112,492,212014],["265",183,354295,480,212494],["264",181,354476,454,212948],["263",187,354663,461,213409],["262",169,354832,466,213875],["261",159,354991,472,214347],["260",203,355194,461,214808],["259",170,355364,458,215266],["258",143,355507,461,215727],["257",179,355686,444,216171],["256",163,355849,440,216611],["255",142,355991,457,217068],["254",152,356143,436,217504],["253",135,356278,451,217955],["252",169,356447,398,218353],["251",167,356614,451,218804],["250",153,356767,469,219273],["249",141,356908,468,219741],["248",133,357041,421,220162],["247",157,357198,421,220583],["246",119,357317,448,221031],["245",136,357453,420,221451],["244",117,357570,411,221862],["243",121,357691,436,222298],["242",118,357809,379,222677],["241",138,357947,442,223119],["240",145,358092,414,223533],["239",131,358223,406,223939],["238",122,358345,421,224360],["237",141,358486,435,224795],["236",105,358591,388,225183],["235",119,358710,371,225554],["234",136,358846,363,225917],["233",116,358962,371,226288],["232",88,359050,382,226670],["231",119,359169,377,227047],["230",106,359275,338,227385],["229",95,359370,407,227792],["228",112,359482,383,228175],["227",104,359586,395,228570],["226",82,359668,347,228917],["225",92,359760,386,229303],["224",85,359845,402,229705],["223",83,359928,341,230046],["222",97,360025,352,230398],["221",87,360112,305,230703],["220",92,360204,317,231020],["219",100,360304,343,231363],["218",71,360375,304,231667],["217",88,360463,304,231971],["216",68,360531,293,232264],["215",87,360618,294,232558],["214",70,360688,291,232849],["213",63,360751,307,233156],["212",76,360827,295,233451],["211",67,360894,297,233748],["210",61,360955,260,234008],["209",45,361000,276,234284],["208",62,361062,274,234558],["207",46,361108,250,234808],["206",50,361158,234,235042],["205",52,361210,257,235299],["204",52,361262,235,235534],["203",55,361317,241,235775],["202",56,361373,254,236029],["201",52,361425,242,236271],["200",52,361477,232,236503],["199",43,361520,232,236735],["198",56,361576,222,236957],["197",49,361625,221,237178],["196",57,361682,213,237391],["195",41,361723,202,237593],["194",57,361780,185,237778],["193",40,361820,189,237967],["192",47,361867,197,238164],["191",40,361907,189,238353],["190",34,361941,177,238530],["189",43,361984,193,238723],["188",28,362012,172,238895],["187",47,362059,172,239067],["186",31,362090,206,239273],["185",31,362121,153,239426],["184",35,362156,148,239574],["183",23,362179,147,239721],["150",15,362922,55,243253],["149",13,362935,46,243299],["148",9,362944,58,243357],["147",15,362959,47,243404],["146",11,362970,49,243453],["145",13,362983,42,243495],["144",10,362993,49,243544],["143",18,363011,38,243582],["142",6,363017,47,243629],["141",10,363027,43,243672],["140",13,363040,42,243714]];
+var RANK_2026=[["701及以上",34,34,0,0],["700",2,36,0,0],["699",10,46,0,0],["698",6,52,0,0],["697",14,66,0,0],["696",9,75,0,0],["695",8,83,0,0],["694",9,92,0,0],["693",19,111,0,0],["692",19,130,0,0],["691",21,151,0,0],["690",26,177,0,0],["689",25,202,0,0],["688",26,228,0,0],["687",30,258,0,0],["686",28,286,0,0],["685",40,326,0,0],["684",38,364,0,0],["683",38,402,0,0],["682",42,444,0,0],["681",35,479,0,0],["680",48,527,0,0],["679",51,578,0,0],["678",67,645,0,0],["677",67,712,0,0],["676",67,779,0,0],["675",73,852,0,0],["674",75,927,0,0],["673",62,989,0,0],["672",81,1070,0,0],["671及以上",94,1164,31,31],["670",98,1262,5,36],["669",108,1370,2,38],["668",120,1490,6,44],["667",103,1593,7,51],["666",104,1697,6,57],["665",130,1827,10,67],["664",138,1965,8,75],["663",142,2107,6,81],["662",151,2258,6,87],["661",163,2421,9,96],["660",117,2538,14,110],["659",168,2706,6,116],["658",157,2863,10,126],["657",178,3041,14,140],["656",183,3224,18,158],["655",205,3429,18,176],["654",206,3635,17,193],["653",218,3853,18,211],["652",231,4084,21,232],["651",230,4314,26,258],["650",224,4538,25,283],["649",210,4748,34,317],["648",252,5000,42,359],["647",256,5256,30,389],["646",243,5499,38,427],["645",271,5770,39,466],["644",277,6047,46,512],["643",275,6322,37,549],["642",299,6621,37,586],["641",297,6918,60,646],["640",312,7230,40,686],["639",345,7575,53,739],["638",352,7927,57,796],["637",358,8285,58,854],["636",359,8644,64,918],["635",409,9053,60,978],["634",423,9476,59,1037],["633",389,9865,56,1093],["632",414,10279,68,1161],["631",438,10717,94,1255],["630",413,11130,91,1346],["629",440,11570,91,1437],["628",447,12017,91,1528],["627",436,12453,108,1636],["626",508,12961,105,1741],["625",502,13463,99,1840],["624",519,13982,103,1943],["623",489,14471,107,2050],["622",538,15009,123,2173],["621",509,15518,122,2295],["620",593,16111,120,2415],["619",529,16640,105,2520],["618",560,17200,147,2667],["617",604,17804,132,2799],["616",613,18417,127,2926],["615",633,19050,167,3093],["614",595,19645,154,3247],["613",662,20307,158,3405],["612",643,20950,153,3558],["611",619,21569,167,3725],["610",677,22246,176,3901],["609",642,22888,160,4061],["608",735,23623,204,4265],["607",714,24337,233,4498],["606",659,24996,176,4674],["605",724,25720,185,4859],["604",756,26476,205,5064],["603",721,27197,204,5268],["602",713,27910,204,5472],["601",763,28673,218,5690],["600",752,29425,241,5931],["599",763,30188,212,6143],["598",818,31006,199,6342],["597",864,31870,220,6562],["596",837,32707,236,6798],["595",849,33556,238,7036],["594",881,34437,261,7297],["593",908,35345,275,7572],["592",871,36216,247,7819],["591",877,37093,274,8093],["590",913,38006,279,8372],["589",901,38907,281,8653],["588",894,39801,273,8926],["587",940,40741,297,9223],["586",974,41715,267,9490],["585",930,42645,307,9797],["584",991,43636,308,10105],["583",1031,44667,296,10401],["582",957,45624,306,10707],["581",1033,46657,336,11043],["580",1088,47745,340,11383],["579",1024,48769,324,11707],["578",1076,49845,382,12089],["577",1048,50893,362,12451],["576",1050,51943,354,12805],["575",1120,53063,378,13183],["574",1024,54087,342,13525],["573",1129,55216,352,13877],["572",1122,56338,354,14231],["571",1147,57485,346,14577],["570",1066,58551,406,14983],["569",1135,59686,387,15370],["568",1179,60865,394,15764],["567",1160,62025,435,16199],["566",1226,63251,389,16588],["565",1175,64426,401,16989],["564",1212,65638,389,17378],["563",1254,66892,487,17865],["562",1245,68137,400,18265],["561",1297,69434,488,18753],["560",1279,70713,452,19205],["559",1311,72024,419,19624],["558",1295,73319,462,20086],["557",1218,74537,432,20518],["556",1297,75834,439,20957],["555",1351,77185,460,21417],["554",1308,78493,484,21901],["553",1402,79895,468,22369],["552",1311,81206,490,22859],["551",1335,82541,495,23354],["550",1401,83942,501,23855],["549",1320,85262,518,24373],["548",1366,86628,475,24848],["547",1482,88110,526,25374],["546",1352,89462,548,25922],["545",1506,90968,537,26459],["544",1372,92340,541,27000],["543",1372,93712,529,27529],["542",1397,95109,529,28058],["541",1477,96586,522,28580],["540",1459,98045,519,29099],["539",1491,99536,562,29661],["538",1484,101020,548,30209],["537",1455,102475,561,30770],["536",1500,103975,523,31293],["535",1487,105462,528,31821],["534",1528,106990,587,32408],["533",1489,108479,584,32992],["532",1441,109920,587,33579],["531",1508,111428,560,34139],["530",1536,112964,539,34678],["529",1527,114491,574,35252],["528",1482,115973,547,35799],["527",1463,117436,600,36399],["526",1504,118940,568,36967],["525",1454,120394,585,37552],["524",1520,121914,629,38181],["523",1516,123430,581,38762],["522",1492,124922,611,39373],["521",1502,126424,595,39968],["520",1492,127916,620,40588],["519",1536,129452,625,41213],["518",1555,131007,704,41917],["517",1605,132612,605,42522],["516",1467,134079,604,43126],["515",1532,135611,612,43738],["514",1523,137134,660,44398],["513",1496,138630,682,45080],["512",1541,140171,630,45710],["511",1564,141735,662,46372],["510",1514,143249,624,46996],["509",1579,144828,662,47658],["508",1552,146380,683,48341],["507",1518,147898,662,49003],["506",1483,149381,614,49617],["505",1515,150896,655,50272],["504",1518,152414,702,50974],["487",1518,178108,699,62653],["486",1469,179577,681,63334],["485",1466,181043,691,64025],["479",1384,189846,707,68317],["478",1450,191296,698,69015],["477",1477,192773,728,69743],["476",1403,194176,695,70438],["475",1405,195581,792,71230],["474",1392,196973,689,71919],["473",1424,198397,710,72629],["472",1442,199839,729,73358],["471",1417,201256,721,74079],["470",1419,202675,716,74795],["469",1364,204039,680,75475],["468",1361,205400,676,76151],["467",1380,206780,774,76925],["466",1417,208197,784,77709],["465",1340,209537,754,78463],["464",1311,210848,691,79154],["463",1340,212188,713,79867],["462",1358,213546,729,80596],["461",1360,214906,772,81368],["460",1227,216133,762,82130],["459",1391,217524,715,82845],["458",1362,218886,735,83580],["457",1244,220130,777,84357],["456",1260,221390,722,85079],["455",1310,222700,744,85823],["454",1284,223984,758,86581],["453",1210,225194,768,87349],["452",1248,226442,761,88110],["451",1201,227643,759,88869],["450",1264,228907,716,89585],["449",1263,230170,768,90353],["448",1260,231430,733,91086],["447",1192,232622,790,91876],["446",1208,233830,722,92598],["445",1187,235017,809,93407],["444",1224,236241,761,94168],["443",1175,237416,781,94949],["442",1265,238681,766,95715],["441",1182,239863,750,96465],["440",1174,241037,714,97179],["439",1152,242189,793,97972],["438",1199,243388,762,98734],["437",1171,244559,742,99476],["436",1089,245648,749,100225],["435",1172,246820,828,101053],["434",1106,247926,793,101846],["433",1108,249034,810,102656],["432",1098,250132,767,103423],["431",1094,251226,823,104246],["430",1138,252364,815,105061],["429",1131,253495,724,105785],["428",1068,254563,759,106544],["427",1109,255672,794,107338],["426",1024,256696,827,108165],["425",1079,257775,760,108925],["424",1064,258839,743,109668],["423",972,259811,766,110434],["422",991,260802,805,111239],["421",1065,261867,756,111995],["420",1025,262892,809,112804],["419",1046,263938,782,113586],["418",1031,264969,779,114365],["417",982,265951,782,115147],["416",1049,267000,781,115928],["415",978,267978,785,116713],["414",971,268949,805,117518],["413",950,269899,801,118319],["412",964,270863,823,119142],["411",904,271767,736,119878],["410",979,272746,858,120736],["409",908,273654,745,121481],["408",950,274604,799,122280],["407",943,275547,798,123078],["406",937,276484,819,123897],["405",925,277409,782,124679],["404",876,278285,839,125518],["403",886,279171,813,126331],["402",907,280078,786,127117],["401",925,281003,765,127882],["400",908,281911,810,128692],["399",813,282724,797,129489],["398",893,283617,781,130270],["397",805,284422,816,131086],["396",811,285233,817,131903],["395",838,286071,793,132696],["394",802,286873,793,133489],["393",828,287701,809,134298],["392",841,288542,807,135105],["391",779,289321,785,135890],["390",790,290111,772,136662],["389",742,290853,842,137504],["388",755,291608,782,138286],["387",755,292363,769,139055],["386",778,293141,787,139842],["385",800,293941,714,140556],["384",757,294698,755,141311],["383",741,295439,780,142091],["382",702,296141,781,142872],["381",735,296876,802,143674],["380",680,297556,763,144437],["379",742,298298,816,145253],["378",693,298991,840,146093],["377",711,299702,802,146895],["376",680,300382,766,147661],["375",686,301068,816,148477],["374",676,301744,793,149270],["373",614,302358,803,150073],["372",621,302979,763,150836],["371",678,303657,792,151628],["370",633,304290,822,152450],["369",663,304953,773,153223],["368",673,305626,757,153980],["367",632,306258,771,154751],["366",619,306877,774,155525],["365",630,307507,777,156302],["364",621,308128,761,157063],["363",549,308677,735,157798],["362",592,309269,759,158557],["361",593,309862,749,159306],["360",594,310456,787,160093],["359",559,311015,728,160821],["358",582,311597,754,161575],["357",584,312181,741,162316],["356",552,312733,779,163095],["355",542,313275,767,163862],["354",504,313779,760,164622],["353",562,314341,748,165370],["352",514,314855,764,166134],["351",514,315369,755,166889],["350",519,315888,704,167593],["349",546,316434,727,168320],["348",513,316947,735,169055],["347",503,317450,809,169864],["346",517,317967,694,170558],["345",498,318465,720,171278],["344",486,318951,779,172057],["343",489,319440,726,172783],["342",484,319924,772,173555],["341",452,320376,768,174323],["340",462,320838,715,175038],["339",465,321303,723,175761],["338",452,321755,681,176442],["337",441,322196,688,177130],["336",428,322624,659,177789],["335",441,323065,674,178463],["334",427,323492,705,179168],["333",386,323878,693,179861],["332",455,324333,718,180579],["331",419,324752,702,181281],["330",394,325146,635,181916],["329",388,325534,660,182576],["328",436,325970,634,183210],["327",409,326379,669,183879],["326",381,326760,649,184528],["325",403,327163,651,185179],["324",352,327515,637,185816],["323",393,327908,584,186400],["322",377,328285,605,187005],["321",383,328668,608,187613],["320",343,329011,620,188233],["319",348,329359,567,188800],["318",369,329728,631,189431],["317",329,330057,575,190006],["316",315,330372,577,190583],["315",340,330712,574,191157],["314",342,331054,626,191783],["313",340,331394,563,192346],["312",350,331744,551,192897],["311",297,332041,571,193468],["310",281,332322,578,194046],["309",304,332626,590,194636],["308",306,332932,493,195129],["307",325,333257,515,195644],["306",295,333552,543,196187],["305",285,333837,547,196734],["304",302,334139,533,197267],["303",284,334423,558,197825],["302",286,334709,534,198359],["301",276,334985,529,198888],["300",291,335276,500,199388],["299",275,335551,508,199896],["298",281,335832,486,200382],["297",272,336104,489,200871],["296",257,336361,466,201337],["295",270,336631,481,201818],["294",231,336862,475,202293],["293",231,337093,427,202720],["292",273,337366,452,203172],["291",236,337602,449,203621],["290",202,337804,430,204051],["289",220,338024,431,204482],["288",251,338275,437,204919],["287",218,338493,444,205363],["286",220,338713,449,205812],["285",252,338965,417,206229],["284",224,339189,428,206657],["283",225,339414,422,207079],["282",197,339611,398,207477],["281",231,339842,373,207850],["280",233,340075,375,208225],["279",196,340271,359,208584],["278",202,340473,365,208949],["277",204,340677,384,209333],["276",194,340871,352,209685],["275",205,341076,372,210057],["274",189,341265,388,210445],["273",177,341442,374,210819],["272",190,341632,374,211193],["271",191,341823,354,211547],["270",178,342001,368,211915],["269",196,342197,360,212275],["268",181,342378,335,212610],["267",176,342554,312,212922],["266",173,342727,349,213271],["265",188,342915,377,213648],["264",170,343085,355,214003],["263",159,343244,306,214309],["262",168,343412,332,214641],["261",170,343582,334,214975],["260",168,343750,340,215315],["259",165,343915,306,215621],["258",162,344077,324,215945],["257",167,344244,330,216275],["256",157,344401,297,216572],["255",155,344556,324,216896],["254",149,344705,301,217197],["253",153,344858,293,217490],["252",153,345011,324,217814],["251",128,345139,310,218124],["250",134,345273,284,218408],["249",164,345437,260,218668],["248",124,345561,245,218913],["247",137,345698,239,219152],["246",144,345842,273,219425],["245",130,345972,273,219698],["244",123,346095,246,219944],["243",117,346212,254,220198],["242",105,346317,281,220479],["241",125,346442,250,220729],["240",135,346577,223,220952],["239",125,346702,255,221207],["238",137,346839,256,221463],["237",126,346965,229,221692],["236",115,347080,216,221908],["235",121,347201,255,222163],["234",109,347310,239,222402],["233",115,347425,237,222639],["232",91,347516,195,222834],["231",97,347613,225,223059],["230",107,347720,207,223266],["229",91,347811,237,223503],["228",95,347906,231,223734],["227",98,348004,203,223937],["226",98,348102,182,224119],["225",84,348186,200,224319],["224",91,348277,188,224507],["223",74,348351,199,224706],["222",91,348442,199,224900],["221",71,348513,209,225109],["220",73,348586,191,225300],["219",80,348666,183,225483],["218",68,348734,186,225669],["217",58,348792,176,225845],["216",69,348861,181,226026],["215",74,348935,139,226165],["214",63,348998,150,226315],["213",83,349081,147,226462],["212",62,349143,140,226602],["211",64,349207,136,226738],["210",59,349266,129,226867],["209",53,349319,128,226995],["208",55,349374,123,227118],["207",49,349423,121,227239],["206",46,349469,115,227354],["205",50,349519,117,227471],["204",47,349566,108,227579],["203",48,349614,104,227683],["202",41,349664,104,228017],["201",56,349720,112,228129],["200",43,349763,113,228242],["199",43,349806,125,228367],["198",31,349837,96,228463],["197",48,349885,118,228581],["191",33,350090,89,229112],["190",31,350121,77,229189],["189",33,350154,67,229256],["188",42,350196,91,229347],["187",23,350219,76,229423],["186",20,350239,65,229488],["185",25,350264,64,229552],["184",23,350287,80,229632],["183",26,350313,73,229705],["182",23,350336,56,229761],["181",23,350359,73,229834],["180",23,350382,52,229886],["179",26,350408,60,229946],["178",20,350428,39,229985],["177",17,350445,67,230052],["176",18,350463,53,230105],["175",25,350488,54,230159],["174",26,350514,57,230216],["173",33,350547,44,230260],["172",23,350570,40,230300],["171",19,350589,54,230354],["170",14,350603,50,230404],["169",19,350622,43,230447],["168",17,350639,47,230494],["167",15,350654,54,230548],["166",16,350670,40,230588],["165",16,350686,31,230619],["164",18,350704,48,230667],["163",14,350718,32,230699],["162",17,350735,48,230747],["161",14,350749,34,230781],["160",7,350756,49,230830],["159",18,350774,39,230869],["158",14,350788,49,230918],["157",12,350800,40,230958],["156",12,350812,32,230990],["155",11,350823,31,231021],["154",14,350837,31,231052],["153",12,350849,38,231090],["152",20,350869,41,231131],["151",12,350881,33,231164],["150",9,350890,43,231207],["149",19,350909,28,231235],["148",5,350914,30,231265],["147",13,350927,33,231298],["146",6,350933,30,231328],["145",11,350944,23,231351],["144",9,350953,32,231383],["143",9,350962,29,231412],["142",9,350971,16,231428],["141",7,350978,19,231447],["140",13,350991,29,231476]];
+var MAJORS=[{"name":"车辆工程","college":"智能工程学院","score":476,"rank":199215,"subject":"wl","type":"普通","level":"本科","desc":"面向汽车产业，培养车辆设计与制造工程技术人才","his_score":null,"phy_score":476},{"name":"机械工程","college":"智能工程学院","score":483,"rank":188387,"subject":"wl","type":"普通","level":"本科","desc":"培养机械设计制造及自动化领域应用型技术人才","his_score":null,"phy_score":483},{"name":"机器人工程","college":"智能工程学院","score":478,"rank":196199,"subject":"wl","type":"普通","level":"本科","desc":"聚焦机器人系统设计与智能控制技术方向","his_score":null,"phy_score":478},{"name":"智能制造工程","college":"智能工程学院","score":479,"rank":194622,"subject":"wl","type":"普通","level":"本科","desc":"面向工业4.0，培养智能制造系统设计与运维人才","his_score":null,"phy_score":479},{"name":"自动化","college":"智能工程学院","score":495,"rank":169008,"subject":"wl","type":"普通","level":"本科","desc":"培养自动控制系统设计与应用领域工程技术人才","his_score":null,"phy_score":495},{"name":"电气工程及其自动化","college":"智能工程学院","score":494,"rank":170629,"subject":"wl","type":"普通","level":"本科","desc":"面向电力系统与电气控制领域应用型人才培养","his_score":null,"phy_score":494},{"name":"护理学","college":"环境与健康学院","score":481,"rank":191536,"subject":"wl","type":"普通","level":"本科","desc":"培养临床护理与健康管理的专业护理人才","his_score":null,"phy_score":481},{"name":"环境工程","college":"环境与健康学院","score":468,"rank":211317,"subject":"wl","type":"普通","level":"本科","desc":"培养环境污染防治与资源化利用工程技术人才","his_score":null,"phy_score":468},{"name":"制药工程","college":"环境与健康学院","score":474,"rank":202340,"subject":"wl","type":"普通","level":"本科","desc":"面向制药行业，培养药品研发与生产工艺人才","his_score":null,"phy_score":474},{"name":"医学检验技术","college":"环境与健康学院","score":475,"rank":200789,"subject":"wl","type":"普通","level":"本科","desc":"培养临床检验与医学实验室技术专业人才","his_score":null,"phy_score":475},{"name":"电子信息工程","college":"信息科学与技术学院","score":484,"rank":186805,"subject":"wl","type":"普通","level":"本科","desc":"培养电子系统与信息处理领域工程技术人才","his_score":null,"phy_score":484},{"name":"计算机科学与技术","college":"信息科学与技术学院","score":489,"rank":178836,"subject":"wl","type":"普通","level":"本科","desc":"培养具备软件开发与系统设计能力的IT工程技术人才","his_score":null,"phy_score":489},{"name":"软件工程","college":"信息科学与技术学院","score":483,"rank":188387,"subject":"wl","type":"普通","level":"本科","desc":"面向软件产业，培养软件开发与项目管理人才","his_score":null,"phy_score":483},{"name":"物联网工程","college":"信息科学与技术学院","score":481,"rank":191536,"subject":"wl","type":"普通","level":"本科","desc":"培养物联网系统架构设计与应用开发人才","his_score":null,"phy_score":481},{"name":"数据科学与大数据技术","college":"信息科学与技术学院","score":482,"rank":189932,"subject":"wl","type":"普通","level":"本科","desc":"培养大数据分析与人工智能应用技术人才","his_score":null,"phy_score":482},{"name":"通信工程","college":"信息科学与技术学院","score":484,"rank":186805,"subject":"wl","type":"普通","level":"本科","desc":"培养通信系统与网络技术领域工程技术人才","his_score":null,"phy_score":484},{"name":"人工智能","college":"信息科学与技术学院","score":482,"rank":189932,"subject":"wl","type":"普通","level":"本科","desc":"聚焦AI算法与智能系统开发应用方向","his_score":null,"phy_score":482},{"name":"工程造价","college":"建筑学院","score":467,"rank":212828,"subject":"wl","type":"普通","level":"本科","desc":"培养建设工程造价管理与成本控制专业人才","his_score":null,"phy_score":467},{"name":"建筑学","college":"建筑学院","score":463,"rank":218647,"subject":"wl","type":"普通","level":"本科","desc":"培养建筑设计、规划与工程实践专业人才","his_score":null,"phy_score":463},{"name":"土木工程","college":"建筑学院","score":459,"rank":224230,"subject":"wl","type":"普通","level":"本科","desc":"培养建筑工程设计与施工管理技术人才","his_score":null,"phy_score":459},{"name":"智慧建筑与建造","college":"建筑学院","score":468,"rank":211317,"subject":"wl","type":"普通","level":"本科","desc":"面向智能建筑与绿色建造技术方向","his_score":null,"phy_score":468},{"name":"会计学","college":"会计学院","score":488,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养会计核算、审计与财务管理专业人才","his_score":488,"phy_score":null},{"name":"审计学","college":"会计学院","score":493,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养审计监督与内部控制专业人才","his_score":493,"phy_score":null},{"name":"税收学","college":"会计学院","score":485,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"面向税务领域，培养税务筹划与管理人才","his_score":485,"phy_score":null},{"name":"工商管理","college":"国际商学院","score":487,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养企业运营管理与组织协调能力的管理人才","his_score":487,"phy_score":null},{"name":"人力资源管理","college":"国际商学院","score":488,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养人力资源开发与管理专业人才","his_score":488,"phy_score":null},{"name":"财务管理","college":"国际商学院","score":495,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养企业财务分析与资本运作管理人才","his_score":495,"phy_score":null},{"name":"大数据管理与应用","college":"国际商学院","score":482,"rank":189932,"subject":"wl","type":"普通","level":"本科","desc":"培养利用大数据技术辅助商业决策的管理人才","his_score":null,"phy_score":482},{"name":"金融学","college":"国际商学院","score":495,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养银行证券保险领域金融管理与服务人才","his_score":495,"phy_score":null},{"name":"金融科技","college":"国际商学院","score":471,"rank":206836,"subject":"wl","type":"普通","level":"本科","desc":"培养金融与科技融合创新应用型人才","his_score":null,"phy_score":471},{"name":"数字经济","college":"国际商学院","score":471,"rank":206836,"subject":"wl","type":"普通","level":"本科","desc":"面向数字经济时代，培养数字化运营与管理人才","his_score":null,"phy_score":471},{"name":"英语","college":"人文教育学院","score":486,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养英语语言应用与国际交流专业人才","his_score":486,"phy_score":null},{"name":"学前教育","college":"人文教育学院","score":481,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养幼儿教育与保育管理专业人才","his_score":481,"phy_score":null},{"name":"商务英语","college":"人文教育学院","score":480,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养商务沟通与国际贸易英语应用人才","his_score":480,"phy_score":null},{"name":"汉语言文学","college":"人文教育学院","score":499,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养汉语言文学素养与写作传播能力人才","his_score":499,"phy_score":null},{"name":"小学教育","college":"人文教育学院","score":491,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养小学教育教学与管理专业人才","his_score":491,"phy_score":null},{"name":"应用心理学","college":"人文教育学院","score":485,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养心理咨询与人力资源测评应用型人才","his_score":485,"phy_score":null},{"name":"产品设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养产品创新设计与用户体验设计人才","his_score":null,"phy_score":null},{"name":"服装与服饰设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养服装设计与时尚创意产业人才","his_score":null,"phy_score":null},{"name":"表演（服装表演）(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养服装表演与时尚传播专业人才","his_score":null,"phy_score":null},{"name":"环境设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养室内外环境艺术设计与规划人才","his_score":null,"phy_score":null},{"name":"视觉传达设计(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养品牌视觉设计与数字媒体创意人才","his_score":null,"phy_score":null},{"name":"数字媒体艺术(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养数字影像与交互媒体艺术创作人才","his_score":null,"phy_score":null},{"name":"艺术与科技(艺术)","college":"艺术学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养科技与艺术融合的创新设计人才","his_score":null,"phy_score":null},{"name":"摄影(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视摄影与商业摄影专业人才","his_score":null,"phy_score":null},{"name":"表演(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视戏剧表演与舞台艺术人才","his_score":null,"phy_score":null},{"name":"广播电视编导(艺术)","college":"传媒学院","score":478.0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视节目策划编导与制作人才","his_score":478,"phy_score":null},{"name":"戏剧影视导演(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视戏剧导演与创作专业人才","his_score":null,"phy_score":null},{"name":"戏剧影视文学(艺术)","college":"传媒学院","score":459.0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视剧本创作与文艺评论人才","his_score":459,"phy_score":null},{"name":"播音与主持艺术(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养播音主持与有声语言传播人才","his_score":null,"phy_score":null},{"name":"影视技术(艺术)","college":"传媒学院","score":477.0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养影视后期制作与视觉特效技术人才","his_score":477,"phy_score":null},{"name":"动画(艺术)","college":"传媒学院","score":0,"rank":0,"subject":"all","type":"艺术","level":"本科","desc":"培养二维三维动画创作与数字影视制作人才","his_score":null,"phy_score":null},{"name":"网络与新媒体","college":"传媒学院","score":484,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养新媒体内容生产与传播运营人才","his_score":484,"phy_score":null},{"name":"社会体育指导与管理(体育)","college":"体育学院","score":0,"rank":0,"subject":"all","type":"体育","level":"本科","desc":"培养社会体育指导与健身管理专业人才","his_score":null,"phy_score":null},{"name":"体育教育(体育)","college":"体育学院","score":0,"rank":0,"subject":"all","type":"体育","level":"本科","desc":"培养体育教学与运动训练专业人才","his_score":null,"phy_score":null},{"name":"体能训练","college":"体育学院","score":0,"rank":0,"subject":"all","type":"普通","level":"本科","desc":"体育学院开设的教育学类本科专业","his_score":null,"phy_score":null},{"name":"法学","college":"法学院","score":501,"rank":0,"subject":"ls","type":"普通","level":"本科","desc":"培养法律实务与法治建设领域专业人才","his_score":501,"phy_score":null},{"name":"机电一体化技术(专)","college":"智能工程学院","score":345,"rank":329119,"subject":"all","type":"普通","level":"专科","desc":"培养机电设备装调与自动化生产线运维技术人才","his_score":null,"phy_score":345},{"name":"电气自动化技术(专)","college":"智能工程学院","score":330,"rank":335946,"subject":"all","type":"普通","level":"专科","desc":"培养电气控制系统安装调试与维护技术人才","his_score":null,"phy_score":330},{"name":"护理(专)","college":"环境与健康学院","score":231,"rank":359169,"subject":"all","type":"普通","level":"专科","desc":"培养基础护理与社区健康服务专业人才","his_score":394,"phy_score":231},{"name":"医学检验技术(专)","college":"环境与健康学院","score":216,"rank":360531,"subject":"all","type":"普通","level":"专科","desc":"培养临床检验标本采集与分析技术人才","his_score":null,"phy_score":216},{"name":"药品生产技术(专)","college":"环境与健康学院","score":240,"rank":358092,"subject":"all","type":"普通","level":"专科","desc":"培养药品生产质量控制与工艺管理人才","his_score":null,"phy_score":240},{"name":"环境工程技术(专)","college":"环境与健康学院","score":202,"rank":361373,"subject":"all","type":"普通","level":"专科","desc":"培养环境监测与污染治理技术人才","his_score":null,"phy_score":202},{"name":"宠物医疗技术(专)","college":"环境与健康学院","score":0,"rank":0,"subject":"all","type":"普通","level":"专科","desc":"培养宠物疾病诊疗与护理技术人才","his_score":null,"phy_score":null},{"name":"计算机应用技术(专)","college":"信息科学与技术学院","score":202,"rank":361373,"subject":"all","type":"普通","level":"专科","desc":"培养计算机系统运维与软件开发应用人才","his_score":null,"phy_score":202},{"name":"电子信息工程技术(专)","college":"信息科学与技术学院","score":205,"rank":361210,"subject":"all","type":"普通","level":"专科","desc":"培养电子设备装调与智能系统运维人才","his_score":null,"phy_score":205},{"name":"工程造价(专)","college":"建筑学院","score":226,"rank":359668,"subject":"all","type":"普通","level":"专科","desc":"培养工程预决算与招投标管理技术人才","his_score":324,"phy_score":226},{"name":"建设工程管理(专)","college":"建筑学院","score":206,"rank":361158,"subject":"all","type":"普通","level":"专科","desc":"培养建设工程项目管理与施工组织人才","his_score":314,"phy_score":206},{"name":"大数据与会计(专)","college":"会计学院","score":218,"rank":360375,"subject":"all","type":"普通","level":"专科","desc":"培养大数据环境下会计核算与财务分析人才","his_score":384,"phy_score":218},{"name":"大数据与财务管理(专)","college":"国际商学院","score":247,"rank":357198,"subject":"all","type":"普通","level":"专科","desc":"培养企业财务数据管理与投融资分析人才","his_score":376,"phy_score":247},{"name":"金融服务与管理(专)","college":"国际商学院","score":231,"rank":359169,"subject":"all","type":"普通","level":"专科","desc":"培养银行保险证券领域金融服务人才","his_score":335,"phy_score":231},{"name":"摄影摄像技术(专)","college":"传媒学院","score":262,"rank":354832,"subject":"all","type":"普通","level":"专科","desc":"培养商业摄影与影视摄制技术人才","his_score":309,"phy_score":262},{"name":"网络直播与运营(专)","college":"传媒学院","score":231,"rank":359169,"subject":"all","type":"普通","level":"专科","desc":"培养网络直播策划与新媒体运营人才","his_score":318,"phy_score":231}];
 
-
-// Ensure globals are accessible
-window.YKDATA = YKDATA;
-
-
-</script>
-<script>
-// Verify data loaded
-if (typeof YKDATA === 'undefined') {
-  document.write('<div style="color:red;padding:20px">数据加载失败，请检查 data.js 是否存在</div>');
-}
-console.log('YKDATA loaded:', YKDATA ? 'OK ('+Object.keys(YKDATA['2025']?.wuli||{}).length+' scores)' : 'FAIL');
-function findScore(subject, year, score) {
-  const data = YKDATA[year]?.[subject];
-  if (!data) return null;
-  return data[String(score)] || null;
+// ===== HELPERS =====
+function getRankData(rankData, subject, scoreStr) {
+  var d = rankData[scoreStr];
+  if (!d) return null;
+  return subject === 'wl' ? { count: d[1], cum: d[2] } : { count: d[3], cum: d[4] };
 }
 
-function findRank(subject, year, target) {
-  const data = YKDATA[year]?.[subject];
-  if (!data) return null;
-  let best = null;
-  let lowest = null;
-  for (const [score, arr] of Object.entries(data)) {
-    const s = parseInt(score);
-    const cum = arr[1];
-    // track lowest score for overflow
-    if (!lowest || s < lowest.score) lowest = { score: s, cum };
-    // find the score whose cum just >= target (lowest cum that meets the bar)
-    if (cum >= target && (!best || cum < best.cum)) {
-      best = { score: s, cum };
+function findRank(cum, data, subject) {
+  var threshold = cum;
+  var idx = subject === 'wl' ? 2 : 4;
+  var best = null;
+  for (var k in data) {
+    var v = data[k];
+    var c = v[idx];
+    if (c && c >= threshold) {
+      if (!best || Math.abs(c - threshold) < Math.abs(best[1] - threshold)) {
+        best = [k, c];
+      }
     }
-  }
-  return best || lowest;
-}
-
-function getClosestScore(subject, year, target) {
-  const data = YKDATA[year]?.[subject];
-  if (!data || !target) return null;
-  let best = null;
-  for (const [score, arr] of Object.entries(data)) {
-    const cum = arr[1];
-    if (!best || Math.abs(cum - target) < Math.abs(best.cum - target))
-      best = { score: parseInt(score), cum };
   }
   return best;
 }
 
-function renderResult(score, subject) {
-  const d25 = findScore(subject, '2025', score);
-  const d26 = findScore(subject, '2026', score);
-  const label = subject === 'wuli' ? '物理类' : '历史类';
-
-  let html = '<div class="result-grid">';
-  if (d25) html += `<div class="result-item"><div class="label">2025 位次</div><div class="value">${(+d25[1]).toLocaleString()}</div><div class="subtext">${label} · ${score}分</div></div>`;
-  else html += `<div class="result-item"><div class="label">2025</div><div class="value" style="color:#999">—</div><div class="subtext">${score}分超出数据范围</div></div>`;
-  if (d26) html += `<div class="result-item"><div class="label">2026 位次</div><div class="value">${(+d26[1]).toLocaleString()}</div><div class="subtext">${label} · ${score}分</div></div>`;
-  else html += `<div class="result-item"><div class="label">2026</div><div class="value" style="color:#999">—</div><div class="subtext">${score}分超出数据范围</div></div>`;
-  html += '</div>';
-
-  if (d25 && d26) {
-    const diff = d26[1] - d25[1];
-    const trend = diff > 0 ? '下降' : (diff < 0 ? '上升' : '持平');
-    html += `<div class="tip tip-warn">⚠ ${score}分在2025年排${d25[1].toLocaleString()}名，2026年排${d26[1].toLocaleString()}名，同分位次${trend}了 ${Math.abs(diff).toLocaleString()} 名</div>`;
-  } else if (d25 && !d26) {
-    const eq = getClosestScore(subject, '2026', d25[1]);
-    if (eq) html += `<div class="tip tip-info">💡 ${score}分（2025）≈ ${eq.score}分（2026），位次${eq.cum.toLocaleString()}</div>`;
-  } else if (d26 && !d25) {
-    const eq = getClosestScore(subject, '2025', d26[1]);
-    if (eq) html += `<div class="tip tip-info">💡 ${score}分（2026）≈ ${eq.score}分（2025），位次${eq.cum.toLocaleString()}</div>`;
-  }
-
-  document.getElementById('queryResult').innerHTML = html;
-  if (subject === 'wuli') highlightMajors(d25 ? d25[1] : null);
-}
-
-let queryMode = 'score';
-function setMode(m) {
-  queryMode = m;
-  document.getElementById('modeScore').className = 'btn mode-btn' + (m==='score'?' active':'');
-  document.getElementById('modeRank').className = 'btn mode-btn' + (m==='rank'?' active':'');
-  const input = document.getElementById('queryInput');
-  if (m === 'score') {
-    document.getElementById('inputLabel').textContent = '高考分数';
-    input.placeholder = '输入分数 140~710';
-    input.min = 140; input.max = 710;
-  } else {
-    document.getElementById('inputLabel').textContent = '全省位次';
-    input.placeholder = '如 224230';
-    input.min = 1; input.max = 370000;
-  }
-  input.value = '';
-  document.getElementById('queryResult').innerHTML = '';
-  clearHighlights();
-}
-
-function doQuery() {
-  const val = parseInt(document.getElementById('queryInput').value);
-  const subject = document.getElementById('subjectSelect').value;
-  if (!val || val < 1) {
-    document.getElementById('queryResult').innerHTML = '<div class="tip tip-err">请输入有效数值</div>';
-    return;
-  }
-  if (queryMode === 'score') {
-    if (val < 140 || val > 710) {
-      document.getElementById('queryResult').innerHTML = '<div class="tip tip-err">请输入有效分数（140~710）</div>';
-      return;
-    }
-    renderResult(val, subject);
-  } else {
-    const maxCum = subject === 'wuli' ? 363040 : 243812;
-    if (val > maxCum) {
-      document.getElementById('queryResult').innerHTML = `<div class="tip tip-err">最大位次为 ${maxCum.toLocaleString()}，输入值超出范围</div>`;
-      return;
-    }
-    renderRankResult(val, subject);
-  }
-}
-
-function renderRankResult(rank, subject) {
-  const d25 = findRank(subject, '2025', rank);
-  const d26 = findRank(subject, '2026', rank);
-  const label = subject === 'wuli' ? '物理类' : '历史类';
-  let html = '<div class="result-grid">';
-  if (d25) html += `<div class="result-item"><div class="label">2025 等效分</div><div class="value">${d25.score}分</div><div class="subtext">${label} · 位次 ${d25.cum.toLocaleString()}</div></div>`;
-  if (d26) html += `<div class="result-item"><div class="label">2026 等效分</div><div class="value">${d26.score}分</div><div class="subtext">${label} · 位次 ${d26.cum.toLocaleString()}</div></div>`;
-  html += '</div>';
-  if (d25 && d26) {
-    const diff = d26.score - d25.score;
-    html += `<div class="tip tip-warn">位次 ${rank.toLocaleString()} 在2026年约${d26.score}分，${diff>0?'高':'低'} ${Math.abs(diff)}分</div>`;
-  }
-  document.getElementById('queryResult').innerHTML = html;
-  if (subject === 'wuli') highlightMajors(rank);
-}
-
-function highlightMajors(rank) {
-  if (!rank) {
-    document.getElementById('tipArea').textContent = '暂无位次数据，无法匹配专业';
-    return;
-  }
-  const tbody = document.getElementById('majorTable');
-  const rows = Array.from(tbody.querySelectorAll('tr'));
-  let countBao = 0, countWen = 0, countChong = 0;
-  
-  rows.forEach(row => {
-    const cell = row.cells[2];
-    const majorRank = parseInt(cell?.getAttribute('data-rank'));
-    let cat;
-    if (!majorRank) {
-      row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">—</span>';
-      cat = 4;
-    } else if (rank <= majorRank) {
-      const diff = majorRank - rank;
-      if (diff >= 30000) {
-        row.style.background = '#e8f5e9'; row.cells[4].innerHTML = '<span class="match-bao">保一保 ✓</span>';
-        cat = 2; countBao++;
-      } else {
-        row.style.background = '#e3f2fd'; row.cells[4].innerHTML = '<span class="match-wen">稳一稳</span>';
-        cat = 1; countWen++;
-      }
-    } else {
-      const diff = rank - majorRank;
-      if (diff <= 20000) {
-        row.style.background = '#fff8e1'; row.cells[4].innerHTML = '<span class="match-chong">冲一冲 △</span>';
-        cat = 2; countChong++;
-      } else {
-        row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">差距较大</span>';
-        cat = 3;
+function findScore(rank, data) {
+  var best = null;
+  for (var k in data) {
+    var val = data[k][2];
+    if (val) {
+      var diff = Math.abs(val - rank);
+      if (!best || diff < best[1]) {
+        best = [parseFloat(k.replace(/[^0-9.]/g,'')), diff];
       }
     }
-    row.setAttribute('data-cat', cat);
-  });
-  
-  // Sort: 保一保(0) → 稳一稳(1) → 冲一冲(0) → 稳一稳(1) → 保一保(2) → 差距较大(3) → —(4)
-  rows.sort((a, b) => {
-    const ca = parseInt(a.getAttribute('data-cat'));
-    const cb = parseInt(b.getAttribute('data-cat'));
-    if (ca !== cb) return ca - cb;
-    // Same category: sort by score descending
-    const sa = parseInt(a.cells[1].textContent) || 0;
-    const sb = parseInt(b.cells[1].textContent) || 0;
-    return sb - sa;
-  });
-  
-  rows.forEach(row => tbody.appendChild(row));
-  
-  document.getElementById('tipArea').textContent = `保一保 ${countBao} · 稳一稳 ${countWen} · 冲一冲 ${countChong}`;
-  applyFilter(currentFilter);
+  }
+  return best ? best[0] : null;
 }
 
-let currentFilter = 'all';
-function setFilter(f) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
-  applyFilter(f);
-}
-function applyFilter(f) {
-  const rows = document.querySelectorAll('#majorTable tr');
-  rows.forEach(r => {
-    const isZhuanke = r.cells[0].querySelector('.badge-专科');
-    if (f === 'all') r.style.display = '';
-    else if (f === 'benke') r.style.display = isZhuanke ? 'none' : '';
-    else if (f === 'zhuanke') r.style.display = isZhuanke ? '' : 'none';
-  });
-  applySubjectFilter();
+function getRankForScore(score, data, subject) {
+  var idx = subject === 'wl' ? 2 : 4;
+  var s = String(Math.floor(score));
+  if (data[s]) return data[s][idx];
+  return 0;
 }
 
-function applySubjectFilter() {
-  const subj = document.getElementById('subjectSelect').value;
-  const rows = document.querySelectorAll('#majorTable tr');
-  rows.forEach(r => {
-    const s = r.getAttribute('data-subj');
-    if (s && r.style.display !== 'none') {
-      if (subj === 'wuli' && s === 'ls') r.style.display = 'none';
-      else if (subj === 'lishi' && s === 'wl') r.style.display = 'none';
+var scoreThreshold25 = 477; // 物理本科线2025
+var scoreThreshold25his = 459; // 历史本科线2025
+var scoreThreshold26 = 443;
+var scoreThreshold26his = 485;
+
+// ===== RENDER =====
+var queryScore = null;
+var queryRank = null;
+var querySubject = 'wl';
+
+function render() {
+  var tbody = document.getElementById('majorBody');
+  var html = '';
+  var levelF = document.querySelector('#levelFilter .active').getAttribute('data-filter');
+  var subjF = document.querySelector('#subjectFilter .active').getAttribute('data-filter');
+  
+  var filtered = MAJORS.filter(function(m) {
+    if (levelF === 'benke' && m.level !== '本科') return false;
+    if (levelF === 'zhuanke' && m.level !== '专科') return false;
+    if (subjF === 'wl' && m.subject !== 'wl' && m.subject !== 'all') return false;
+    if (subjF === 'ls' && m.subject !== 'ls' && m.subject !== 'all') return false;
+    return true;
+  });
+
+  document.getElementById('filterCount').textContent = filtered.length + ' 个专业';
+
+  var rank25 = querySubject === 'wl' ? RANK_2025 : RANK_2025;
+  var rank26 = querySubject === 'wl' ? RANK_2026 : RANK_2026;
+
+  filtered.forEach(function(m, i) {
+    var score = m.score;
+    var rank = m.rank;
+    
+    // Get 2026 equivalent score
+    var eq26 = '—';
+    if (queryRank && rank > 0) {
+      var es = findScore(queryRank + (rank - queryRank), rank26);
+      if (es) eq26 = es + '分';
     }
-  });
-}
 
-function buildMajorTable() {
-  const tbody = document.getElementById('majorTable');
-  let html = '';
-  const subjLabel = {'wl':'理','ls':'文','all':'文理'};
-  const subjColor = {'wl':'#e3f2fd','ls':'#fce4ec','all':'#e8f5e9'};
-  SCHOOL_MAJORS.forEach(([name, score, rank, subj]) => {
-    let eq26Score = '—';
-    if (rank) {
-      const eq26 = getClosestScore('wuli', '2026', rank);
-      if (eq26) eq26Score = `${eq26.score}分`;
+    // Determine match tag
+    var tag = '';
+    var tagClass = 'na';
+    if (queryRank && rank > 0) {
+      var diff = queryRank - rank;
+      if (diff <= -5000) {
+        tag = '冲'; tagClass = 'reach';
+      } else if (diff <= 20000) {
+        tag = '稳'; tagClass = 'match';
+      } else {
+        tag = '保'; tagClass = 'safety';
+      }
     }
-    const isZhuanke = name.includes('(专)');
-    const badge = isZhuanke ? '专科' : '本科';
-    const scoreDisplay = score > 0 ? `${score}分` : '暂无数据';
-    const sl = subjLabel[subj] || '';
-    const sc = subjColor[subj] || '#fff';
-    html += `<tr data-subj="${subj}">
-      <td><span class="badge badge-${badge}">${badge}</span> ${name.replace('(专)','')} <span style="font-size:10px;background:${sc};padding:1px 5px;border-radius:6px;color:#666">${sl}</span></td>
-      <td>${scoreDisplay}</td>
-      <td data-rank="${rank}">${rank ? rank.toLocaleString() : '—'}</td>
-      <td>${eq26Score}</td>
-      <td><span class="match-no">等待查询</span></td>
-    </tr>`;
+
+    var lvlBadge = m.level === '本科' ? '<span class="level-badge benke">本</span>' : '<span class="level-badge">专</span>';
+    var subjText = {'wl':'理','ls':'文','all':'文理'}[m.subject] || '';
+    var subjCls = m.subject || '';
+    var subjBadge = subjText ? '<span class="subj-badge ' + subjCls + '">' + subjText + '</span>' : '';
+
+    var scoreDisplay = score > 0 ? score + '分' : '—';
+    var rankDisplay = rank > 0 ? rank.toLocaleString() : '—';
+
+    html += '<tr class="clickable" data-idx="' + i + '">';
+    html += '<td><div class="major-name">' + lvlBadge + ' ' + m.name + ' ' + subjBadge + '</div></td>';
+    html += '<td class="score-col">' + scoreDisplay + '</td>';
+    html += '<td class="rank-col">' + rankDisplay + '</td>';
+    html += '<td class="score-col">' + eq26 + '</td>';
+    html += '<td style="text-align:center"><span class="tag ' + tagClass + '">' + (tag || '—') + '</span></td>';
+    html += '</tr>';
+    html += '<tr class="expand-row"><td colspan="5"><div class="expand-content" id="expand' + i + '"><div class="desc">' + m.desc + '</div></div></td></tr>';
   });
+
   tbody.innerHTML = html;
-  sortByScore();
-  applySubjectFilter();
-}
 
-function sortByScore() {
-  const tbody = document.getElementById('majorTable');
-  const rows = Array.from(tbody.querySelectorAll('tr'));
-  rows.sort((a, b) => {
-    const sa = parseInt(a.cells[1].textContent) || 0;
-    const sb = parseInt(b.cells[1].textContent) || 0;
-    return sb - sa;
+  // Click to expand
+  tbody.querySelectorAll('.clickable').forEach(function(row) {
+    row.addEventListener('click', function() {
+      var idx = this.getAttribute('data-idx');
+      var ec = document.getElementById('expand' + idx);
+      var isOpen = ec.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.expand-content.open').forEach(function(e) { e.classList.remove('open'); });
+      if (!isOpen) {
+        ec.classList.add('open');
+      }
+    });
   });
-  rows.forEach(row => tbody.appendChild(row));
 }
 
-function clearAll() {
+// ===== QUERY =====
+function doQuery() {
+  var mode = document.querySelector('#modeToggle .active').getAttribute('data-mode');
+  var input = document.getElementById('queryInput').value.trim();
+  querySubject = document.getElementById('subjectSelect').value;
+  var rankData = querySubject === 'wl' ? RANK_2025 : RANK_2025;
+  var idx = querySubject === 'wl' ? 2 : 4;
+  
+  queryScore = null;
+  queryRank = null;
+
+  if (!input) return;
+
+  if (mode === 'score') {
+    var val = parseInt(input);
+    if (isNaN(val)) return;
+    queryScore = val;
+    var d = rankData[String(val)];
+    if (d) queryRank = d[idx];
+  } else {
+    var val = parseInt(input.replace(/,/g, ''));
+    if (isNaN(val)) return;
+    queryRank = val;
+    var found = findScore(val, rankData);
+    if (found) queryScore = found;
+  }
+
+  // Update result display
+  var resultDiv = document.getElementById('queryResult');
+  resultDiv.classList.add('show');
+  document.getElementById('displayRank').textContent = queryRank ? queryRank.toLocaleString() : '—';
+
+  // Equiv score
+  var eq26data = querySubject === 'wl' ? RANK_2026 : RANK_2026;
+  var equiv = null;
+  if (queryRank) {
+    equiv = findScore(queryRank, eq26data);
+  }
+  document.getElementById('displayEquiv').textContent = equiv ? equiv + '分' : '—';
+
+  // Line diff
+  var line26 = querySubject === 'wl' ? scoreThreshold26 : scoreThreshold26his;
+  if (equiv) {
+    var diff = equiv - line26;
+    var txt = diff >= 0 ? '+' + diff : String(diff);
+    document.getElementById('displayLineDiff').textContent = txt + '分' + (diff >= 0 ? ' (过线)' : ' (差线)');
+  } else {
+    document.getElementById('displayLineDiff').textContent = '—';
+  }
+
+  render();
+}
+
+// ===== SHARE CARD =====
+function generateShareCard() {
+  if (!queryRank) return;
+  
+  var subjectMap = {'wl':'物理类','ls':'历史类'};
+  document.getElementById('scRank').textContent = queryRank ? queryRank.toLocaleString() : '—';
+  document.getElementById('scScore').textContent = document.getElementById('displayEquiv').textContent;
+  document.getElementById('scSubject').textContent = subjectMap[querySubject] || '—';
+
+  // Top 5 majors (2 reach + 2 match + 1 safety)
+  var filtered = MAJORS.filter(function(m) {
+    if (querySubject === 'wl' && m.subject === 'ls') return false;
+    if (querySubject === 'ls' && m.subject === 'wl') return false;
+    return m.rank > 0;
+  });
+  
+  var reach = [], match = [], safety = [];
+  filtered.forEach(function(m) {
+    var diff = queryRank - m.rank;
+    if (diff <= -5000) reach.push(m);
+    else if (diff <= 20000) match.push(m);
+    else safety.push(m);
+  });
+  
+  var selected = [];
+  reach.slice(0,2).forEach(function(m) { selected.push({name:m.name, tag:'冲', cls:'reach'}); });
+  match.slice(0,2).forEach(function(m) { selected.push({name:m.name, tag:'稳', cls:'match'}); });
+  safety.slice(0,1).forEach(function(m) { selected.push({name:m.name, tag:'保', cls:'safety'}); });
+
+  var html = '';
+  selected.forEach(function(s) {
+    html += '<div class="major-item"><span class="tag ' + s.cls + '">' + s.tag + '</span>' + s.name + '</div>';
+  });
+  document.getElementById('scMajors').innerHTML = html || '<div style="font-size:13px;opacity:0.7">暂无推荐专业</div>';
+
+  // Use html2canvas-like approach via canvas
+  var card = document.getElementById('shareCard');
+  // For now, use a simple approach: screenshot via canvas
+  import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js').then(function() {
+    html2canvas(card, { backgroundColor: null, scale: 2 }).then(function(canvas) {
+      var link = document.createElement('a');
+      link.download = '燕京理工招生参考.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  }).catch(function() {
+    // Fallback: native screenshot
+    alert('生成分享卡片需要网络连接，已复制查询信息到剪贴板。');
+    var text = '燕京理工学院招生参考\n';
+    text += '考生位次：' + (queryRank ? queryRank.toLocaleString() : '—') + '\n';
+    text += '等效分：' + document.getElementById('displayEquiv').textContent + '\n';
+    text += '科目：' + subjectMap[querySubject] + '\n';
+    navigator.clipboard.writeText(text);
+  });
+}
+
+// ===== COPY SUMMARY =====
+function copySummary() {
+  if (!queryRank) { alert('请先查询分数或位次'); return; }
+  
+  var subjectMap = {'wl':'物理类','ls':'历史类'};
+  var text = '';
+  
+  var filtered = MAJORS.filter(function(m) {
+    if (querySubject === 'wl' && m.subject === 'ls') return false;
+    if (querySubject === 'ls' && m.subject === 'wl') return false;
+    return m.rank > 0;
+  });
+  
+  var reach = [], match = [], safety = [];
+  filtered.forEach(function(m) {
+    var diff = queryRank - m.rank;
+    if (diff <= -5000) reach.push(m);
+    else if (diff <= 20000) match.push(m);
+    else safety.push(m);
+  });
+  
+  text = '您好，根据您孩子' + (document.getElementById('displayEquiv').textContent || '的数据');
+  text += '，报考燕京理工学院的情况如下：\n\n';
+  text += '可冲一冲（' + reach.length + '个）：' + reach.slice(0,3).map(function(m){return m.name;}).join('、') + '等\n';
+  text += '较稳妥（' + match.length + '个）：' + match.slice(0,3).map(function(m){return m.name;}).join('、') + '等\n';
+  text += '保底选择（' + safety.length + '个）：' + safety.slice(0,3).map(function(m){return m.name;}).join('、') + '等\n';
+
+  navigator.clipboard.writeText(text).then(function() {
+    alert('咨询摘要已复制到剪贴板！');
+  });
+}
+
+// ===== EVENT BINDING =====
+document.getElementById('queryBtn').addEventListener('click', doQuery);
+document.getElementById('queryInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') doQuery(); });
+document.getElementById('clearBtn').addEventListener('click', function() {
   document.getElementById('queryInput').value = '';
-  document.getElementById('queryResult').innerHTML = '';
-  document.getElementById('tipArea').textContent = '输入分数后，可匹配的专业会高亮';
-  clearHighlights();
-}
+  document.getElementById('queryResult').classList.remove('show');
+  queryScore = null;
+  queryRank = null;
+  render();
+});
 
-function clearHighlights() {
-  const rows = document.querySelectorAll('#majorTable tr');
-  rows.forEach(r => { r.style.background = ''; r.cells[4].innerHTML = '<span class="match-no">等待查询</span>'; });
-}
+// Mode toggle
+document.querySelectorAll('#modeToggle button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#modeToggle button').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    var mode = this.getAttribute('data-mode');
+    document.getElementById('queryInput').placeholder = mode === 'score' ? '输入高考分数，如 500' : '输入全省位次，如 224230';
+    document.getElementById('queryInput').value = '';
+    document.getElementById('queryResult').classList.remove('show');
+    queryScore = null;
+    queryRank = null;
+    render();
+  });
+});
 
-document.getElementById('queryInput').addEventListener('keydown', e => { if (e.key === 'Enter') doQuery(); });
-document.getElementById('subjectSelect').addEventListener('change', applySubjectFilter);
+// Level filter
+document.querySelectorAll('#levelFilter button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#levelFilter button').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    render();
+  });
+});
 
-buildMajorTable();
+// Subject filter
+document.querySelectorAll('#subjectFilter button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#subjectFilter button').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    render();
+  });
+});
+
+// Subject select change
+document.getElementById('subjectSelect').addEventListener('change', function() {
+  if (queryRank !== null) doQuery(); else render();
+});
+
+document.getElementById('shareBtn').addEventListener('click', generateShareCard);
+document.getElementById('copySummaryBtn').addEventListener('click', copySummary);
+
+// Initial render
+render();
 </script>
 </body>
 </html>
