@@ -776,25 +776,46 @@ function generateShareCard() {
   });
   document.getElementById('scMajors').innerHTML = html || '<div style="font-size:13px;opacity:0.7">暂无推荐专业</div>';
 
-  // Use html2canvas-like approach via canvas
-  var card = document.getElementById('shareCard');
-  // For now, use a simple approach: screenshot via canvas
-  import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js').then(function() {
-    html2canvas(card, { backgroundColor: null, scale: 2 }).then(function(canvas) {
-      var link = document.createElement('a');
-      link.download = '燕京理工招生参考.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+  function loadScript(src) {
+    return new Promise(function(resolve, reject) {
+      if (window.html2canvas) { resolve(); return; }
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
     });
-  }).catch(function() {
-    // Fallback: native screenshot
-    alert('生成分享卡片需要网络连接，已复制查询信息到剪贴板。');
+  }
+
+  var card = document.getElementById('shareCard');
+  var cdnList = [
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://unpkg.zhimg.com/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+    'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js'
+  ];
+
+  function fallback() {
     var text = '燕京理工学院招生参考\n';
     text += '考生位次：' + (queryRank ? queryRank.toLocaleString() : '—') + '\n';
-    text += '等效分：' + document.getElementById('displayEquiv').textContent + '\n';
+    text += '2025等效分：' + document.getElementById('displayEquiv').textContent + '\n';
     text += '科目：' + subjectMap[querySubject] + '\n';
-    navigator.clipboard.writeText(text);
-  });
+    copyText(text);
+    alert('已复制查询信息到剪贴板。');
+  }
+
+  function tryLoad(i) {
+    if (i >= cdnList.length) { fallback(); return; }
+    loadScript(cdnList[i]).then(function() {
+      html2canvas(card, { backgroundColor: null, scale: 2, useCORS: true }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = '燕京理工招生参考.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }).catch(fallback);
+    }).catch(function() { tryLoad(i+1); });
+  }
+  tryLoad(0);
 }
 
 // ===== COPY SUMMARY =====
