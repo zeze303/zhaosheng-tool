@@ -43,6 +43,7 @@ tr:hover td { background: #f5f7ff; }
 .badge-本科 { background: #e3f2fd; color: #1565c0; }
 .badge-专科 { background: #fce4ec; color: #c62828; }
 .match-yes { color: #2e7d32; font-weight: 600; }
+.match-bao { color: #2e7d32; font-weight: 600; } .match-wen { color: #1565c0; font-weight: 600; } .match-chong { color: #e65100; font-weight: 500; }
 .match-no { color: #bdbdbd; }
 .match-maybe { color: #e65100; font-weight: 500; }
 .empty-state { text-align: center; padding: 30px 0; color: #bbb; font-size: 14px; }
@@ -272,22 +273,32 @@ function highlightMajors(rank) {
     return;
   }
   const rows = document.querySelectorAll('#majorTable tr');
-  let matchCount = 0;
+  let countBao = 0, countWen = 0, countChong = 0;
   rows.forEach(row => {
     const cell = row.cells[2];
     const majorRank = parseInt(cell?.getAttribute('data-rank'));
     if (!majorRank) {
       row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">—</span>';
     } else if (rank <= majorRank) {
-      row.style.background = '#e8f5e9'; row.cells[4].innerHTML = '<span class="match-yes">✓ 可报考</span>';
-      matchCount++;
-    } else if (rank - majorRank < 30000) {
-      row.style.background = '#fff8e1'; row.cells[4].innerHTML = '<span class="match-maybe">△ 冲一冲</span>';
+      const diff = majorRank - rank;
+      if (diff >= 30000) {
+        row.style.background = '#e8f5e9'; row.cells[4].innerHTML = '<span class="match-bao">保一保 ✓</span>';
+        countBao++;
+      } else {
+        row.style.background = '#e3f2fd'; row.cells[4].innerHTML = '<span class="match-yes" class="match-wen">稳一稳</span>';
+        countWen++;
+      }
     } else {
-      row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">差距较大</span>';
+      const diff = rank - majorRank;
+      if (diff <= 20000) {
+        row.style.background = '#fff8e1'; row.cells[4].innerHTML = '<span class="match-chong">冲一冲 △</span>';
+        countChong++;
+      } else {
+        row.style.background = ''; row.cells[4].innerHTML = '<span class="match-no">差距较大</span>';
+      }
     }
   });
-  document.getElementById('tipArea').textContent = `共 ${matchCount} 个专业可报考（含冲一冲）`;
+  document.getElementById('tipArea').textContent = `保一保 ${countBao} · 稳一稳 ${countWen} · 冲一冲 ${countChong}`;
   applyFilter(currentFilter);
 }
 
