@@ -271,7 +271,7 @@ function highlightMajors(rank) {
     document.getElementById('tipArea').textContent = '暂无位次数据，无法匹配专业';
     return;
   }
-  const rows = document.querySelectorAll('#majorTable tbody tr');
+  const rows = document.querySelectorAll('#majorTable tr');
   let matchCount = 0;
   rows.forEach(row => {
     const cell = row.cells[2];
@@ -298,7 +298,7 @@ function setFilter(f) {
   applyFilter(f);
 }
 function applyFilter(f) {
-  const rows = document.querySelectorAll('#majorTable tbody tr');
+  const rows = document.querySelectorAll('#majorTable tr');
   rows.forEach(r => {
     const isZhuanke = r.cells[0].querySelector('.badge-专科');
     if (f === 'all') r.style.display = '';
@@ -338,7 +338,7 @@ function clearAll() {
 }
 
 function clearHighlights() {
-  const rows = document.querySelectorAll('#majorTable tbody tr');
+  const rows = document.querySelectorAll('#majorTable tr');
   rows.forEach(r => { r.style.background = ''; r.cells[4].innerHTML = '<span class="match-no">等待查询</span>'; });
 }
 
